@@ -79,7 +79,7 @@ inline void configuration_mis::standard( MISConfig & mis_config ) {
     // Basic 
     mis_config.population_size                        = 50;
     mis_config.repetitions                            = 50;
-    mis_config.time_limit                             = 600.0;
+    mis_config.time_limit                             = 1000.0;
     // KaHIP
     mis_config.kahip_mode                             = FAST;
     // Randomization
