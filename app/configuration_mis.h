@@ -108,7 +108,7 @@ inline void configuration_mis::standard( MISConfig & mis_config ) {
     mis_config.number_of_k_separators                 = 10;
     mis_config.number_of_k_partitions                 = 10;
     // Output
-    mis_config.print_repetition                       = false;
+    mis_config.print_repetition                       = true;
     mis_config.print_population                       = false;
     mis_config.console_log                            = false;
     mis_config.check_sorted                           = true;
