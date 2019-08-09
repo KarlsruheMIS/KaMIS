@@ -94,6 +94,9 @@ env.Append(LIBPATH = [ '../extern/KaHIP' ])
 env.Append(CPPPATH = [ './extern/argtable-2.10/include' ])
 env.Append(CPPPATH = [ '../extern/argtable-2.10/include' ])
 
+
+env.Append(CPPPATH = [ './lib/mis/kernel/ParFastKer/fast_reductions/src' ])
+
 if not SYSTEM == 'Darwin':
     env.Append(LIBPATH = [ './extern/argtable-2.10/lib' ])
     env.Append(LIBPATH = [ '../extern/argtable-2.10/lib' ])
@@ -102,9 +105,12 @@ if not SYSTEM == 'Darwin':
 conf = Configure(env)
 
 # Set compiler flags
+# env.Append(CXXFLAGS = '-fopenmp -g')
 env.Append(CXXFLAGS = '-fopenmp')
+# env.Append(CXXFLAGS = '-DNDEBUG -Wall -funroll-loops -fno-stack-limit -O3 -std=c++0x -fsanitize=address')
 env.Append(CXXFLAGS = '-DNDEBUG -Wall -funroll-loops -fno-stack-limit -O3 -std=c++0x')
 env.Append(CCFLAGS  = '-DNDEBUG -Wall -funroll-loops -fno-stack-limit -O3 -std=c++0x')
+# env.Append(LINKFLAGS = '-fsanitize=address')
 
 # Execute the SConscript.
 SConscript('SConscript', exports=['env'],variant_dir=env['variant'], duplicate=False)

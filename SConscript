@@ -29,6 +29,11 @@ libfiles = [
                 'lib/mis/evolutionary/combine/cover_combine.cpp',
                 'lib/mis/evolutionary/combine/separator_combine.cpp',
                 'lib/mis/evolutionary/combine/multiway_combine.cpp',
+                'lib/mis/kernel/ParFastKer/fast_reductions/src/full_reductions.cpp',
+                'lib/mis/kernel/ParFastKer/fast_reductions/src/MaximumMatching.cpp',
+                'lib/mis/kernel/ParFastKer/fast_reductions/src/parallel_reductions.cpp',
+                'lib/mis/kernel/ParFastKer/LinearTime/MIS_sigmod_pub/Graph.cpp',
+                'lib/mis/kernel/ParFastKer/LinearTime/MIS_sigmod_pub/Utility.cpp',
                 ]
 
 libkahip_files = [   'extern/KaHIP//lib/data_structure/graph_hierarchy.cpp',

@@ -30,17 +30,20 @@
 #include "separator_combine.h"
 #include "graph_io.h"
 
-reduction_evolution::reduction_evolution() {
+template <typename reducer>
+reduction_evolution<reducer>::reduction_evolution() {
     pool = new separator_pool();
     pool_counter = 0;
     reduction_counter = 0;
 }
 
-reduction_evolution::~reduction_evolution() {
+template <typename reducer>
+reduction_evolution<reducer>::~reduction_evolution() {
 
 }
 
-void reduction_evolution::init(MISConfig & mis_config, graph_access & G) {
+template <typename reducer>
+void reduction_evolution<reducer>::init(MISConfig & mis_config, graph_access & G) {
     // Set the RNG
     srand(mis_config.seed);
     random_functions::setSeed(mis_config.seed);
@@ -48,28 +51,32 @@ void reduction_evolution::init(MISConfig & mis_config, graph_access & G) {
     mis_log::instance()->restart_evo_timer();
 }
 
-void reduction_evolution::extract_nodes(MISConfig & mis_config, 
+template <typename reducer>
+void reduction_evolution<reducer>::extract_nodes(MISConfig & mis_config, 
                               graph_access & G, 
                               std::vector<NodeID> & is_nodes,
                               std::vector<NodeID> & other_nodes,
-                              std::unique_ptr<branch_and_reduce_algorithm> &full_reducer) {
+                              std::unique_ptr<reducer> &full_reducer) {
     std::vector<NodeID> nodes;
     island.get_best_individual_nodes(mis_config, G, nodes);
     full_reducer->force_into_independent_set(nodes);
 }
 
-void reduction_evolution::get_extract_nodes(MISConfig & mis_config, 
+template <typename reducer>
+void reduction_evolution<reducer>::get_extract_nodes(MISConfig & mis_config, 
                               graph_access & G, 
                               std::vector<NodeID> & nodes) {
     island.get_best_individual_nodes(mis_config, G, nodes);
 }
 
-void reduction_evolution::init_pool(MISConfig & mis_config, graph_access & G) {
+template <typename reducer>
+void reduction_evolution<reducer>::init_pool(MISConfig & mis_config, graph_access & G) {
     pool->init(mis_config, G);
     pool->renew_pool(mis_config, G, true, false, island);
 }
 
-unsigned int reduction_evolution::reduce(MISConfig & mis_config, 
+template <typename reducer>
+unsigned int reduction_evolution<reducer>::reduce(MISConfig & mis_config, 
                                graph_access & G, 
                                graph_access & reduced, 
                                std::vector<NodeID> & is_nodes,
@@ -77,20 +84,7 @@ unsigned int reduction_evolution::reduce(MISConfig & mis_config,
                                std::vector<NodeID> & reverse_mapping,
                                std::vector<NodeID> & best_nodes,
                                bool recursive,
-                               std::unique_ptr<branch_and_reduce_algorithm> &full_reducer) {
-    // initialize full reducer
-    std::vector<std::vector<int>> adj(G.number_of_nodes());
-
-    // Build adjacency vectors
-    forall_nodes(G, node) {
-        adj[node].reserve(G.getNodeDegree(node));
-        forall_out_edges(G, edge, node) {
-            NodeID neighbor = G.getEdgeTarget(edge);
-            adj[node].push_back(neighbor);
-        } endfor
-    } endfor
-
-    full_reducer = std::unique_ptr<branch_and_reduce_algorithm>(new branch_and_reduce_algorithm(adj, adj.size()));
+                               std::unique_ptr<reducer> &full_reducer) {
 
     // extract mis nodes
     if (best_nodes.size() > 0)
@@ -104,11 +98,13 @@ unsigned int reduction_evolution::reduce(MISConfig & mis_config,
     return full_reducer->number_of_nodes_remaining();
 }
 
-void reduction_evolution::set_local_iterations(MISConfig & mis_config, graph_access & G) {
+template <typename reducer>
+void reduction_evolution<reducer>::set_local_iterations(MISConfig & mis_config, graph_access & G) {
     mis_config.ils_iterations = std::min(G.number_of_nodes(), mis_config.ils_iterations);
 }
 
-unsigned int reduction_evolution::perform_mis_search(MISConfig & mis_config, 
+template <typename reducer>
+unsigned int reduction_evolution<reducer>::perform_mis_search(MISConfig & mis_config, 
                                    graph_access & G, 
                                    std::vector<bool> & independent_set,
                                    std::vector<NodeID> & best_nodes,
@@ -123,9 +119,22 @@ unsigned int reduction_evolution::perform_mis_search(MISConfig & mis_config,
     std::vector<NodeID> other_nodes;
     graph_access reduced;
     std::vector<NodeID> reverse_mapping(G.number_of_nodes(), 0);
-    std::unique_ptr<branch_and_reduce_algorithm> full_reducer;
+    std::unique_ptr<reducer> full_reducer;
 
     // Perform reductions
+    // initialize full reducer
+    std::vector<std::vector<int>> adj(G.number_of_nodes());
+
+    // Build adjacency vectors
+    forall_nodes(G, node) {
+        adj[node].reserve(G.getNodeDegree(node));
+        forall_out_edges(G, edge, node) {
+            NodeID neighbor = G.getEdgeTarget(edge);
+            adj[node].push_back(neighbor);
+        } endfor
+              } endfor
+
+                    full_reducer = std::unique_ptr<reducer>(new reducer(adj, adj.size()));
     unsigned int remaining_size = reduce(mis_config, G, reduced, is_nodes, other_nodes, reverse_mapping, best_nodes, recursive, full_reducer);
     is_base += full_reducer->get_current_is_size_with_folds();
 
@@ -157,7 +166,8 @@ unsigned int reduction_evolution::perform_mis_search(MISConfig & mis_config,
     return std::max(finer_max, coarser_max);
 }
 
-void reduction_evolution::perform_evolutionary(MISConfig & mis_config,
+template <typename reducer>
+void reduction_evolution<reducer>::perform_evolutionary(MISConfig & mis_config,
                                                graph_access & G, 
                                                std::vector<bool> & independent_set) { 
     // Build a separator pool 
@@ -198,9 +208,10 @@ void reduction_evolution::perform_evolutionary(MISConfig & mis_config,
     pool = NULL;
 }
 
-void reduction_evolution::add_reductions(MISConfig & mis_config, 
+template <typename reducer>
+void reduction_evolution<reducer>::add_reductions(MISConfig & mis_config, 
                                std::vector<bool> & independent_set, 
-                               std::unique_ptr<branch_and_reduce_algorithm> & full_reducer) {
+                               std::unique_ptr<reducer> & full_reducer) {
     unsigned int size = 0;
     for (bool is : independent_set) {
         if (is) size++;
@@ -212,7 +223,8 @@ void reduction_evolution::add_reductions(MISConfig & mis_config,
     }
 }
 
-void reduction_evolution::perform_reverse_mapping(MISConfig & mis_config, 
+template <typename reducer>
+void reduction_evolution<reducer>::perform_reverse_mapping(MISConfig & mis_config, 
                                                   graph_access & coarser,
                                                   std::vector<bool> & independent_set,
                                                   std::vector<bool> & coarser_is,
@@ -238,7 +250,8 @@ void reduction_evolution::perform_reverse_mapping(MISConfig & mis_config,
     }
 }
 
-void reduction_evolution::build_final_solution(MISConfig & mis_config, 
+template <typename reducer>
+void reduction_evolution<reducer>::build_final_solution(MISConfig & mis_config, 
                                                graph_access & G, 
                                                std::vector<bool> & independent_set) {
     // Create individuum for final independent set
@@ -266,12 +279,14 @@ void reduction_evolution::build_final_solution(MISConfig & mis_config,
     solution = NULL;
 } 
 
-unsigned int reduction_evolution::collect_best_mis(MISConfig & mis_config, graph_access & G, individuum_mis & out) {
+template <typename reducer>
+unsigned int reduction_evolution<reducer>::collect_best_mis(MISConfig & mis_config, graph_access & G, individuum_mis & out) {
     island.get_best_individuum(out);
     return out.solution_size;
 }
 
-void reduction_evolution::fill_population(MISConfig & mis_config, graph_access & G) {
+template <typename reducer>
+void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph_access & G) {
     // If the population is not filled simply create new individuals
     mis_log::instance()->print_init_title();
     while (!island.is_full()) {
@@ -300,7 +315,8 @@ void reduction_evolution::fill_population(MISConfig & mis_config, graph_access &
     else pool->calculate_separator_scores(mis_config, G, island);
 }
 
-void reduction_evolution::perform_local_mis(MISConfig & mis_config, graph_access & G) {
+template <typename reducer>
+void reduction_evolution<reducer>::perform_local_mis(MISConfig & mis_config, graph_access & G) {
     unsigned int repetitions = mis_config.repetitions;
 
     timer round_timer;
@@ -395,3 +411,5 @@ void reduction_evolution::perform_local_mis(MISConfig & mis_config, graph_access
     }
 }
 
+template class reduction_evolution<branch_and_reduce_algorithm>;
+template class reduction_evolution<full_reductions>;

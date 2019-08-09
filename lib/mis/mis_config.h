@@ -4,6 +4,7 @@
  *
  ******************************************************************************
  * Copyright (C) 2015-2017 Sebastian Lamm <lamm@ira.uka.de>
+ * Copyright (C) 2019 Demian Hespe <hespe@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -40,6 +41,8 @@ struct MISConfig {
     double imbalance;
     // Mode for the KaHIP-framework.
     unsigned int kahip_mode;
+    // Use full kernelization (true) or FastKer (false)
+    bool fullKernelization;
     // Time limit for the evolutionary algorithm
     double time_limit;
     // Number of repetitions in each round.

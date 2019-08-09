@@ -4,6 +4,7 @@
  *
  ******************************************************************************
  * Copyright (C) 2015-2017 Sebastian Lamm <lamm@ira.uka.de>
+ * Copyright (C) 2019 Demian Hespe <hespe@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -48,6 +49,8 @@ int parse_parameters(int argn, char **argv,
     
     struct arg_int *kahip_mode          = arg_int0(NULL, "kahip_mode", NULL, "KaHIP mode to use.");
 
+    struct arg_str *kernelization_mode  = arg_str0(NULL, "kernelization", NULL, "Kernelization to use. ([FastKer|full]). Full is slower but produces smaller kernels (default: FastKer)");
+
     // struct arg_int *repetitions         = arg_int0(NULL, "repetitions", NULL, "Number of repetitions per round.");
 
     // struct arg_lit *use_multiway_ns     = arg_lit0(NULL, "use_multiway_ns", "Use the multiway combine operator with node separators.");
@@ -74,6 +77,7 @@ int parse_parameters(int argn, char **argv,
             user_seed, 
             user_conf, 
             kahip_mode,
+	    kernelization_mode,
             // use_hopcroft,
             // use_multiway_ns,
             // use_multiway_vc,
@@ -113,6 +117,12 @@ int parse_parameters(int argn, char **argv,
         else if (strcmp(user_conf->sval[0], "social") == 0) cfg.social(mis_config);
         else if (strcmp(user_conf->sval[0], "full_standard") == 0) cfg.full_standard(mis_config);
         else if (strcmp(user_conf->sval[0], "full_social") == 0) cfg.full_social(mis_config);
+    }
+
+    mis_config.fullKernelization = false;
+    if (kernelization_mode->count > 0) {
+        if (strcmp(kernelization_mode->sval[0], "FastKer") == 0) mis_config.fullKernelization = false;
+        else if (strcmp(kernelization_mode->sval[0], "full") == 0) mis_config.fullKernelization = true;
     }
 
     if (filename->count > 0) {

@@ -28,10 +28,12 @@
 #include "separator_pool.h"
 #include "data_structure/graph_access.h"
 #include "mis/kernel/branch_and_reduce_algorithm.h"
+#include "full_reductions.h"
 
 // system includes
 #include <memory> // unique_ptr
 
+template <typename reducer>
 class reduction_evolution {
     public:
         /**
@@ -133,7 +135,7 @@ class reduction_evolution {
                             std::vector<NodeID> & reverse_mapping,
                             std::vector<NodeID> & best_nodes,
                             bool recursive,
-                            std::unique_ptr<branch_and_reduce_algorithm> & full_reducer);
+                            std::unique_ptr<reducer> & full_reducer);
 
         /**
          * Revert a set of reductions.
@@ -147,7 +149,7 @@ class reduction_evolution {
          */
         void add_reductions(MISConfig & mis_config, 
                             std::vector<bool> & independent_set, 
-                            std::unique_ptr<branch_and_reduce_algorithm> & full_reducer);
+                            std::unique_ptr<reducer> & full_reducer);
 
         /**
          * Create an initial population.
@@ -171,7 +173,7 @@ class reduction_evolution {
                            graph_access & G, 
                            std::vector<NodeID> & is_nodes,
                            std::vector<NodeID> & other_nodes,
-                           std::unique_ptr<branch_and_reduce_algorithm> &full_reducer);
+                           std::unique_ptr<reducer> &full_reducer);
 
         /**
          * Extract a set of independent set nodes and 
