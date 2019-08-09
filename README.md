@@ -1,6 +1,6 @@
 # KaMIS #
 ## Description ##
-Framework for finding the maximum independent set of large sparse graphs.
+Framework for finding high-quality independent sets of large sparse graphs.
 
 Main project site:
 http://algo2.iti.kit.edu/kamis/
