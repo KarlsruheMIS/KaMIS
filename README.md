@@ -41,3 +41,25 @@ Time limit until the algorithm terminates.
 
 ## License
 The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
+If you publish results using our algorithms, please acknowledge our work by quoting one or more of the following papers:
+```
+@inproceedings{kamis2015,
+             AUTHOR = {Lamm, S. and Sanders, P. and Schulz, C. and Strash, D. and Werneck, R. F.},
+             TITLE = {{Finding Near-Optimal Independent Sets at Scale}},
+             BOOKTITLE = {18th Meeting on Algorithm Engineering and Exerpimentation (ALENEX'16)},
+             YEAR = {2016}
+}
+```
+
+```
+@article{kamis2019JV,
+             AUTHOR = {Hespe, D. and Schulz, C. and Strash, D.},
+             TITLE = {{Scalable Kernelization for Maximum Independent Sets}},
+             JOURNAL = {Journal of Experimental Algorithms},
+             PUBLISHER = {ACM},
+             PAGES = {1.16:1--1.16:22},
+             VOLUME = {24},
+             NUMBER = {1},
+             YEAR = {2019}
+}
+```
