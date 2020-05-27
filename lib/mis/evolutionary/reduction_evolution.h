@@ -13,7 +13,7 @@
 #include "separator_pool.h"
 #include "data_structure/graph_access.h"
 #include "mis/kernel/branch_and_reduce_algorithm.h"
-#include "full_reductions.h"
+#include "../kernel/ParFastKer/fast_reductions/src/full_reductions.h"
 
 // system includes
 #include <memory> // unique_ptr

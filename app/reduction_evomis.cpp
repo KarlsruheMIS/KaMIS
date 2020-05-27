@@ -20,7 +20,7 @@
 #include "parse_parameters.h"
 #include "data_structure/graph_access.h"
 #include "data_structure/mis_permutation.h"
-#include "full_reductions.h"
+#include "mis/kernel/ParFastKer/fast_reductions/src/full_reductions.h"
 
 template<class reducer>
 int run(MISConfig &mis_config, graph_access &G) {
