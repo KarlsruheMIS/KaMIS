@@ -6,8 +6,8 @@ Main project site:
 http://algo2.iti.kit.edu/kamis/
 
 ## Installation ##
-Compile the source by running *compile.sh*. The binaries can then be found in the folder *deploy*.
-To compile the programs you need to have Argtable, g++, OpenMP and scons installed.
+Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.
+To compile the programs you need to have Argtable, g++, OpenMP and cmake installed.
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
@@ -40,4 +40,4 @@ Config to use for the evolutionary algorithm [standard|social].
 Time limit until the algorithm terminates.
 
 ## License
-The project is released under GPL2. However, some files used for kernelization are released under the MIT or the BSD 3-clause license. See the respective files for their license.
+The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
