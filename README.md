@@ -6,8 +6,8 @@ Main project site:
 http://algo2.iti.kit.edu/kamis/
 
 ## Installation ##
-Compile the source by running *compile.sh*. The binaries can then be found in the folder *deploy*.
-To compile the programs you need to have Argtable, g++, OpenMP and scons installed.
+Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.
+To compile the programs you need to have Argtable, g++, OpenMP and cmake installed.
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 

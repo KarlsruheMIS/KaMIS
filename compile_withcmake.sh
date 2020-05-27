@@ -22,3 +22,4 @@ mkdir deploy
 cp ./build/redumis deploy/
 cp ./build/graphchecker deploy/
 
+rm -rf build
