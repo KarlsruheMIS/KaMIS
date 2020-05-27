@@ -40,4 +40,4 @@ Config to use for the evolutionary algorithm [standard|social].
 Time limit until the algorithm terminates.
 
 ## License
-The project is released under GPL2. However, some files used for kernelization are released under the MIT or the BSD 3-clause license. See the respective files for their license.
+The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
