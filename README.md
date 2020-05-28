@@ -105,7 +105,7 @@ Choose how the weights are assigned. Can be either: file (default), hybrid, unif
 
 `-reduction_style=<string>`
 Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
-## Usage Weighted Branch and Reduce ##
+## Usage Sort Adjacencies ##
 `sort_adjacencies FILE`.    
 
 The program reads a Metis file, sorts the neighborhood of each node and prints the graph to the console.
