@@ -106,6 +106,7 @@ class mis_log {
          * Print the final results.
          */
         void print_results();
+        void print_results_online();
 
         /**
          * Print a title.
@@ -191,6 +192,25 @@ class mis_log {
         void set_result_operator(unsigned int result);
 
         /**
+         * Restart the timer for the online algorithm.
+         */
+        void restart_online_timer();
+
+        /**
+         * Get the timer for the online algorithm.
+         */
+        double get_online_timer();
+
+        /**
+         * Update the size of the best solution.
+         *
+         * @param mis_config Config for the logger.
+         * @param size Candidate to replace the best solution size.
+         */
+        void set_best_size_online(MISConfig & mis_config, unsigned int size);
+
+
+        /**
          * Update the size of the best solution.
          *
          * @param mis_config Config for the logger.
@@ -218,6 +238,7 @@ class mis_log {
         timer operator_timer;
         timer pool_timer;
         timer non_pool_timer;
+        timer online_timer;
         std::stringstream filebuffer_string;
         MISConfig log_config;
 

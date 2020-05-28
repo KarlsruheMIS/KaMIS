@@ -188,6 +188,14 @@ extern/KaHIP/lib/partition/uncoarsening/refinement/tabu_search/tabu_search.cpp
 extern/KaHIP/interface/kaHIP_interface.cpp)
 add_library(libkaffpa OBJECT ${LIBKAFFPA_SOURCE_FILES})
 
+
+set(LIBONLINEMIS_FILES
+lib/mis/ils/online_ils.cpp
+lib/mis/ils/local_search_online.cpp
+lib/mis/initial_mis/greedy_mis_online.cpp
+lib/data_structure/mis_permutation_online.cpp)
+add_library(libonlinemis OBJECT ${LIBONLINEMIS_FILES})
+
 add_executable(redumis app/reduction_evomis.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGET_OBJECTS:libfiles>)
 target_link_libraries(redumis ${OpenMP_CXX_LIBRARIES})
 install(TARGETS redumis DESTINATION bin)
@@ -200,4 +208,8 @@ add_executable(sort_adjacencies app/sort_adjacencies.cpp $<TARGET_OBJECTS:libkaf
 target_link_libraries(sort_adjacencies ${OpenMP_CXX_LIBRARIES})
 install(TARGETS sort_adjacencies DESTINATION bin)
 
+add_executable(online_mis app/online_mis.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGET_OBJECTS:libfiles> $<TARGET_OBJECTS:libonlinemis>)
+target_compile_definitions(online_mis PRIVATE "-DOMIS")
+target_link_libraries(online_mis ${OpenMP_CXX_LIBRARIES})
+install(TARGETS online_mis DESTINATION bin)
 

@@ -82,13 +82,6 @@ void mis_log::print_newline() {
 }
 
 void mis_log::print_title() {
-    filebuffer_string << "=========================================="                           << std::endl;
-    filebuffer_string << "\t\tReduMIS"                                                          << std::endl;
-    filebuffer_string << "=========================================="                           << std::endl;
-
-    std::cout << "=========================================="                           << std::endl;
-    std::cout << "\t\tReduMIS"                                                          << std::endl;
-    std::cout << "=========================================="                           << std::endl;
 }
 
 void mis_log::print_graph() {
@@ -232,6 +225,22 @@ void mis_log::print_repetition(MISConfig & mis_config) {
     }
 }
 
+void mis_log::print_results_online() {
+  filebuffer_string << std::endl;
+  filebuffer_string << "\t\tBest" << std::endl;
+  filebuffer_string << "=========================================="
+                    << std::endl;
+  filebuffer_string << "Size:\t\t\t\t\t" << best_solution_size << std::endl;
+  filebuffer_string << "Time found:\t\t\t\t" << time_taken_best << std::endl;
+  filebuffer_string << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "\t\tBest" << std::endl;
+  std::cout << "==========================================" << std::endl;
+  std::cout << "Size:\t\t\t\t" << best_solution_size << std::endl;
+  std::cout << "Time found:\t\t\t" << time_taken_best << std::endl;
+  std::cout << std::endl;
+}
 void mis_log::print_results() {
     compute_avg();
     filebuffer_string << std::endl;
@@ -351,6 +360,10 @@ void mis_log::restart_total_timer() {
     total_timer.restart();
 }
 
+void mis_log::restart_online_timer() { online_timer.restart(); }
+
+double mis_log::get_online_timer() { return online_timer.elapsed(); }
+
 void mis_log::restart_evo_timer() {
     evo_timer.restart();
 }
@@ -365,6 +378,17 @@ void mis_log::restart_operator_timer() {
 
 void mis_log::restart_building_pool_timer() {
     pool_timer.restart();
+}
+
+void mis_log::set_best_size_online(MISConfig &mis_config, unsigned int size) {
+  if (size > best_solution_size) {
+    best_solution_size = size;
+    time_taken_best = online_timer.elapsed();
+    filebuffer_string << "Size:\t\t\t\t" << best_solution_size << "\t["
+                      << time_taken_best << "]" << std::endl;
+    std::cout << "Size:\t\t\t\t" << best_solution_size << "\t["
+              << time_taken_best << "]" << std::endl;
+  }
 }
 
 double mis_log::get_pool_building_time() {
