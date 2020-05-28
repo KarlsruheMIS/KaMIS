@@ -37,7 +37,7 @@ class ils {
          * @param G Graph representation.
          * @param iteration_limit Maximum number of iterations.
          */
-        void perform_ils(graph_access& G, unsigned int iteration_limit = 0);
+        void perform_ils(graph_access& G, unsigned int iteration_limit = 0, int offset = 0);
 
         /** 
          * Reset the ILS.

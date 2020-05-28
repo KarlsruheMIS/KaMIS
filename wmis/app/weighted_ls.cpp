@@ -89,7 +89,7 @@ NodeWeight perform_reduction(std::unique_ptr<branch_and_reduce_algorithm>& reduc
 void perform_ils(const MISConfig& mis_config, graph_access& G, NodeWeight weight_offset) {
 	ils local(mis_config);
 	initial_is(G);
-	local.perform_ils(G, 1000000);
+	local.perform_ils(G, 1000000, weight_offset);
 
 	if (!is_IS(G)) {
 		std::cerr << "ERROR: graph after ILS is not independent" << std::endl;
@@ -104,7 +104,7 @@ void perform_ils(const MISConfig& mis_config, graph_access& G, NodeWeight weight
 		}
 	} endfor
 
-	std::cout << "%MIS_weight " << is_weight << std::endl;
+	std::cout << "MIS_weight " << is_weight << std::endl;
 }
 
 void assign_weights(graph_access& G, const MISConfig& mis_config) {
@@ -193,7 +193,7 @@ int main(int argn, char **argv) {
 		return 0;
 	}
 
-	std::cout << "%nodes " << G.number_of_nodes() << std::endl;
+	//std::cout << "%nodes " << G.number_of_nodes() << std::endl;
 
 	if (mis_config.perform_reductions) {
 		// recude graph and run local search
@@ -205,14 +205,14 @@ int main(int argn, char **argv) {
 
 		std::chrono::duration<float> reduction_time = end - start;
 
-		std::cout << "%reduction_nodes " << rG.number_of_nodes() << "\n";
-		std::cout << "%reduction_time " << reduction_time.count() << "\n";
-		std::cout << "%reduction_offset " << weight_offset << std::endl;
+		//std::cout << "%reduction_nodes " << rG.number_of_nodes() << "\n";
+		//std::cout << "%reduction_time " << reduction_time.count() << "\n";
+		//std::cout << "%reduction_offset " << weight_offset << std::endl;
 
 		if (rG.number_of_nodes() != 0) {
 			perform_ils(mis_config, rG, weight_offset);
 		} else {
-			std::cout << "%MIS_weight " << weight_offset << std::endl;
+			std::cout << "MIS_weight " << weight_offset << std::endl;
 		}
 
 		reducer->reverse_reduction(G, rG, reverse_mapping);
@@ -229,7 +229,7 @@ int main(int argn, char **argv) {
 				}
 			} endfor
 
-			std::cout << "%MIS_weight_check " << is_weight << std::endl;
+			std::cout << "MIS_weight_check " << is_weight << std::endl;
 		}
 	} else {
 		// run local search whithout reductions

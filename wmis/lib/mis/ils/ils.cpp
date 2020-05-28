@@ -32,7 +32,7 @@ ils::~ils() {
     reset();
 }
 
-void ils::perform_ils(graph_access& G, unsigned int iteration_limit) {
+void ils::perform_ils(graph_access& G, unsigned int iteration_limit, int offset) {
     reset();
     // Init operation log
     operation_log::instance()->init(G.number_of_nodes());
@@ -83,7 +83,7 @@ void ils::perform_ils(graph_access& G, unsigned int iteration_limit) {
         iterations++;
         // Stop if the time limit was passed
         if (best_solution_weight > last_best_weight) {
-			std::cout << best_solution_weight << " [" << t.elapsed() << ", " << perm->added_vertices << "]" << std::endl; 
+			std::cout << best_solution_weight+offset << " [" << t.elapsed() << ", " << perm->added_vertices << "]" << std::endl; 
             last_best_weight = best_solution_weight;
 		}
         if (t.elapsed() > config.time_limit) break;

@@ -570,9 +570,9 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
 	t.restart();
 	initial_reduce();
 
-	std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
-	std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
-	std::cout << "%reduction_time " << t.elapsed() << "\n";
+	//std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
+	//std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
+	std::cout << "reduction_time " << t.elapsed() << "\n";
 
 	if (global_status.remaining_nodes == 0) {
 		restore_best_global_solution();
@@ -584,7 +584,7 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
 	std::vector<int> comp_map(global_status.remaining_nodes, 0);
 	size_t comp_count = strongly_connected_components().strong_components(global_graph, comp_map);
 
-	std::cout << "%components " << comp_count << "\n";
+	//std::cout << "%components " << comp_count << "\n";
 
 	for (size_t node = 0; node < global_status.remaining_nodes; node++) {
 		global_graph.setPartitionIndex(node, comp_map[node]);
@@ -606,7 +606,7 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
 
 	std::sort(comp_idx.begin(), comp_idx.end(), [&comp_size](const size_t lhs, const size_t rhs) { return comp_size[lhs] < comp_size[rhs]; });
 
-	std::cout << "%max_component " << comp_size[comp_idx.back()] << "\n";
+	//std::cout << "%max_component " << comp_size[comp_idx.back()] << "\n";
 
 	graph_extractor extractor;
 
@@ -618,7 +618,7 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
 			break;
 		}
 
-		std::cout << "%connected component " << i << ":  " << comp_size[i] << std::endl;
+		//std::cout << "%connected component " << i << ":  " << comp_size[i] << std::endl;
 
 		local_mapping.clear();
 		graph_access G;
