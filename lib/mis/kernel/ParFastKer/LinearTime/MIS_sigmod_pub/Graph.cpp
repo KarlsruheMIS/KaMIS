@@ -1340,9 +1340,9 @@ int Graph::degree_two_kernal_and_remove_max_degree_without_contraction(std::vect
             continue;
         }
     }
-    if(S.size() % 2 != 0) {
-        printf("ERROR! S.size() = %d", S.size());
-    }
+    //if(S.size() % 2 != 0) {
+        //printf("ERROR! S.size() = %d", S.size());
+    //}
     offset += S.size() / 2;
     //printf("Offset = %d\n", offset);
     // write_graph_metis(is, degree, pend);

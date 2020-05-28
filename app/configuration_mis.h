@@ -10,6 +10,16 @@
 #include "definitions.h"
 #include "mis_config.h"
 
+#ifdef OMIS
+const int FAST           = 0;
+const int ECO            = 1;
+const int STRONG         = 2;
+const int FASTSOCIAL     = 3;
+const int ECOSOCIAL      = 4;
+const int STRONGSOCIAL   = 5;
+#endif
+
+
 class configuration_mis {
     public:
         /**
@@ -107,6 +117,9 @@ inline void configuration_mis::standard( MISConfig & mis_config ) {
     mis_config.reduction_threshold                    = 350;
     mis_config.remove_fraction                        = 0.10;
     mis_config.extract_best_nodes                     = true;
+    // Initial solution
+    mis_config.start_greedy_adaptive = false;
+
 }
 
 inline void configuration_mis::social( MISConfig & mis_config ) {

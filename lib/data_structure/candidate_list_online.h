@@ -73,7 +73,7 @@ class candidate_list {
                  */
                 void insert(NodeID node);
 
-                /** 
+                /**
                  * Remove the given node from the list.
                  *
                  * @param node Node to remove.
@@ -129,4 +129,3 @@ class candidate_list {
 };
 
 #endif
-

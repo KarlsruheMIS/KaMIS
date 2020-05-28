@@ -93,6 +93,8 @@ struct MISConfig {
     unsigned int reduction_threshold;
     // Check graph sortedness
     bool check_sorted;
+    // Use adaptive greedy starting solution
+    bool start_greedy_adaptive;
 };
 
 #endif

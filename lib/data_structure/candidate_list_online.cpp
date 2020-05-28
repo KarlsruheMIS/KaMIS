@@ -11,13 +11,9 @@
 #include "macros_assertions.h"
 #include "random_functions.h"
 
-candidate_list::candidate_list() {
-        count = 0;
-}
+candidate_list::candidate_list() { count = 0; }
 
-candidate_list::~candidate_list() {
-
-}
+candidate_list::~candidate_list() {}
 
 void candidate_list::init(unsigned int size) {
         nodes.clear();
@@ -59,9 +55,7 @@ NodeID candidate_list::pick_random() {
         return pick(rand);
 }
 
-NodeID candidate_list::pick(unsigned int pos) {
-        return nodes[pos];
-}
+NodeID candidate_list::pick(unsigned int pos) { return nodes[pos]; }
 
 void candidate_list::insert(NodeID node) {
         position[node] = count;
@@ -71,22 +65,18 @@ void candidate_list::insert(NodeID node) {
 
 bool candidate_list::contains(NodeID node) {
         bool in = false;
-        if ((unsigned) position[node] < count && position[node] != -1) in = true;
+        if ((unsigned)position[node] < count && position[node] != -1) in = true;
         return in;
 }
 
-bool candidate_list::is_empty() {
-        return (count == 0);
-}
+bool candidate_list::is_empty() { return (count == 0); }
 
 void candidate_list::reset() {
         while (!is_empty()) remove_position(0);
         ASSERT_EQ(count, 0);
 }
 
-void candidate_list::remove(NodeID node) {
-        remove_position(position[node]);
-}
+void candidate_list::remove(NodeID node) { remove_position(position[node]); }
 
 NodeID candidate_list::remove_position(unsigned int pos) {
         ASSERT_LT(pos, count);
@@ -105,8 +95,5 @@ NodeID candidate_list::remove_position(unsigned int pos) {
 
 void candidate_list::print() {
         printf("Candidates\n");
-
-        for (unsigned int i = 0; i < count; ++i) {
-                printf("Node: %d\n", nodes[i]);
-        }
+        for (unsigned int i = 0; i < count; ++i) printf("Node: %d\n", nodes[i]);
 }

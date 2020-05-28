@@ -21,5 +21,7 @@ cd ..
 mkdir deploy
 cp ./build/redumis deploy/
 cp ./build/graphchecker deploy/
+cp ./build/sort_adjacencies deploy/
+cp ./build/online_mis deploy/
 
 rm -rf build
