@@ -102,3 +102,23 @@ If you use OnlineMIS, then please also cite the following:
   url       = {https://doi.org/10.1007/978-3-319-38851-9\_9}
 }
 ```
+
+If you use the weighted indpendents set algorithms, please also cite the following: 
+```
+@inproceedings{DBLP:conf/alenex/Lamm0SWZ19,
+        author    = {Sebastian Lamm and
+                Christian Schulz and
+                        Darren Strash and
+                        Robert Williger and
+                        Huashuo Zhang},
+        title     = {Exactly Solving the Maximum Weight Independent Set Problem on Large
+                Real-World Graphs},
+        booktitle = {Proceedings of the Twenty-First Workshop on Algorithm Engineering and Experiments, {ALENEX} 2019},
+        pages     = {144--158},
+        year      = {2019},
+        url       = {https://doi.org/10.1137/1.9781611975499.12},
+        doi       = {10.1137/1.9781611975499.12},
+        publisher = {{SIAM}},
+        year      = {2019}
+}
+```
