@@ -51,6 +51,7 @@ If you publish results using our algorithms, please acknowledge our work by quot
 }
 ```
 
+If you use parallel kernelization routines (note that this is the default), the please also cite the following:
 ```
 @article{kamis2019JV,
              AUTHOR = {Hespe, D. and Schulz, C. and Strash, D.},
@@ -61,5 +62,25 @@ If you publish results using our algorithms, please acknowledge our work by quot
              VOLUME = {24},
              NUMBER = {1},
              YEAR = {2019}
+}
+```
+
+If you use OnlineMIS, then please also cite the following:
+```
+@inproceedings{DBLP:conf/wea/DahlumLS0SW16,
+  author    = {Jakob Dahlum and
+               Sebastian Lamm and
+               Peter Sanders and
+               Christian Schulz and
+               Darren Strash and
+               Renato F. Werneck},
+  title     = {Accelerating Local Search for the Maximum Independent Set Problem},
+  booktitle = {15th International Symposium on Experimental Algorithms {SEA}},
+  pages     = {118--133},
+  year      = {2016},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {9685},
+  publisher = {Springer},
+  url       = {https://doi.org/10.1007/978-3-319-38851-9\_9}
 }
 ```
