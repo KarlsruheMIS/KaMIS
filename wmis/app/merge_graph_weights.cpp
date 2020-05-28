@@ -6,6 +6,7 @@
 int main(int argc, char* argv[]) {
 	if (argc != 4) {
 		std::cout << "Usage: graph_filename weights_filename output_filename" << std::endl;
+		std::cout << "The program merges to files one graph and one weight file to produce a valid weighted Metis file." << std::endl;
 		return 0;
 	}
 
