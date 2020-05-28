@@ -67,7 +67,7 @@ public:
     }
 
     bool Contains(int const x) const {
-        if (x < 0 || x >= m_Lookup.size()) return false;
+        if (x < 0 || x >= (int)m_Lookup.size()) return false;
         int const locationX(m_Lookup[x]);
         return locationX >= m_iBegin && locationX <= m_iEnd;
     }

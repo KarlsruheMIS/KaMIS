@@ -62,7 +62,7 @@ int main(int argn, char **argv) {
                 adjacent_nodes.push_back(target);
             }
             std::sort(adjacent_nodes.begin(), adjacent_nodes.end());
-            for( long i = 0; i < adjacent_nodes.size(); i++) {
+            for( unsigned long i = 0; i < adjacent_nodes.size(); i++) {
                     std::cout <<  adjacent_nodes[i] << " ";
             }
             std::cout <<  std::endl;

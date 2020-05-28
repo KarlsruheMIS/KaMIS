@@ -40,7 +40,9 @@
 #include <queue>
 #include <set>
 
+#ifndef NDEBUG
 #define NDEBUG
+#endif
 #include <cassert>
 
 typedef unsigned int ui;
