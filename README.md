@@ -1,6 +1,6 @@
 # KaMIS #
 ## Description ##
-Framework for finding high-quality independent sets of large sparse graphs.
+This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Given a graph G=(V,E), the goal of the maximum independent set problem is to compute a maximum cardinality set of vertices I, such that no vertices in the set are adjacent to one another. Such a set is called a maximum independent set. The problem is NP-hard and particularly difficult to solve in large sparse graphs. 
 
 Main project site:
 http://algo2.iti.kit.edu/kamis/
@@ -100,5 +100,24 @@ If you use OnlineMIS, then please also cite the following:
   volume    = {9685},
   publisher = {Springer},
   url       = {https://doi.org/10.1007/978-3-319-38851-9\_9}
+}
+```
+
+If you use the weighted indpendents set algorithms, please also cite the following: 
+```
+@inproceedings{DBLP:conf/alenex/Lamm0SWZ19,
+        author    = {Sebastian Lamm and
+                     Christian Schulz and
+                     Darren Strash and
+                     Robert Williger and
+                     Huashuo Zhang},
+        title     = {Exactly Solving the Maximum Weight Independent Set Problem on Large Real-World Graphs},
+        booktitle = {Proceedings of the Twenty-First Workshop on Algorithm Engineering and Experiments, {ALENEX} 2019},
+        pages     = {144--158},
+        year      = {2019},
+        url       = {https://doi.org/10.1137/1.9781611975499.12},
+        doi       = {10.1137/1.9781611975499.12},
+        publisher = {{SIAM}},
+        year      = {2019}
 }
 ```
