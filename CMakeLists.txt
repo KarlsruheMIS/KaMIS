@@ -74,7 +74,8 @@ if(64BITMODE)
   add_definitions("-DPOINTER64=1")
 endif()
 
-
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable3-3.0.3)
+add_subdirectory(wmis)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/app)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable3-3.0.3)
@@ -212,4 +213,5 @@ add_executable(online_mis app/online_mis.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGE
 target_compile_definitions(online_mis PRIVATE "-DOMIS")
 target_link_libraries(online_mis ${OpenMP_CXX_LIBRARIES})
 install(TARGETS online_mis DESTINATION bin)
+
 
