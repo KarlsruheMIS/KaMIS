@@ -43,25 +43,43 @@ Time limit until the algorithm terminates.
 The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
 If you publish results using our algorithms, please acknowledge our work by quoting one or more of the following papers:
 ```
-@inproceedings{kamis2015,
-             AUTHOR = {Lamm, S. and Sanders, P. and Schulz, C. and Strash, D. and Werneck, R. F.},
-             TITLE = {{Finding Near-Optimal Independent Sets at Scale}},
-             BOOKTITLE = {18th Meeting on Algorithm Engineering and Exerpimentation (ALENEX'16)},
-             YEAR = {2016}
+@article{DBLP:journals/heuristics/LammSSSW17,
+  author    = {Sebastian Lamm and
+               Peter Sanders and
+               Christian Schulz and
+               Darren Strash and
+               Renato F. Werneck},
+  title     = {Finding near-optimal independent sets at scale},
+  journal   = {J. Heuristics},
+  volume    = {23},
+  number    = {4},
+  pages     = {207--229},
+  year      = {2017},
+  url       = {https://doi.org/10.1007/s10732-017-9337-x},
+  doi       = {10.1007/s10732-017-9337-x},
+  timestamp = {Fri, 27 Dec 2019 21:13:52 +0100},
+  biburl    = {https://dblp.org/rec/journals/heuristics/LammSSSW17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
 
 If you use parallel kernelization routines (note that this is the default), the please also cite the following:
 ```
-@article{kamis2019JV,
-             AUTHOR = {Hespe, D. and Schulz, C. and Strash, D.},
-             TITLE = {{Scalable Kernelization for Maximum Independent Sets}},
-             JOURNAL = {Journal of Experimental Algorithms},
-             PUBLISHER = {ACM},
-             PAGES = {1.16:1--1.16:22},
-             VOLUME = {24},
-             NUMBER = {1},
-             YEAR = {2019}
+@article{DBLP:journals/jea/Hespe0S19,
+  author    = {Demian Hespe and
+               Christian Schulz and
+               Darren Strash},
+  title     = {Scalable Kernelization for Maximum Independent Sets},
+  journal   = {{ACM} Journal of Experimental Algorithmics},
+  volume    = {24},
+  number    = {1},
+  pages     = {1.16:1--1.16:22},
+  year      = {2019},
+  url       = {https://doi.org/10.1145/3355502},
+  doi       = {10.1145/3355502},
+  timestamp = {Fri, 27 Mar 2020 08:38:35 +0100},
+  biburl    = {https://dblp.org/rec/journals/jea/Hespe0S19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
 
