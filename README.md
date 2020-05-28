@@ -111,8 +111,7 @@ If you use the weighted indpendents set algorithms, please also cite the followi
                      Darren Strash and
                      Robert Williger and
                      Huashuo Zhang},
-        title     = {Exactly Solving the Maximum Weight Independent Set Problem on Large
-                Real-World Graphs},
+        title     = {Exactly Solving the Maximum Weight Independent Set Problem on Large Real-World Graphs},
         booktitle = {Proceedings of the Twenty-First Workshop on Algorithm Engineering and Experiments, {ALENEX} 2019},
         pages     = {144--158},
         year      = {2019},
