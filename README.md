@@ -110,6 +110,12 @@ Choose the type of reductions appropriate for the input graph. Can be either: no
 
 The program reads a Metis file, sorts the neighborhood of each node and prints the graph to the console.
 
+## Usage Graph Checker ##
+`graph_checker FILE`.    
+
+The program reads a Metis file and checks the file for correctness.
+
+
 ## License
 The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
 If you publish results using our algorithms, please acknowledge our work by quoting one or more of the following papers:
