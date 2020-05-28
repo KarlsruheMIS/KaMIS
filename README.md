@@ -74,11 +74,12 @@ Seed to use for the random number generator.
 `-time_limit=<double>`
 Time limit until the algorithm terminates.
 
-`--adaptive_greedy`
+`-adaptive_greedy`
 Use adaptive greedy solution
 
 ## Usage Weighted Branch and Reduce ##
 `weighted_branch_reduce FILE [options]`.    
+`weighted_local_search FILE [options]`.    
 
 ### Options ###
 This is a brief overview of the most important options.
@@ -99,10 +100,10 @@ Path to store the resulting independent set.
 `-seed=<int>`
 Seed to use for the random number generator.
 
-`--weight_source=<string>`
+`-weight_source=<string>`
 Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.
 
-`--reduction_style=<string>`
+`-reduction_style=<string>`
 Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
 
 
