@@ -187,3 +187,8 @@ add_executable(graphchecker app/graphchecker.cpp $<TARGET_OBJECTS:libkaffpa> $<T
 target_link_libraries(graphchecker ${OpenMP_CXX_LIBRARIES})
 install(TARGETS graphchecker DESTINATION bin)
 
+add_executable(sort_adjacencies app/sort_adjacencies.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGET_OBJECTS:libfiles>)
+target_link_libraries(sort_adjacencies ${OpenMP_CXX_LIBRARIES})
+install(TARGETS sort_adjacencies DESTINATION bin)
+
+
