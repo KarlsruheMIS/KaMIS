@@ -1,4 +1,4 @@
-# KaMIS #
+# KaMIS v2.0 #
 ## Description ##
 This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Given a graph G=(V,E), the goal of the maximum independent set problem is to compute a maximum cardinality set of vertices I, such that no vertices in the set are adjacent to one another. Such a set is called a maximum independent set. The problem is NP-hard and particularly difficult to solve in large sparse graphs. 
 
@@ -6,12 +6,22 @@ Main project site:
 http://algo2.iti.kit.edu/kamis/
 
 ## Installation ##
-Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.
-To compile the programs you need to have Argtable, g++, OpenMP and cmake installed.
+Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
-## Usage ##
+The version of our framework currently contains the following algorithms:
+* redumis -- run an evolutionary algorithm on a reduced graph 
+* onlinemis -- local search pruned with reductions
+* weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
+* weighted_local_search -- a local search algorithm for weighed maximum independent sets
+
+Furthermore, the framework contains tools to make life a little bit easier:
+* sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
+* graphchecker -- check if the graph file you gave to algorithm is in the correct format
+
+
+## Usage ReduMIS ##
 `redumis FILE [options]`.    
 
 ### Options ###
@@ -38,6 +48,73 @@ Config to use for the evolutionary algorithm [standard|social].
 
 `-time_limit=<double>`
 Time limit until the algorithm terminates.
+
+## Usage OnlineMIS ##
+`online_mis FILE [options]`.    
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`-help`
+Print help.
+
+`-console_log`
+Write the log to the console.
+
+`-output=<string>`
+Path to store the resulting independent set.
+
+`-seed=<int>`
+Seed to use for the random number generator.
+
+`-time_limit=<double>`
+Time limit until the algorithm terminates.
+
+`-adaptive_greedy`
+Use adaptive greedy solution
+
+## Usage Weighted Branch and Reduce ##
+`weighted_branch_reduce FILE [options]`.    
+`weighted_local_search FILE [options]`.    
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`-help`
+Print help.
+
+`-console_log`
+Write the log to the console.
+
+`-output=<string>`
+Path to store the resulting independent set.
+
+`-seed=<int>`
+Seed to use for the random number generator.
+
+`-weight_source=<string>`
+Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.
+
+`-reduction_style=<string>`
+Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
+## Usage Sort Adjacencies ##
+`sort_adjacencies FILE`.    
+
+The program reads a Metis file, sorts the neighborhood of each node and prints the graph to the console.
+
+## Usage Graph Checker ##
+`graphchecker FILE`.    
+
+The program reads a Metis file and checks the file for correctness.
+
 
 ## License
 The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.
@@ -103,7 +180,7 @@ If you use OnlineMIS, then please also cite the following:
 }
 ```
 
-If you use the weighted indpendents set algorithms, please also cite the following: 
+If you use the weighted independents set algorithms, please also cite the following: 
 ```
 @inproceedings{DBLP:conf/alenex/Lamm0SWZ19,
         author    = {Sebastian Lamm and
