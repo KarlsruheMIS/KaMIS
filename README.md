@@ -111,7 +111,7 @@ Choose the type of reductions appropriate for the input graph. Can be either: no
 The program reads a Metis file, sorts the neighborhood of each node and prints the graph to the console.
 
 ## Usage Graph Checker ##
-`graph_checker FILE`.    
+`graphchecker FILE`.    
 
 The program reads a Metis file and checks the file for correctness.
 
