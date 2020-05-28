@@ -21,7 +21,7 @@ Furthermore, the framework contains tools to make life a little bit easier:
 * graphchecker -- check if the graph file you gave to algorithm is in the correct format
 
 
-## Usage ##
+## Usage ReduMIS ##
 `redumis FILE [options]`.    
 
 ### Options ###
@@ -48,6 +48,63 @@ Config to use for the evolutionary algorithm [standard|social].
 
 `-time_limit=<double>`
 Time limit until the algorithm terminates.
+
+## Usage OnlineMIS ##
+`online_mis FILE [options]`.    
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`-help`
+Print help.
+
+`-console_log`
+Write the log to the console.
+
+`-output=<string>`
+Path to store the resulting independent set.
+
+`-seed=<int>`
+Seed to use for the random number generator.
+
+`-time_limit=<double>`
+Time limit until the algorithm terminates.
+
+`--adaptive_greedy`
+Use adaptive greedy solution
+
+## Usage Weighted Branch and Reduce ##
+`weighted_branch_reduce FILE [options]`.    
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`-help`
+Print help.
+
+`-console_log`
+Write the log to the console.
+
+`-output=<string>`
+Path to store the resulting independent set.
+
+`-seed=<int>`
+Seed to use for the random number generator.
+
+`--weight_source=<string>`
+Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.
+
+`--reduction_style=<string>`
+Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
+
 
 ## License
 The project is released under MIT. However, some files used for kernelization are released under the BSD 3-clause license. See the respective files for their license.

@@ -49,7 +49,7 @@ int parse_parameters(int argn, char **argv, MISConfig &mis_config,
 
   // Setup the argtable
   void *argtable[] = {help,      filename,        output,      user_seed,
-                      user_conf, time_limit,      console_log, disable_checks,
+                      time_limit,      console_log, disable_checks,
                       adaptive_greedy, end};
 
   // Choose standard configuration
