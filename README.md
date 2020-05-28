@@ -11,8 +11,8 @@ Compile the source by running *compile_withcmake.sh*. The binaries can then be f
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
 The version of our framework currently contains the following algorithms:
---* redumis -- run an evolutionary algorithm on a reduced graph 
---* onlinemis -- local search pruned with reductions
+⋅⋅⋅ redumis -- run an evolutionary algorithm on a reduced graph 
+⋅⋅⋅ onlinemis -- local search pruned with reductions
 --* weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
 --* weighted_local_search -- a local search algorithm for weighed maximum independent sets
 
