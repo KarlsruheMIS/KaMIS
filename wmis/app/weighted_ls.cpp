@@ -8,7 +8,7 @@
 #include <string.h>
 #include <sstream>
 #include <iostream>
-#include <argtable2.h>
+#include <argtable3.h>
 #include <algorithm>
 #include <fstream>
 #include <chrono>
