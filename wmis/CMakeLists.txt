@@ -72,6 +72,6 @@ add_executable(merge_graph_weights "app/merge_graph_weights.cpp" $<TARGET_OBJECT
 set(LIBS libkaffpa2)
 
 #target_link_libraries(graph_checker LINK_PUBLIC ${LIBS})
-target_link_libraries(branch_reduce LINK_PUBLIC ${LIBS})
-target_link_libraries(weighted_ls LINK_PUBLIC ${LIBS})
-target_link_libraries(merge_graph_weights LINK_PUBLIC ${LIBS})
+target_link_libraries(branch_reduce LINK_PUBLIC $<TARGET_OBJECTS:libkaffpa2>)
+target_link_libraries(weighted_ls LINK_PUBLIC $<TARGET_OBJECTS:libkaffpa2>)
+target_link_libraries(merge_graph_weights LINK_PUBLIC $<TARGET_OBJECTS:libkaffpa2>)
