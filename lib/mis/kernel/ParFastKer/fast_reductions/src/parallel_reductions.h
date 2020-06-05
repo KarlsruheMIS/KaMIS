@@ -108,7 +108,7 @@ protected: // members
     std::vector<int> graph_to_kernel_map;
     std::vector<int> kernel_solution;
     std::vector<std::vector<std::vector<Reduction>>> AllReductions;
-    std::vector<std::vector<int>> const &m_AdjacencyArray;
+    std::vector<std::vector<int>> const m_AdjacencyArray;
     std::vector<SparseArraySet>     neighbors;
     SimpleSet inGraph;
     SimpleSet neighborhoodChanged;
