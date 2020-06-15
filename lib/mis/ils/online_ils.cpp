@@ -345,9 +345,9 @@ void online_ils::force(MISConfig &config, graph_access &G, NodeID v,
   } endfor
 
   perm->add_to_solution(v, marked_degree, degree_limit, G);
-  if (marked_degree[v] >= 0 && marked_degree[v] <= degree_limit)
+  if (marked_degree[v] >= 0 && marked_degree[v] <= degree_limit){
     if (!cand->contains(v)) cand->insert(v);
-  else {
+  } else {
     if (cand->contains(v)) cand->remove(v);
   }
 }
