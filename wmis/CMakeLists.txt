@@ -5,15 +5,26 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release) 
 endif (NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fno-omit-frame-pointer -march=native -DNDEBUG -funroll-loops -fno-stack-limit -fPIC -O3 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fno-omit-frame-pointer -march=native -DNDEBUG -fPIC -O3 ")
 
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSED)
 if(COMPILER_SUPPORTS_NOUNUSED)
 add_definitions(-Wno-unused-value)
 endif()
+
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSEDRES)
 if(COMPILER_SUPPORTS_NOUNUSEDRES)
 add_definitions(-Wno-unused-result)
+endif()
+
+CHECK_CXX_COMPILER_FLAG(-fno-stack-limit COMPILER_SUPPORTS_FNOSTACKLIMITS)
+if(COMPILER_SUPPORTS_FNOSTACKLIMITS)
+  add_definitions(-fno-stack-limit)
+endif()
+
+        CHECK_CXX_COMPILER_FLAG(-funroll-loops COMPILER_SUPPORTS_FUNROLL_LOOPS)
+if(COMPILER_SUPPORTS_FUNROLL_LOOPS)
+  add_definitions(-funroll-loops)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
