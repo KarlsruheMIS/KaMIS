@@ -7,7 +7,7 @@ This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Give
 <p align="center">
 <img src="./img/isolateclique.png"
   alt="framework overview"
-  width="601" height="558">
+  width="700" height="245">
 </p>
 
 
