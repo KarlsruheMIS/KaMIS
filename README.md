@@ -150,7 +150,7 @@ If you publish results using our algorithms, please acknowledge our work by quot
 }
 ```
 
-If you use parallel kernelization routines (note that this is the default), the please also cite the following:
+If you use fast kernelization routines (note that this is the default), the please also cite the following:
 ```
 @article{DBLP:journals/jea/Hespe0S19,
   author    = {Demian Hespe and
