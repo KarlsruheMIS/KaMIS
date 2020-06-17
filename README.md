@@ -111,6 +111,9 @@ Path to store the resulting independent set.
 `-seed=<int>`
 Seed to use for the random number generator.
 
+`-time_limit=<double>`
+Time limit until the algorithm terminates.
+
 `-weight_source=<string>`
 Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.
 
