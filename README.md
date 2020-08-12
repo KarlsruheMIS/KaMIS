@@ -14,7 +14,7 @@ This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Give
 
 
 Main project site:
-http://KarlsruheMIS.github.io
+<http://KarlsruheMIS.github.io>
 
 ## Installation ##
 Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
@@ -22,15 +22,15 @@ Compile the source by running *compile_withcmake.sh*. The binaries can then be f
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
 The version of our framework currently contains the following algorithms:
-* redumis -- run an evolutionary algorithm on a reduced graph 
-* onlinemis -- local search pruned with reductions
-* weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
-* weighted_local_search -- a local search algorithm for weighed maximum independent sets
-* If you want to use the solver that one the vertex cover track of the PACE Challenge, go here https://github.com/sebalamm/pace-2019
+  * redumis -- run an evolutionary algorithm on a reduced graph 
+  * onlinemis -- local search pruned with reductions
+  * weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
+  * weighted_local_search -- a local search algorithm for weighed maximum independent sets
+  * If you want to use the solver that one the vertex cover track of the PACE Challenge, go here <https://github.com/sebalamm/pace-2019>
 
 Furthermore, the framework contains tools to make life a little bit easier:
-* sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
-* graphchecker -- check if the graph file you gave to algorithm is in the correct format
+  * sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
+  * graphchecker -- check if the graph file you gave to algorithm is in the correct format
 
 
 ## Usage ReduMIS ##
