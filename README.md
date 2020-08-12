@@ -26,6 +26,7 @@ The version of our framework currently contains the following algorithms:
 * onlinemis -- local search pruned with reductions
 * weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
 * weighted_local_search -- a local search algorithm for weighed maximum independent sets
+* If you want to use the solver that one the vertex cover track of the PACE Challenge, go here https://github.com/sebalamm/pace-2019
 
 Furthermore, the framework contains tools to make life a little bit easier:
 * sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
