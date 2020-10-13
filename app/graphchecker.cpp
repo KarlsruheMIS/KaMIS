@@ -62,9 +62,23 @@ int main(int argn, char **argv) {
         std::vector<long> adjacent_nodes;
         adjacent_nodes.reserve(nmbEdges * 2);
 
+        long node_weight;
+        long total_nodeweight = 0;
+
         long node_degree = 0;
         long node_counter = 0;
         long edge_counter = 0;
+
+        bool node_weights = false;
+        bool edge_weights = false;
+        if (ew == 11) {
+            node_weights = true;
+            edge_weights = true;
+        } else if (ew == 10) {
+            node_weights = true;
+        } else if (ew == 1) {
+            edge_weights = true;
+        }
 
         while (std::getline(in, line)) {
             // Check if there are more nodes than specified
@@ -80,19 +94,63 @@ int main(int argn, char **argv) {
             node_degree = 0;
 
             std::stringstream ss(line);
+
+            if (node_weights) {
+                ss >> node_weight;
+                if (node_weight < 0) {
+                    std::cout <<  "The node " <<  node_counter+1 << " has weight < 0."  << std::endl;
+                    std::cout <<  "See line " << node_counter+2 << " of your file."  << std::endl;
+                    std::cout <<  "*******************************************************************************"  << std::endl;
+                    exit(0);
+                }
+                total_nodeweight += node_weight;
+                if (total_nodeweight > (long)std::numeric_limits<unsigned int>::max()) {
+                    std::cout <<  "The sum of the node weights exeeds 32 bits. Currently not supported."  << std::endl;
+                    std::cout <<  "Please scale weights of the graph."  << std::endl;
+                    std::cout <<  "*******************************************************************************"  << std::endl;
+                    exit(0);
+                }
+            }
+
+
             long target;
             while (ss >> target) {
                 node_degree++;
                 // Check if the neighboring node is within the valid range
                 if (target > nmbNodes || target <= 0) {
-                     std::cout <<  "Node " << node_counter + 1 
-                               << " has an edge to a node greater than the number of nodes specified in the file or smaller or equal to zero, i.e. it has target " 
-                               <<  target << " and the number of nodes specified was " <<  nmbNodes << std::endl;
-                     std::cout <<  "See line " << node_counter + 2 << " of your file."  << std::endl;
-                     exit(0);
+                    std::cout <<  "Node " << node_counter + 1
+                              << " has an edge to a node greater than the number of nodes specified in the file or smaller or equal to zero, i.e. it has target "
+                              <<  target << " and the number of nodes specified was " <<  nmbNodes << std::endl;                        std::cout <<  "See line " << node_counter + 2 << " of your file."  << std::endl;
+                    exit(0);
                 }
 
                 adjacent_nodes.push_back(target - 1);
+
+
+                if (edge_weights) {
+                    long edge_weight = 1;
+                    if (ss.eof()) {
+                        std::cout <<  "Something is wrong."  << std::endl;
+                        std::cout <<  "See line " << node_counter+2 << " of your file."  << std::endl;
+                        std::cout <<  "There is not the right amount of numbers in line " << node_counter+2 << " of the file. " << std::endl;
+                        if (node_weights) {
+                            std::cout <<  "That means either the node weight is missing, "
+                                      <<  "or there is an edge without a weight specified, "
+                                      <<  "or there are no edge weights at all despite the specification "
+                                      <<  ew  << " in the first line of the file."<< std::endl;
+                            std::cout <<  "*******************************************************************************"  << std::endl;
+                        } else {
+                            std::cout <<  "That there is may be an edge without an edge weight specified "
+                                      <<  "or there are no edge weights at all despite the specification "
+                                      <<  ew  << " in the first line of the file."<< std::endl;
+                            std::cout <<  "*******************************************************************************"  << std::endl;
+
+                        }
+                        exit(0);
+
+                    }
+                    ss >> edge_weight;
+                }
                 edge_counter++;
             }
             node_counter++;
@@ -154,7 +212,7 @@ int main(int argn, char **argv) {
 
         // Check if all backward and forward edges exist 
         for (long node = 0; node < nmbNodes; node++) {
-            for(long e = node_starts[node]; e < node_starts[node + 1]; e++) {
+            for (long e = node_starts[node]; e < node_starts[node + 1]; e++) {
                 long target = adjacent_nodes[e];
                 bool found = false;
                 for (long e_bar = node_starts[target]; e_bar < node_starts[target + 1]; e_bar++) {
