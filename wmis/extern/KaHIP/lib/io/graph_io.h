@@ -48,6 +48,9 @@ class graph_io {
                 static
                 void writePartition(graph_access& G, const std::string & filename);
 
+                static 
+                void writeIndependentSet(graph_access & G, std::string filename);
+
                 template<typename vectortype>
                 static void writeVector(std::vector<vectortype> & vec, const std::string & filename);
 
