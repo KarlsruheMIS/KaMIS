@@ -174,24 +174,24 @@ int main(int argn, char **argv) {
    NodeWeight weight_offset = 0;
    std::unique_ptr<branch_and_reduce_algorithm> reducer;
 
-	if (mis_config.write_graph) {
-		// just reduce the graph and write it into a file
-		graph_access rG;
+	//if (mis_config.write_graph) {
+		//// just reduce the graph and write it into a file
+		//graph_access rG;
 
-		auto start = std::chrono::system_clock::now();
-		weight_offset = perform_reduction(reducer, G, rG, mis_config);
-		auto end = std::chrono::system_clock::now();
+		//auto start = std::chrono::system_clock::now();
+		//weight_offset = perform_reduction(reducer, G, rG, mis_config);
+		//auto end = std::chrono::system_clock::now();
 
-		std::chrono::duration<float> reduction_time = end - start;
+		//std::chrono::duration<float> reduction_time = end - start;
 
-		std::ofstream output_reduced(mis_config.output_filename);
+		//std::ofstream output_reduced(mis_config.output_filename);
 
-		output_reduced << "%reduction_time " << reduction_time.count() << "\n";
-		output_reduced << "%reduction_offset " << weight_offset << "\n";
+		//output_reduced << "%reduction_time " << reduction_time.count() << "\n";
+		//output_reduced << "%reduction_offset " << weight_offset << "\n";
 
-		graph_io::writeGraphNodeWeighted(rG, output_reduced);
-		return 0;
-	}
+		//graph_io::writeGraphNodeWeighted(rG, output_reduced);
+		//return 0;
+	//}
 
 	//std::cout << "%nodes " << G.number_of_nodes() << std::endl;
 
