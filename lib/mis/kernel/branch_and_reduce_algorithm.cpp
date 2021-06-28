@@ -590,10 +590,10 @@ bool branch_and_reduce_algorithm::dominateReduction() {
         for (int u : adj[v]) if (x[u] < 0) {
             for (int w : adj[u]) {
                 if (x[w] < 0 && !used.get(w)) goto loop;
-                set(v, 1);
-                break;
             }
-loop:           ;
+            set(v, 1);
+            break;
+ loop:       ;
         }
     }
     if (debug >= 3 && depth <= maxDepth && oldn != rn) fprintf(stderr, "%sdominate: %d -> %d\n", debugString().c_str(), oldn, rn);
