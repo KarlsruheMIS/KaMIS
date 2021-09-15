@@ -43,22 +43,22 @@ For a full description, please take a look at the user guide.
 `FILE`
 Path to graph file that you want the maximum independent set for.
 
-`-help`
+`--help`
 Print help.
 
-`-console_log`
+`--console_log`
 Write the log to the console.
 
-`-output=<string>`
+`--output=<string>`
 Path to store the resulting independent set.
 
-`-seed=<int>`
+`--seed=<int>`
 Seed to use for the random number generator.
 
-`-config=<string>`
+`--config=<string>`
 Config to use for the evolutionary algorithm [standard|social].
 
-`-time_limit=<double>`
+`--time_limit=<double>`
 Time limit until the algorithm terminates.
 
 ## Usage OnlineMIS ##
@@ -71,22 +71,22 @@ For a full description, please take a look at the user guide.
 `FILE`
 Path to graph file that you want the maximum independent set for.
 
-`-help`
+`--help`
 Print help.
 
-`-console_log`
+`--console_log`
 Write the log to the console.
 
-`-output=<string>`
+`--output=<string>`
 Path to store the resulting independent set.
 
-`-seed=<int>`
+`--seed=<int>`
 Seed to use for the random number generator.
 
-`-time_limit=<double>`
+`--time_limit=<double>`
 Time limit until the algorithm terminates.
 
-`-adaptive_greedy`
+`--adaptive_greedy`
 Use adaptive greedy solution
 
 ## Usage Weighted Branch and Reduce ##
@@ -100,25 +100,25 @@ For a full description, please take a look at the user guide.
 `FILE`
 Path to graph file that you want the maximum independent set for.
 
-`-help`
+`--help`
 Print help.
 
-`-console_log`
+`--console_log`
 Write the log to the console.
 
-`-output=<string>`
+`--output=<string>`
 Path to store the resulting independent set.
 
-`-seed=<int>`
+`--seed=<int>`
 Seed to use for the random number generator.
 
-`-time_limit=<double>`
+`--time_limit=<double>`
 Time limit until the algorithm terminates.
 
-`-weight_source=<string>`
+`--weight_source=<string>`
 Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.
 
-`-reduction_style=<string>`
+`--reduction_style=<string>`
 Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
 ## Usage Sort Adjacencies ##
 `sort_adjacencies FILE`.    
