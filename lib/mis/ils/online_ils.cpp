@@ -131,6 +131,14 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
     int non_solution = G.number_of_nodes() - (perm->get_solution_size() + perm->get_folded_vertices());
     if (non_solution <= 0) break;
 
+    long long should_skip = 0;
+    forall_nodes(G, node) {
+      if (marked_degree[node] < 0 || marked_degree[node] > degree_limit) {
+        should_skip++;
+      }
+    } endfor
+    if (non_solution - should_skip <= 0) break;
+
     denominator = 2 * (perm->get_solution_size() + perm->get_folded_vertices());
     unsigned int solution_before = perm->get_solution_size() + perm->get_folded_vertices();
     unsigned int forced = 1;
