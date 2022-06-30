@@ -29,6 +29,8 @@
 #include <limits>
 #include <algorithm>
 
+using namespace std;
+
 namespace LinearTime {
 Graph::Graph() {
 
@@ -109,7 +111,7 @@ void Graph::write_graph_metis(const char *is, const int *degree, const ui *pend)
         }
     }
     outputfile.close();
-    delete mapping;
+    delete[] mapping;
 
 }
 

@@ -1,4 +1,4 @@
- /******************************************************************************
+ ******************************************************************************
  * Copyright (C) 2019 Lijun Chang <ljchang.au@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,8 +26,6 @@
 // #include "Utility.h"
 #include "mis/kernel/ParFastKer/LinearTime/MIS_sigmod_pub/Utility.h"
 
-using namespace std;
-
 namespace LinearTime {
 struct Edge {
 	int id, duplicate;
@@ -36,7 +34,7 @@ struct Edge {
 
 class Graph {
 private:
-	string dir; //input graph directory
+	std::string dir; //input graph directory
 	ui n, m; //number of nodes and edges of the graph
 
 	ui *pstart; //offset of neighbors of nodes
@@ -45,7 +43,7 @@ private:
     char *is;
     char *fixed;
     ui *reverse_mapping;
-	vector<pair<ui,ui> > S;
+	std::vector<std::pair<ui,ui> > S;
 public:
 	Graph() ;
 	~Graph() ;
@@ -80,24 +78,24 @@ private:
 	int find_other_endpoint(ui u, ui v, char *is) ;
 	ui edge_rewire(ui u, const ui *pend, ui v, ui w) ;
 
-	int remove_degree_one_two(vector<ui> &degree_ones, vector<ui> &degree_twos, char *is, int *degree, vector<pair<ui,ui> > &S) ;
+	int remove_degree_one_two(std::vector<ui> &degree_ones, std::vector<ui> &degree_twos, char *is, int *degree, std::vector<std::pair<ui,ui> > &S) ;
 
-	int initial_dominance_and_degree_two_remove(vector<ui> &degree_ones, vector<ui> &degree_twos, char *is, int *degree, char *adj, vector<pair<ui,ui> > &S) ;
+	int initial_dominance_and_degree_two_remove(std::vector<ui> &degree_ones, std::vector<ui> &degree_twos, char *is, int *degree, char *adj, std::vector<std::pair<ui,ui> > &S) ;
 
 	int lp_reduction(ui *ids, ui ids_n, char *is, int *degree) ;
 
 	void shrink(ui u, ui &end, const char *is) ;
 	void shrink(ui u, ui &end, const char *is, ui *tri) ;
-	void update_triangle(ui u1, ui u2, ui *pend, char *is, char *adj, ui *tri, int *degree, char *dominate, vector<ui> &dominated) ;
+	void update_triangle(ui u1, ui u2, ui *pend, char *is, char *adj, ui *tri, int *degree, char *dominate, std::vector<ui> &dominated) ;
 	int dominated_check(ui u, ui *pend, char *is, ui *tri, int *degree) ;
-	int compute_triangle_counts(ui *tri, ui *pend, char *adj, char *is, int *degree, char *dominate, vector<ui> &dominated) ;
+	int compute_triangle_counts(ui *tri, ui *pend, char *adj, char *is, int *degree, char *dominate, std::vector<ui> &dominated) ;
 	void construct_degree_increase(ui *ids) ;
 
-	int delete_vertex(ui v, char *is, int *degree, vector<ui> &degree_ones) ;
-	int delete_vertex(ui v, char *is, int *degree, vector<ui> &degree_ones, vector<ui> &degree_twos) ;
-	int delete_vertex(ui v, const ui *pend, char *is, int *degree, vector<ui> &degree_ones, vector<ui> &degree_twos) ;
-	int delete_vertex(ui u, ui *pend, char *is, vector<ui> &degree_twos, ui *tri, char *adj, int *degree, char *dominate, vector<ui> &dominated) ;
-	int delete_vertex(ui v, char *is, int *degree, int *head, Edge *es, int *bin_head, int *bin_next, int *bin_pre, vector<ui> &degree_ones, vector<ui> &degree_twos) ;
+	int delete_vertex(ui v, char *is, int *degree, std::vector<ui> &degree_ones) ;
+	int delete_vertex(ui v, char *is, int *degree, std::vector<ui> &degree_ones, std::vector<ui> &degree_twos) ;
+	int delete_vertex(ui v, const ui *pend, char *is, int *degree, std::vector<ui> &degree_ones, std::vector<ui> &degree_twos) ;
+	int delete_vertex(ui u, ui *pend, char *is, std::vector<ui> &degree_twos, ui *tri, char *adj, int *degree, char *dominate, std::vector<ui> &dominated) ;
+	int delete_vertex(ui v, char *is, int *degree, int *head, Edge *es, int *bin_head, int *bin_next, int *bin_pre, std::vector<ui> &degree_ones, std::vector<ui> &degree_twos) ;
 };
 }
 #endif
