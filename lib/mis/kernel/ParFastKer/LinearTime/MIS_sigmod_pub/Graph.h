@@ -1,4 +1,4 @@
- ******************************************************************************
+/******************************************************************************
  * Copyright (C) 2019 Lijun Chang <ljchang.au@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
