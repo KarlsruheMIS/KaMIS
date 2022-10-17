@@ -16,7 +16,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) 
-
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # if no build mode is specified build in release mode
@@ -29,18 +28,22 @@ CHECK_CXX_COMPILER_FLAG(-funroll-loops COMPILER_SUPPORTS_FUNROLL_LOOPS)
 if(COMPILER_SUPPORTS_FUNROLL_LOOPS)
   add_definitions(-funroll-loops)
 endif()
+
 CHECK_CXX_COMPILER_FLAG(-fno-stack-limit COMPILER_SUPPORTS_FNOSTACKLIMITS)
 if(COMPILER_SUPPORTS_FNOSTACKLIMITS)
   add_definitions(-fno-stack-limit)
 endif()
+
 #CHECK_CXX_COMPILER_FLAG(-Wall COMPILER_SUPPORTS_WALL)
 #if(COMPILER_SUPPORTS_WALL)
   #add_definitions(-Wall)
 #endif()
+
 CHECK_CXX_COMPILER_FLAG(-march=native COMPILER_SUPPORTS_MARCH_NATIVE)
 if(COMPILER_SUPPORTS_MARCH_NATIVE)
   add_definitions(-march=native)
 endif()
+
 CHECK_CXX_COMPILER_FLAG(-fpermissive COMPILER_SUPPORTS_FPERMISSIVE)
 if(COMPILER_SUPPORTS_FPERMISSIVE)
   add_definitions(-fpermissive)
@@ -48,11 +51,12 @@ endif()
 
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSED)
 if(COMPILER_SUPPORTS_NOUNUSED)
-add_definitions(-Wno-unused-value)
+  add_definitions(-Wno-unused-value)
 endif()
+
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSEDRES)
 if(COMPILER_SUPPORTS_NOUNUSEDRES)
-add_definitions(-Wno-unused-result)
+  add_definitions(-Wno-unused-result)
 endif()
 
 # check dependencies

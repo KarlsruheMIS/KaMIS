@@ -2,29 +2,47 @@ cmake_minimum_required(VERSION 2.8.9)
 project(components)
 
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release) 
+    set(CMAKE_BUILD_TYPE "Release")
 endif (NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fno-omit-frame-pointer -march=native -DNDEBUG -fPIC -O3 ")
+#probably set by Release, but doing anyway.
+if(CMAKE_BUILD_TYPE EQUAL "Release")
+    add_definitions(-DNDEBUG)
+    add_compile_options(-O3)
+endif()
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+CHECK_CXX_COMPILER_FLAG(-fno-omit-frame-pointer COMPILER_SUPPORTS_OMIT_FRAME_POINTER)
+if(COMPILER_SUPPORTS_OMIT_FRAME_POINTER)
+  add_compile_options(-fno-omit-frame-pointer)
+endif()
+
+CHECK_CXX_COMPILER_FLAG(-march=native COMPILER_SUPPORTS_MARCH_NATIVE)
+if(COMPILER_SUPPORTS_MARCH_NATIVE)
+  add_compile_options(-march=native)
+endif()
 
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSED)
 if(COMPILER_SUPPORTS_NOUNUSED)
-add_definitions(-Wno-unused-value)
+  add_compile_options(-Wno-unused-value)
 endif()
 
 CHECK_CXX_COMPILER_FLAG(-Wno-unused-value COMPILER_SUPPORTS_NOUNUSEDRES)
 if(COMPILER_SUPPORTS_NOUNUSEDRES)
-add_definitions(-Wno-unused-result)
+  add_compile_options(-Wno-unused-result)
 endif()
 
 CHECK_CXX_COMPILER_FLAG(-fno-stack-limit COMPILER_SUPPORTS_FNOSTACKLIMITS)
 if(COMPILER_SUPPORTS_FNOSTACKLIMITS)
-  add_definitions(-fno-stack-limit)
+  add_compile_options(-fno-stack-limit)
 endif()
 
-        CHECK_CXX_COMPILER_FLAG(-funroll-loops COMPILER_SUPPORTS_FUNROLL_LOOPS)
+CHECK_CXX_COMPILER_FLAG(-funroll-loops COMPILER_SUPPORTS_FUNROLL_LOOPS)
 if(COMPILER_SUPPORTS_FUNROLL_LOOPS)
-  add_definitions(-funroll-loops)
+  add_compile_options(-funroll-loops)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -158,5 +176,3 @@ add_library(libsources OBJECT ${SOURCES})
 add_executable(branch_reduce "app/branch_reduce.cpp" $<TARGET_OBJECTS:libkaffpa2> $<TARGET_OBJECTS:libsources>)
 add_executable(weighted_ls "app/weighted_ls.cpp" $<TARGET_OBJECTS:libkaffpa2> $<TARGET_OBJECTS:libsources>)
 add_executable(merge_graph_weights "app/merge_graph_weights.cpp" $<TARGET_OBJECTS:libkaffpa2> $<TARGET_OBJECTS:libsources>)
-
-
