@@ -15,7 +15,7 @@ std::streambuf* cout_handler::cout_rdbuf_backup = std::cout.rdbuf();
 std::stringstream cout_handler::buffered_output;
 int cout_handler::disable_count = 0;
 
-
+constexpr NodeID branch_and_reduce_algorithm::BRANCHING_TOKEN;
 
 branch_and_reduce_algorithm::branch_and_reduce_algorithm(graph_access& G, const MISConfig& config, bool called_from_fold)
 	: config(config), global_status(G), set_1(global_status.n), set_2(global_status.n), double_set(global_status.n * 2), buffers(2, sized_vector<NodeID>(global_status.n)) {
