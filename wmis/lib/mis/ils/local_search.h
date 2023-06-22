@@ -1,4 +1,4 @@
-/**
+/*
  * local_search.h
  * Purpose: Apply the local search algorithm to a maximum independent set.
  *
@@ -110,7 +110,7 @@ class local_search {
     private:
 		// insertion node of a (1,2)-swap
 		using Swap_1_2 = std::pair<NodeID, NodeID>;
-		static const NodeID INVALID_NODE = std::numeric_limits<NodeID>::max();
+		static constexpr NodeID INVALID_NODE = std::numeric_limits<NodeID>::max();
 
         // List of 1-tight neighbors of a node.
         std::vector<NodeID> onetight;
