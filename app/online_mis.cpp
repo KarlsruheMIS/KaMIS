@@ -43,7 +43,7 @@ int main(int argn, char **argv) {
 
   // Graph copy for unfolding
   graph_access fG;
-  graph_io::readGraphWeighted(fG, graph_filepath);
+  G.copy(fG);
 
   // Print setup information
   mis_log::instance()->print_graph();
