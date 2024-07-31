@@ -566,12 +566,16 @@ void branch_and_reduce_algorithm::branch_reduce_single_component() {
 	restore_best_local_solution();
 }
 
-bool branch_and_reduce_algorithm::run_branch_reduce() {
+bool branch_and_reduce_algorithm::run_branch_reduce(bool run_initial_reductions) {
 	t.restart();
-	initial_reduce();
+        if(run_initial_reductions) {
+                initial_reduce();
+        }else{
+                global_status.modified_queue.push_back(BRANCHING_TOKEN);
+        }
 
-	//std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
-	//std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
+	std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
+	std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
 	std::cout << "reduction_time " << t.elapsed() << "\n";
 
 	if (global_status.remaining_nodes == 0) {
@@ -660,6 +664,7 @@ void branch_and_reduce_algorithm::update_best_solution() {
 		best_weight = current_weight;
 		is_ils_best_solution = false;
 
+                best_time = t.elapsed();
 		std::cout << (get_current_is_weight() + current_weight) << " [" << t.elapsed() << "]" << std::endl;
 	}
 }
@@ -866,3 +871,4 @@ void branch_and_reduce_algorithm::apply_branch_reduce_solution(graph_access & G)
 		}
 	} endfor
 }
+double branch_and_reduce_algorithm::get_best_time() const { return best_time; }
