@@ -194,6 +194,8 @@ private:
 	void disable_cout();
 	void enable_cout();
 
+    NodeWeight get_current_is_weight() const;
+
 public:
 	branch_and_reduce_algorithm(graph_access& G, const MISConfig& config, bool called_from_fold = false);
 
@@ -203,7 +205,7 @@ public:
 	static size_t run_ils(const MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
 	static void greedy_initial_is(graph_access& G, sized_vector<NodeID>& tmp_buffer);
 
-	NodeWeight get_current_is_weight() const;
+	NodeWeight get_is_weight() const;
 	void reverse_reduction(graph_access & G, graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
 	void apply_branch_reduce_solution(graph_access & G);
 

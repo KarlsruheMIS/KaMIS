@@ -728,25 +728,30 @@ void branch_and_reduce_algorithm::restore_best_local_solution() {
 
 void branch_and_reduce_algorithm::restore_best_global_solution() {
 	status = std::move(global_status);
-	status.modified_queue.pop_back();
+    status.modified_queue.pop_back();
 
 	while (!status.modified_queue.empty()) {
 		NodeID node = status.modified_queue.back();
-		status.modified_queue.pop_back();
+        status.modified_queue.pop_back();
 
 		if (status.node_status[node] == IS_status::folded) {
 			auto type = status.folded_queue.back();
-			status.folded_queue.pop_back();
-			status.reductions[global_reduction_map[type]]->apply(this);
+            status.folded_queue.pop_back();
+            status.reductions[global_reduction_map[type]]->apply(this);
 		}
 		else {
-			status.graph.restore_node(node);
+            status.graph.restore_node(node);
 		}
 	}
 }
 
 NodeWeight branch_and_reduce_algorithm::get_current_is_weight() const {
 	return global_status.is_weight + global_status.reduction_offset;
+}
+
+NodeWeight branch_and_reduce_algorithm::get_is_weight() const {
+    // after restoring global best solution, global status was moved to status
+    return status.is_weight + status.reduction_offset;
 }
 
 void branch_and_reduce_algorithm::build_global_graph_access() {
