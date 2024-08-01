@@ -200,6 +200,7 @@ public:
 
 	void reduce_graph();
 	bool run_branch_reduce(bool run_initial_reductions = true);
+	bool run_branch_reduce_without_greedy(bool run_initial_reductions = true);
 
 	static size_t run_ils(const MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
 	static void greedy_initial_is(graph_access& G, sized_vector<NodeID>& tmp_buffer);
