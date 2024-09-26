@@ -119,6 +119,36 @@ Choose how the weights are assigned. Can be either: file (default), hybrid, unif
 
 `--reduction_style=<string>`
 Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
+
+## Usage MMWIS ##
+`mmwis FILE [options]`.    
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`--help`
+Print help.
+
+`--console_log`
+Write the log to the console.
+
+`--output=<string>`
+Path to store the resulting independent set.
+
+`--seed=<int>`
+Seed to use for the random number generator.
+
+`--config=<string>`
+Config to use for the evolutionary algorithm [mmwis|mmwiss].
+
+`--time_limit=<double>`
+Time limit until the algorithm terminates.
+
+
 ## Usage Sort Adjacencies ##
 `sort_adjacencies FILE`.    
 
@@ -212,6 +242,30 @@ If you use the weighted independents set algorithms, please also cite the follow
         year      = {2019}
 }
 ```
+
+If you use mmwis, please also cite the following: 
+```
+@inproceedings{DBLP:conf/gecco/GrossmannL0S23,
+  author       = {Ernestine Gro{\ss}mann and
+                  Sebastian Lamm and
+                  Christian Schulz and
+                  Darren Strash},
+  editor       = {Sara Silva and
+                  Lu{\'{\i}}s Paquete},
+  title        = {Finding Near-Optimal Weight Independent Sets at Scale},
+  booktitle    = {Proceedings of the Genetic and Evolutionary Computation Conference,
+                  {GECCO} 2023, Lisbon, Portugal, July 15-19, 2023},
+  pages        = {293--302},
+  publisher    = {{ACM}},
+  year         = {2023},
+  url          = {https://doi.org/10.1145/3583131.3590353},
+  doi          = {10.1145/3583131.3590353},
+  timestamp    = {Fri, 02 Aug 2024 15:50:42 +0200},
+  biburl       = {https://dblp.org/rec/conf/gecco/GrossmannL0S23.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
 
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS?ref=badge_large)
