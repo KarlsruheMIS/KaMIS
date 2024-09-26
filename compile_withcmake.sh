@@ -18,7 +18,14 @@ cmake ../
 make -j $NCORES
 cd ..
 
+
+# compile mmwis:
+cd mmwis
+./compile.sh
+cd ..
+
 mkdir deploy
+cp ./mmwis/deploy/mmwis deploy/
 cp ./build/redumis deploy/
 cp ./build/graphchecker deploy/
 cp ./build/sort_adjacencies deploy/
