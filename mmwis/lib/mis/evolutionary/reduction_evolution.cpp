@@ -410,7 +410,8 @@ void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph
         }
 
         individuum_mis ind;
-        island.create_individuum(mis_config, G, ind);
+        double remaining_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
+        island.create_individuum(mis_config, G, ind, remaining_time); 
 
         mmwis_log::instance()->set_operator("Initial");
         mmwis_log::instance()->set_result_operator(ind.solution_weight);

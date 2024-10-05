@@ -30,23 +30,17 @@ void cyclicFast::initial_partition(const unsigned int seed, graph_access & G) {
 }
 
 
-void cyclicFast::initial_partition_struction(MISConfig & config, graph_access & G) {
+void cyclicFast::initial_partition_struction(MISConfig & config, graph_access & G, double remaining_time) {
     random_functions::setSeed(config.seed);
-    /* NodePermutationMap permutation; */
-    /* generate_permutation(G, permutation); */
-
-    /* G.set_partition_count(2); */
-
-    /* forall_nodes (G, n) { */
-        /* G.setPartitionIndex(n, 0); */
-    /* } endfor */
-
     MISConfig struction_misconfig(config);
 
     //set config for cyclicFast:
     struction_misconfig.disable_generalized_fold=true;
     struction_misconfig.disable_clique_neighborhood=true;
-    struction_misconfig.time_limit=60;
+    if (remaining_time > 60)
+        struction_misconfig.time_limit=60;
+    else 
+        struction_misconfig.time_limit=remaining_time;
     struction_misconfig.struction_type=MISConfig::Struction_Type::EXTENDED;
     struction_misconfig.setKeyType("approximate_increase");
     struction_misconfig.global_blow_up_factor=9999;

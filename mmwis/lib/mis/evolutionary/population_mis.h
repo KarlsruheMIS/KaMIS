@@ -56,7 +56,7 @@ class population_mis {
          * @param G Graph representation.
          * @param ind Individuum to create/refine.
          */
-        void create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind);
+        void create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time);
 
         /**
          * Returns a certain individuum.

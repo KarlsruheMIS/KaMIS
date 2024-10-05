@@ -46,7 +46,7 @@ void population_mis::reset(MISConfig & config, graph_access & G) {
     init(config, G);
 }
 
-void population_mis::create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind) {
+void population_mis::create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
 
     // Build solution
     int initial;
@@ -77,7 +77,7 @@ void population_mis::create_individuum(MISConfig & config, graph_access & G, ind
     else if (initial == 5) {
         config.use_struction_initial_sol -=1;
         cyclicFast init_solution;
-        init_solution.initial_partition_struction(config, G);
+        init_solution.initial_partition_struction(config, G, remaining_time);
     }
 
     // Create solution for the individuum

@@ -37,7 +37,8 @@ class cyclicFast: public initial_mis {
          * @param G Graph representation.
          */
         void initial_partition_struction(MISConfig & config, 
-                                graph_access & G); 
+                                graph_access & G,
+                                double remaining_time); 
 
         void initial_partition( const unsigned int seed,
                                 graph_access & G );
