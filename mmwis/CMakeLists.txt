@@ -148,6 +148,8 @@ set(LIB_MMWIS
 )   
 add_library(lib_mmwis OBJECT ${LIB_MMWIS})
 
+add_subdirectory(extern/struction)
+
 include_directories(mmwis PRIVATE ${MMWIS_INCLUDES})
 add_executable(mmwis "app/mmwis.cpp" $<TARGET_OBJECTS:libkaffpa> 
                                      $<TARGET_OBJECTS:libmapping> 
@@ -156,4 +158,4 @@ add_executable(mmwis "app/mmwis.cpp" $<TARGET_OBJECTS:libkaffpa>
 target_link_libraries(mmwis ${OpenMP_CXX_LIBRARIES})
 
 install(TARGETS mmwis DESTINATION bin)
-    
+

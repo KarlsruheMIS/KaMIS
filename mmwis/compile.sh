@@ -19,7 +19,7 @@ fi
 # compile mmwis and hils
 
 rm -rf deploy
-rm -rf build
+# rm -rf build
 mkdir build
 cd build
 cmake ../ -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_BUILD_TYPE=${buildtype}
@@ -27,7 +27,8 @@ make -j $NCORES
 cd ..
 
 mkdir deploy
-cp ./build/mmwis                    deploy/mmwis
-rm -rf build
+cp ./build/mmwis                                                         deploy/mmwis
+cp ./build/extern/struction/branch_reduce_convergence                    deploy/struction
+# rm -rf build
 
 
