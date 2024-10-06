@@ -43,6 +43,8 @@ class configuration_mis {
          * @param config Config to be initialized.
          */
         void standard( ::mmwis::MISConfig & config );
+        void cyclicFast( ::mmwis::MISConfig & config );
+        void cyclicStrong( ::mmwis::MISConfig & config );
 };
 
 inline void configuration_mis::standard( ::mmwis::MISConfig & mis_config ) {
@@ -68,13 +70,13 @@ inline void configuration_mis::standard( ::mmwis::MISConfig & mis_config ) {
     mis_config.struction_type                         = ::mmwis::MISConfig::Struction_Type::EXTENDED;
     mis_config.key_type                               = ::mmwis::MISConfig::Key_Type::APPROXIMATE_INCREASE;
     mis_config.key_reinsert_factor                    = 2;
-    mis_config.global_blow_up_factor                  = 2;
+    mis_config.global_blow_up_factor                  = 9999;
     mis_config.phase_blow_up_factor                   = 2;
     mis_config.phase_blow_ups                         = 1;
     mis_config.max_unimproving_phases                 = 100;
     mis_config.backtrack_style                        = ::mmwis::MISConfig::Backtrack_Type::IMMEDIATE_EXCLUDE;
     mis_config.reduce_and_peel                        = false;
-    /* mis_config.neighborhood_clique_disabled           = false; */
+    mis_config.disable_clique_neighborhood            = false;
     mis_config.disable_generalized_fold               = false;
     mis_config.disable_critical_set                   = false;
     mis_config.disable_clique                         = false;
@@ -83,4 +85,22 @@ inline void configuration_mis::standard( ::mmwis::MISConfig & mis_config ) {
     mis_config.perform_hils                           = true;
 }
 
+inline void configuration_mis::cyclicFast( ::mmwis::MISConfig & mis_config ) {
+    standard(mis_config);
+    mis_config.struction_degree                       = 64;
+    mis_config.max_unimproving_phases                 = 25;
+    mis_config.set_limit                              = 512;
+    mis_config.disable_generalized_fold               = true;
+    mis_config.disable_clique_neighborhood            = true;
+
+}
+
+inline void configuration_mis::cyclicStrong( ::mmwis::MISConfig & mis_config ) {
+    standard(mis_config);
+    mis_config.struction_degree                       = 512;
+    mis_config.max_unimproving_phases                 = 64;
+    mis_config.set_limit                              = 2048;
+    mis_config.disable_generalized_fold               = true;
+    mis_config.disable_clique_neighborhood            = true;
+}
 #endif

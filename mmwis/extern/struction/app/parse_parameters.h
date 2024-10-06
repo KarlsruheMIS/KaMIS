@@ -54,6 +54,7 @@ int parse_parameters(int argn, char **argv,
 	struct arg_lit *disable_reduction       = arg_lit0(NULL, "disable_reduction", "Don't perforn any reductions.");
     struct arg_str *weight_source           = arg_str0(NULL, "weight_source", NULL, "Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric.");
     struct arg_str *reduction_style         = arg_str0(NULL, "reduction_style", NULL, "Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.");
+    struct arg_lit *cyclicStrong            = arg_lit0(NULL, "cyclicStrong", "Switch to cyclicStrong configuration (default is cyclicFast)");
 
     struct arg_int *set_limit               = arg_int0(NULL, "set_limit", NULL, "Choose maximum number of new vertices allowed to be created during struction application");
     struct arg_int *struction_degree        = arg_int0(NULL, "struction_degree", NULL, "Choose maximum degree of vertex to perform struction on it.");
@@ -85,6 +86,7 @@ int parse_parameters(int argn, char **argv,
             user_seed,
             time_limit,
             console_log,
+            cyclicStrong,
             disable_checks,
             random_freenodes,
             disable_reduction,
@@ -113,7 +115,11 @@ int parse_parameters(int argn, char **argv,
 
     // Choose standard configuration
     configuration_mis cfg;
-    cfg.standard(mis_config);
+    cfg.cyclicFast(mis_config);
+
+    if (cyclicStrong->count > 0 ) {
+        cfg.cyclicStrong(mis_config);
+    }
 
     // Parse the arguments
     int nerrors = arg_parse(argn, argv, argtable);
