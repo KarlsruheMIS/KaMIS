@@ -1,4 +1,4 @@
-# KaMIS v2.1 #
+# KaMIS v3.0 #
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/29cd8870a6b041948dbf001d0f427f83)](https://app.codacy.com/gh/KarlsruheMIS/KaMIS?utm_source=github.com&utm_medium=referral&utm_content=KarlsruheMIS/KaMIS&utm_campaign=Badge_Grade_Dashboard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS?ref=badge_shield)
