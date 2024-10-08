@@ -537,9 +537,11 @@ void branch_and_reduce_algorithm::branch_reduce_single_component() {
 				status.branching_queue.pop_back();
 				unset(branch_node);
 
-				if (i == 0)
-					break;
 			}
+			if (i == 0) {
+				break;
+			}
+
 
 			reverse_branching();
 			i = status.branching_queue.back().pos;
