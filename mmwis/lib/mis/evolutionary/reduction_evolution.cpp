@@ -397,8 +397,9 @@ NodeWeight reduction_evolution<reducer>::collect_best_mis(MISConfig & mis_config
 template <typename reducer>
 void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph_access & G) {
     // If the population is not filled simply create new individuals
+    double remaining_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
     if (reduced_exact_ind_calculated) {
-        island.insert(mis_config, G, red_exact_ind);
+        island.insert(mis_config, G, red_exact_ind, remaining_time);
     }
 
     mmwis_log::instance()->print_init_title();
@@ -416,8 +417,9 @@ void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph
         mmwis_log::instance()->set_operator("Initial");
         mmwis_log::instance()->set_result_operator(ind.solution_weight);
 
+        remaining_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
         individuum_mis best;
-        island.insert(mis_config, G, ind);
+        island.insert(mis_config, G, ind, remaining_time);
 
         // Set average and best solution and log information
         unsigned int best_after = collect_best_mis(mis_config, G, best);
@@ -436,8 +438,6 @@ void reduction_evolution<reducer>::calculate_population_scores(MISConfig & mis_c
 template <typename reducer>
 void reduction_evolution<reducer>::perform_local_mis(MISConfig & mis_config, graph_access & G) {
     unsigned int repetitions = mis_config.repetitions;
-    timer round_timer ;
-    round_timer.restart();
     // Main evolutionary algorithm part
     for (unsigned int i = 0; i < repetitions; ++i) {
         // Diversify?
@@ -482,8 +482,8 @@ void reduction_evolution<reducer>::perform_local_mis(MISConfig & mis_config, gra
         // Mutation
         int decision = random_functions::nextInt(0, 9);
         if (decision < mis_config.flip_coin) {
-            island.mutate(mis_config, G, out);
-            if (combine < 2) island.mutate(mis_config, G, out_second);
+            island.mutate(mis_config, G, out, mis_config.ils_time_limit);
+            if (combine < 2) island.mutate(mis_config, G, out_second, mis_config.ils_time_limit);
         }
 
         individuum_mis best;
@@ -502,7 +502,8 @@ void reduction_evolution<reducer>::perform_local_mis(MISConfig & mis_config, gra
 
         // Insertion
         unsigned int best_before = collect_best_mis(mis_config, G, best);
-        bool success = island.insert(mis_config, G, better_offspring);
+        double remaining_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
+        bool success = island.insert(mis_config, G, better_offspring, remaining_time);
         // Update the separator cache
         if (success) pool->update_scores_for_individuum(mis_config, G, better_offspring);
         // Only log the bigger offspring for the node separator or vertex cover

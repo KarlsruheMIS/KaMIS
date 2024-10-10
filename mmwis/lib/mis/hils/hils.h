@@ -91,7 +91,7 @@ public:
     }
 
 
-    void perform_ils(graph_access &G, unsigned int max_iterations, NodeWeight weight_offset = 0) {
+    void perform_ils(graph_access &G, unsigned int max_iterations, double time_limit,  NodeWeight weight_offset = 0) {
         double p[4] = {2, 4, 4, 1}; // intensification/exploration parameters
         Solution s(&G);
 
@@ -112,7 +112,7 @@ public:
             while (!s.isMaximal()) {
                 s.addRandomVertex();
             }
-            if (t.elapsed() > config.time_limit) break;
+            if (t.elapsed() > time_limit) break;
         } while (s.omegaImprovement() || s.twoImprovement() );
 
         Solution best_s(s);
@@ -122,7 +122,7 @@ public:
         int k = 1;
         int local_best = s.weight();
         int iter;
-        for (iter = 0; t.elapsed() < config.time_limit && iter < max_iterations; iter++) {
+        for (iter = 0; t.elapsed() < time_limit && iter < max_iterations; iter++) {
             Solution next_s(s);
 
             // shake

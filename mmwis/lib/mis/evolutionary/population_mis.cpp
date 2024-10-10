@@ -187,10 +187,10 @@ int population_mis::get_population_size() {
 
 void population_mis::mutate_random(MISConfig & config, graph_access & G, individuum_mis & ind) {
     get_random_individuum(config, ind); 
-    mutate(config, G, ind);
+    mutate(config, G, ind, config.ils_time_limit);
 }
 
-void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis & ind) {
+void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
     set_mis_for_individuum(config, G, ind);
     delete [] ind.solution;
     ind.solution = NULL;
@@ -212,7 +212,8 @@ void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis
     } endfor
 
     hils iterate(config);
-    iterate.perform_ils(G, config.ils_iterations);
+    double hils_time_limit = std::min(config.ils_time_limit, 0.01 * remaining_time);
+    iterate.perform_ils(G, config.ils_iterations, hils_time_limit);
     /* iterate.direct_improvement(G, node); */
 
     // Create solution for the individuum
@@ -222,9 +223,10 @@ void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis
     ind.solution_weight = solution_weight;
 }
 
-bool population_mis::insert(MISConfig & config, graph_access & G, individuum_mis & ind) {
+bool population_mis::insert(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
     ASSERT_TRUE(is_mis(config, G, ind));
     bool successful_insertion = false;
+    double hils_time_limit = std::min(config.ils_time_limit, 0.01 * remaining_time);
 
     if (internal_population.size() < population_size) {
         ind.id = internal_population.size();
@@ -247,7 +249,7 @@ bool population_mis::insert(MISConfig & config, graph_access & G, individuum_mis
             // std::cout << "Force" << std::endl;
             set_mis_for_individuum(config, G, ind);
             hils iterate(config);
-            iterate.perform_ils(G, config.ils_iterations);
+            iterate.perform_ils(G, config.ils_iterations, hils_time_limit);
 
             ind.solution_weight = 0;
             forall_nodes(G, node) {
@@ -272,7 +274,7 @@ bool population_mis::insert(MISConfig & config, graph_access & G, individuum_mis
         // Else perform ILS and search most similar
         set_mis_for_individuum(config, G, ind);
         hils iterate(config);
-        iterate.perform_ils(G, config.ils_iterations);
+        iterate.perform_ils(G, config.ils_iterations, hils_time_limit);
 
         ind.solution_weight = 0;
         forall_nodes(G, node) {

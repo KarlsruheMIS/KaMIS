@@ -130,8 +130,9 @@ class population_mis {
          * @param config Config used for the population.
          * @param G Graph representation.
          * @param ind Mutated individuum.
+         * @param remaining_time time limit for hils.
          */
-        void mutate(MISConfig & config, graph_access & G, individuum_mis & ind);
+        void mutate(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time);
         
         /**
          * Insert a individuum in the population.
@@ -142,9 +143,10 @@ class population_mis {
          * @param config Config used for the population.
          * @param G Graph representation.
          * @param ind Individuum to insert.
+         * @param remaining_time time limit for hils.
          * @return True if the insertion was successful;
          */
-        bool insert(MISConfig & config, graph_access & G, individuum_mis & ind);
+        bool insert(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time);
 
         /**
          * Get the most similar individuum to a given one.

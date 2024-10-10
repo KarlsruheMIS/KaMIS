@@ -345,8 +345,9 @@ NodeWeight branch_and_reduce_algorithm::compute_cover_pruning_bound() {
 
 NodeWeight branch_and_reduce_algorithm::run_ils(const MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps) {
 	greedy_initial_is(G, tmp_buffer);
+    double hils_time_limit = 0.01*(config.time_limit - t.elapsed()); 
 	hils local_search(config);
-	local_search.perform_ils(G, max_swaps);
+	local_search.perform_ils(G, max_swaps, hils_time_limit);
 /* 	ils local_search(config); */
 /* 	local_search.perform_ils(G, max_swaps); */
 

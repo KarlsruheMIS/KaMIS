@@ -381,10 +381,11 @@ NodeWeight branch_and_reduce_algorithm::compute_cover_pruning_bound() {
 }
 
 size_t branch_and_reduce_algorithm::run_ils(const ::mmwis::MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps) {
+    double time_limit = 0.01*(config.time_limit - t.elapsed());
     if (!config.perform_hils) {
         greedy_initial_is(G, tmp_buffer);
         mmwis::ils local_search(config);
-        local_search.perform_ils(G, max_swaps);
+        local_search.perform_ils(G, max_swaps, time_limit);
     } else {
         if (config.reduce_and_peel) {
             ReduceAndPeel reducer(G);
@@ -392,7 +393,7 @@ size_t branch_and_reduce_algorithm::run_ils(const ::mmwis::MISConfig& config, gr
         } else
             greedy_initial_is(G, tmp_buffer);
         hils local_search(config);
-        local_search.perform_ils(G, max_swaps);
+        local_search.perform_ils(G, max_swaps, time_limit);
     }
 
 	size_t solution_weight = 0;
