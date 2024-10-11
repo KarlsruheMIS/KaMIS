@@ -245,6 +245,7 @@ int parse_parameters(int argn, char **argv,
 
     if (time_limit->count > 0) {
         mis_config.time_limit = time_limit->dval[0];
+        mis_config.ils_time_limit = 0.01*time_limit->dval[0];
     }
 
     if (ils_time_limit->count > 0) {
