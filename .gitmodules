@@ -1,0 +1,3 @@
+[submodule "mmwis/extern/KaHIP"]
+	path = mmwis/extern/KaHIP
+	url = https://github.com/KaHIP/KaHIP

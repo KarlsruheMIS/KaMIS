@@ -1,4 +1,4 @@
-# KaMIS v2.1 #
+# KaMIS v3.0 #
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/29cd8870a6b041948dbf001d0f427f83)](https://app.codacy.com/gh/KarlsruheMIS/KaMIS?utm_source=github.com&utm_medium=referral&utm_content=KarlsruheMIS/KaMIS&utm_campaign=Badge_Grade_Dashboard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS?ref=badge_shield)
@@ -16,11 +16,13 @@ Main project site:
 <http://KarlsruheMIS.github.io>
 
 ## Installation ##
-Compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
+As a first step, please run *git submodule --init --recursive*. Then compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
 The version of our framework currently contains the following algorithms:
+* struction -- a branch and reduce algotrithm with increasing transformations
+* mmwis -- run an iterative reduce and evolution algorithm for the weighted problem
 * redumis -- run an evolutionary algorithm on a reduced graph 
 * onlinemis -- local search pruned with reductions
 * weighted_branch_reduce -- a branch and reduce algorithm for weighed maximum independent sets
@@ -30,6 +32,11 @@ The version of our framework currently contains the following algorithms:
 Furthermore, the framework contains tools to make life a little bit easier:
 * sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
 * graphchecker -- check if the graph file you gave to algorithm is in the correct format
+
+## NEW in v3.0: 
+*mmwis (Memetic Maxmimum Weight Independent Set):* Our iterative reduce and evolution algorithm to solve the maximum weight independent set problem.
+
+*struction:* Our new branch and reduce algorithm using increasing transformations. 
 
 
 ## Usage ReduMIS ##
@@ -119,6 +126,65 @@ Choose how the weights are assigned. Can be either: file (default), hybrid, unif
 
 `--reduction_style=<string>`
 Choose the type of reductions appropriate for the input graph. Can be either: normal/sparse (default), dense/osm.
+
+## Usage MMWIS ##
+`mmwis FILE [options]`.    
+
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`--help`
+Print help.
+
+`--console_log`
+Write the log to the console.
+
+`--output=<string>`
+Path to store the resulting independent set.
+
+`--seed=<int>`
+Seed to use for the random number generator.
+
+`--config=<string>`
+Config to use for the evolutionary algorithm [mmwis|mmwiss].
+
+`--time_limit=<double>`
+Time limit until the algorithm terminates.
+
+## Usage struction ##
+`struction FILE [options]`.    
+
+
+### Options ###
+This is a brief overview of the most important options.
+For a full description, please take a look at the user guide.
+
+`FILE`
+Path to graph file that you want the maximum independent set for.
+
+`--help`
+Print help.
+
+`--console_log`
+Write the log to the console.
+
+`--output=<string>`
+Path to store the resulting independent set.
+
+`--seed=<int>`
+Seed to use for the random number generator.
+
+`--time_limit=<double>`
+Time limit until the algorithm terminates.
+
+`--cyclicStrong`
+Use cyclicStrong instead of cyclicFast (default).
+
 ## Usage Sort Adjacencies ##
 `sort_adjacencies FILE`.    
 
@@ -212,6 +278,52 @@ If you use the weighted independents set algorithms, please also cite the follow
         year      = {2019}
 }
 ```
+
+if you use struction, please also cite the following: 
+```
+@article{DBLP:journals/corr/abs-2008-05180,
+  author       = {Alexander Gellner and
+                  Sebastian Lamm and
+                  Christian Schulz and
+                  Darren Strash and
+                  Bogd{\'{a}}n Zav{\'{a}}lnij},
+  title        = {Boosting Data Reduction for the Maximum Weight Independent Set Problem
+                  Using Increasing Transformations},
+  journal      = {CoRR},
+  volume       = {abs/2008.05180},
+  year         = {2020},
+  url          = {https://arxiv.org/abs/2008.05180},
+  eprinttype    = {arXiv},
+  eprint       = {2008.05180},
+  timestamp    = {Sun, 16 Aug 2020 17:19:29 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-2008-05180.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
+if you use mmwis, please also cite the following: 
+```
+@inproceedings{dblp:conf/gecco/grossmannl0s23,
+  author       = {ernestine gro{\ss}mann and
+                  sebastian lamm and
+                  christian schulz and
+                  darren strash},
+  editor       = {sara silva and
+                  lu{\'{\i}}s paquete},
+  title        = {finding near-optimal weight independent sets at scale},
+  booktitle    = {proceedings of the genetic and evolutionary computation conference,
+                  {gecco} 2023, lisbon, portugal, july 15-19, 2023},
+  pages        = {293--302},
+  publisher    = {{acm}},
+  year         = {2023},
+  url          = {https://doi.org/10.1145/3583131.3590353},
+  doi          = {10.1145/3583131.3590353},
+  timestamp    = {fri, 02 aug 2024 15:50:42 +0200},
+  biburl       = {https://dblp.org/rec/conf/gecco/grossmannl0s23.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
 
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS?ref=badge_large)
