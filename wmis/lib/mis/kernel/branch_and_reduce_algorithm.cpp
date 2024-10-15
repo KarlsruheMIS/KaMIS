@@ -197,6 +197,7 @@ void branch_and_reduce_algorithm::compute_ils_pruning_bound() {
 	best_weight = status.reduction_offset + status.is_weight + run_ils(config_cpy, *local_graph, buffers[0], 1000);
 
 	cout_handler::enable_cout();
+        best_time = t.elapsed();
 	std::cout << (get_current_is_weight() + best_weight) << " [" << t.elapsed() << "]" << std::endl;
 }
 
@@ -465,6 +466,7 @@ void branch_and_reduce_algorithm::branch_reduce_single_component() {
 	}
 	else if (status.n == 1) {
 		set(0, IS_status::included);
+		best_time = t.elapsed();
 		std::cout << (get_current_is_weight() + status.is_weight + status.reduction_offset) << " [" << t.elapsed() << "]" << std::endl;
 		return;
 	}
@@ -685,6 +687,7 @@ bool branch_and_reduce_algorithm::run_branch_reduce(bool run_initial_reductions)
 	std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
 	std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
 	std::cout << "reduction_time " << t.elapsed() << "\n";
+	best_time = t.elapsed();
 
 	if (global_status.remaining_nodes == 0) {
 		restore_best_global_solution();
