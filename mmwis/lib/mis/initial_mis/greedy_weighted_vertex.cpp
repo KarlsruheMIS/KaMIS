@@ -18,7 +18,7 @@ greedy_weighted_vertex::~greedy_weighted_vertex() {
 
 }
 
-void greedy_weighted_vertex::initial_partition(const unsigned int seed, mmwis::graph_access & G) {
+void greedy_weighted_vertex::initial_partition(const unsigned int seed, graph_access & G) {
     random_functions::setSeed(seed);
     NodePermutationMap permutation;
     generate_permutation(G, permutation);
@@ -70,7 +70,7 @@ void greedy_weighted_vertex::initial_partition(const unsigned int seed, mmwis::g
     delete[] uncovered_edges;
 }
 
-void greedy_weighted_vertex::generate_permutation(mmwis::graph_access & G, NodePermutationMap & permutation) {
+void greedy_weighted_vertex::generate_permutation(graph_access & G, NodePermutationMap & permutation) {
     permutation.resize(G.number_of_nodes());
     random_functions::permutate_vector_good(permutation, true);
 }

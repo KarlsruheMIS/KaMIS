@@ -742,7 +742,7 @@ bool struction_generalized_neighborhood_reduction::reduce(branch_and_reduce_algo
 	auto& status = br_alg->status;
 	size_t oldn = status.remaining_nodes;
 
-	mmwis::graph_access neighborhood_graph;
+	::graph_access neighborhood_graph;
 	auto config = br_alg->config;
 
 	cout_handler::disable_cout();
@@ -803,7 +803,7 @@ bool struction_generalized_fold_reduction::reduce(branch_and_reduce_algorithm* b
 	auto& reverse_mapping = br_alg->buffers[1];
 	size_t oldn = status.remaining_nodes;
 
-	mmwis::graph_access neighborhood_graph;
+	::graph_access neighborhood_graph;
 	auto config = br_alg->config;
 
 	cout_handler::disable_cout();

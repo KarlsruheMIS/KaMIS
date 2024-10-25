@@ -49,7 +49,7 @@ class cover_combine : public combine {
          * @param out_first Individuum resulting from the combination
          * @param out_second Second individuum resulting from the combination
          */
-        void combine(MISConfig & config, mmwis::graph_access & G, separator_pool *pool, individuum_mis & first, individuum_mis & second, individuum_mis & out_first, individuum_mis & out_second);
+        void combine(MISConfig & config, graph_access & G, separator_pool *pool, individuum_mis & first, individuum_mis & second, individuum_mis & out_first, individuum_mis & out_second);
 
     private:
         MISConfig config;
@@ -65,7 +65,7 @@ class cover_combine : public combine {
          * @param in Individuum to build the complement for.
          * @param out Individuum containing the complement.
          */
-        void create_complement(mmwis::graph_access & G, individuum_mis & in, individuum_mis & out);
+        void create_complement(graph_access & G, individuum_mis & in, individuum_mis & out);
 
         /**
          * Fix the partition cut boundaries.
@@ -76,7 +76,7 @@ class cover_combine : public combine {
          * @param G Graph representation.
          * @param cover Vertex cover representation.
          */
-        void build_max_flow_cover(MISConfig & config, mmwis::graph_access & G, mmwis::graph_access & cover);
+        void build_max_flow_cover(MISConfig & config, graph_access & G, graph_access & cover);
 
         /**
          * Turn a given vertex cover to a maximum independent set.
@@ -87,7 +87,7 @@ class cover_combine : public combine {
          * @param cover Individual storing a vertex cover.
          * @param ind Individual containing a maximum indepent set.
          */
-        void vertex_cover_to_mis(MISConfig & config, mmwis::graph_access & G, individuum_mis & cover, individuum_mis & ind);
+        void vertex_cover_to_mis(MISConfig & config, graph_access & G, individuum_mis & cover, individuum_mis & ind);
 
         /**
          * Extract all possible boundaries found in the given graph.
@@ -97,7 +97,7 @@ class cover_combine : public combine {
          * @param G Graph representation.
          * @param boundaries Resulting array of boundaries.
          */
-        void extract_boundaries(mmwis::graph_access & G, std::vector<std::pair<std::vector<NodeID>, std::vector<NodeID>>> & boundaries);
+        void extract_boundaries(graph_access & G, std::vector<std::pair<std::vector<NodeID>, std::vector<NodeID>>> & boundaries);
 
         /**
          * Greedily add uncovered nodes to the solutions.
@@ -108,7 +108,7 @@ class cover_combine : public combine {
          * @param G Graph representation.
          * @param partition_index Use first (0) or second (1) partition.
          */
-        void build_vertex_cover_candidates(MISConfig & config, mmwis::graph_access & G, unsigned int partition_index);
+        void build_vertex_cover_candidates(MISConfig & config, graph_access & G, unsigned int partition_index);
 
         /**
          * Checks which individual has a smaller vertex cover for the given graph.
@@ -119,7 +119,7 @@ class cover_combine : public combine {
          * @param second Second individuum.
          * @return 1 if the first cover is smaller, 2 if the second one.
          */
-        unsigned int get_smaller_individuum(mmwis::graph_access & G, std::vector<NodeID> mapping, individuum_mis & first, individuum_mis & second);
+        unsigned int get_smaller_individuum(graph_access & G, std::vector<NodeID> mapping, individuum_mis & first, individuum_mis & second);
 
         /**
          * Get a random partition from the pool build with the KaHIP-interface.
@@ -128,7 +128,7 @@ class cover_combine : public combine {
          * @param G Graph representation.
          * @param pool Pool of partitions.
          */
-        void apply_partition_kahip(MISConfig & config, mmwis::graph_access & G, separator_pool *pool);
+        void apply_partition_kahip(MISConfig & config, graph_access & G, separator_pool *pool);
 };
 
 }

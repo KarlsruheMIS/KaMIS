@@ -17,7 +17,7 @@ random_mis::~random_mis() {
 
 }
 
-void random_mis::initial_partition(const unsigned int seed, mmwis::graph_access & G) {
+void random_mis::initial_partition(const unsigned int seed, graph_access & G) {
     random_functions::setSeed(seed);
     NodePermutationMap permutation;
     generate_permutation(G, permutation);
@@ -41,7 +41,7 @@ void random_mis::initial_partition(const unsigned int seed, mmwis::graph_access 
     } endfor
 }
 
-void random_mis::generate_permutation(mmwis::graph_access & G, NodePermutationMap & permutation) {
+void random_mis::generate_permutation(graph_access & G, NodePermutationMap & permutation) {
     permutation.resize(G.number_of_nodes());
     random_functions::permutate_vector_good(permutation, true);
 }

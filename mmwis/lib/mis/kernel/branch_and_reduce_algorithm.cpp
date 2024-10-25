@@ -240,6 +240,7 @@ void branch_and_reduce_algorithm::compute_ils_pruning_bound() {
 	config_cpy.time_limit = config_cpy.time_limit * status.n / total_ils_node_count / 100;
 
 	best_weight = status.reduction_offset + status.is_weight + run_ils(config_cpy, *local_graph, buffers[0], 1000);
+	best_solution_status = status;
 
 	// std::cout << (get_current_is_weight() + best_weight) << " [" << t.elapsed() << "]" << std::endl;
 }
@@ -414,7 +415,6 @@ void branch_and_reduce_algorithm::initial_reduce() {
 	std::swap(global_reduction_map, local_reduction_map);
 	status = std::move(global_status);
 	reduce_graph_internal();
-	//status.modified_queue.push_back(INITIAL_REDUCTION_TOKEN);
 
 	global_status = std::move(status);
 	std::swap(global_reduction_map, local_reduction_map);
@@ -683,11 +683,6 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
 		branch_reduce_single_component();
 
 		for (size_t node = 0; node < status.n; node++) {
-			// if (status.node_status[node] == IS_status::not_set || status.node_status[node] == IS_status::folded) {
-			// 	std::cerr << "error: node is not_set / folded after restore" << std::endl;
-			// 	exit(1);
-			// }
-
 			global_status.node_status[global_mapping[local_mapping[node]]] = status.node_status[node];
 		}
 
@@ -760,6 +755,7 @@ void branch_and_reduce_algorithm::reverse_branching() {
 }
 
 void branch_and_reduce_algorithm::restore_best_local_solution() {
+	status = best_solution_status;
 	if (is_ils_best_solution) {
 		for (size_t node = 0; node < status.n; node++) {
 
@@ -773,7 +769,6 @@ void branch_and_reduce_algorithm::restore_best_local_solution() {
 		return;
 	}
 
-	status = best_solution_status;
 	status.modified_queue.pop_back();
 
 	while (!status.modified_queue.empty()) {
@@ -1019,12 +1014,12 @@ void branch_and_reduce_algorithm::exclude_nodes(std::vector<NodeID> const &nodes
 
     for (NodeID const node : nodes) {
    
+        // already excluded since neighbor included
+        if (global_status.node_status[node] == IS_status::excluded) continue; 
         assert(global_status.node_status[node] == IS_status::not_set); // should not have been assigned yet.
         if (global_status.node_status[node] != IS_status::not_set && global_status.node_status[node] != IS_status::excluded) {
                 std::cout << "ERROR: invalid vertex selected for independent set!" << std::endl << std::flush;
         } 
-        // already excluded since neighbor included
-        if (global_status.node_status[node] == IS_status::excluded) continue; 
 
         global_status.node_status[node] = IS_status::excluded;
         global_status.remaining_nodes--;

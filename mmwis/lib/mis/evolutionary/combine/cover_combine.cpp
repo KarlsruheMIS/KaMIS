@@ -19,7 +19,7 @@ cover_combine::~cover_combine() {
     
 }
 
-void cover_combine::combine(MISConfig & config, mmwis::graph_access & G, separator_pool *pool, individuum_mis & first, individuum_mis & second, individuum_mis & out_first, individuum_mis & out_second) {
+void cover_combine::combine(MISConfig & config, graph_access & G, separator_pool *pool, individuum_mis & first, individuum_mis & second, individuum_mis & out_first, individuum_mis & out_second) {
     // Create the input covers
     population_mis pop;
     individuum_mis first_cover, second_cover;
@@ -32,7 +32,7 @@ void cover_combine::combine(MISConfig & config, mmwis::graph_access & G, separat
     apply_partition_kahip(config, G, pool);
 
     // Create a second graph to store the vertex cover
-    mmwis::graph_access cover_graph;
+    graph_access cover_graph;
     G.copy(cover_graph);
     cover_graph.resizeSecondPartitionIndex(cover_graph.number_of_nodes());
 
@@ -109,7 +109,7 @@ void cover_combine::combine(MISConfig & config, mmwis::graph_access & G, separat
     second_vertex_cover = NULL;
 }
 
-void cover_combine::create_complement(mmwis::graph_access & G, individuum_mis & in, individuum_mis & out) {
+void cover_combine::create_complement(graph_access & G, individuum_mis & in, individuum_mis & out) {
     NodeID *complement = new NodeID[G.number_of_nodes()]; 
     NodeWeight weight = 0;
 
@@ -130,7 +130,7 @@ void cover_combine::create_complement(mmwis::graph_access & G, individuum_mis & 
     out.solution_weight = weight;
 }
 
-void cover_combine::build_max_flow_cover(MISConfig & config, mmwis::graph_access & G, mmwis::graph_access & cover) {
+void cover_combine::build_max_flow_cover(MISConfig & config, graph_access & G, graph_access & cover) {
     // Improve the vertex cover by finding a minimal vertex cover for the boundary
     // Create and extract the boundary
     std::vector<std::pair<std::vector<NodeID>, std::vector<NodeID>>> boundaries;
@@ -151,7 +151,7 @@ void cover_combine::build_max_flow_cover(MISConfig & config, mmwis::graph_access
     }
 }
 
-void cover_combine::build_vertex_cover_candidates(MISConfig & config, mmwis::graph_access & G, unsigned int partition_index) {
+void cover_combine::build_vertex_cover_candidates(MISConfig & config, graph_access & G, unsigned int partition_index) {
     bucket_array *buckets = new bucket_array(G.number_of_nodes());
     unsigned int uncovered_nodes = G.number_of_nodes();
     // Only keep nodes that still have an uncovered edge left 
@@ -224,7 +224,7 @@ void cover_combine::build_vertex_cover_candidates(MISConfig & config, mmwis::gra
     delete buckets;
 }
 
-void cover_combine::extract_boundaries(mmwis::graph_access & G, std::vector<std::pair<std::vector<NodeID>, std::vector<NodeID>>> & boundaries) {
+void cover_combine::extract_boundaries(graph_access & G, std::vector<std::pair<std::vector<NodeID>, std::vector<NodeID>>> & boundaries) {
     // Extract the complete boundary
     std::vector<bool> boundary(G.number_of_nodes(), 0);
     std::vector<NodeID> candidates;
@@ -305,7 +305,7 @@ void cover_combine::extract_boundaries(mmwis::graph_access & G, std::vector<std:
     }
 }
 
-unsigned int cover_combine::get_smaller_individuum(mmwis::graph_access & G, std::vector<NodeID> mapping, individuum_mis & first, individuum_mis & second) {
+unsigned int cover_combine::get_smaller_individuum(graph_access & G, std::vector<NodeID> mapping, individuum_mis & first, individuum_mis & second) {
     unsigned int first_count = 0;
     unsigned int second_count = 0;
     forall_nodes(G, node) {
@@ -317,7 +317,7 @@ unsigned int cover_combine::get_smaller_individuum(mmwis::graph_access & G, std:
     return (first_count < second_count)? 1: 2;
 }
 
-void cover_combine::vertex_cover_to_mis(MISConfig & config, mmwis::graph_access & G, individuum_mis & cover, individuum_mis & ind) {
+void cover_combine::vertex_cover_to_mis(MISConfig & config, graph_access & G, individuum_mis & cover, individuum_mis & ind) {
     create_complement(G, cover, ind);
 
     // Use local search
@@ -334,7 +334,7 @@ void cover_combine::vertex_cover_to_mis(MISConfig & config, mmwis::graph_access 
 
 }
 
-void cover_combine::apply_partition_kahip(MISConfig & config, mmwis::graph_access & G, separator_pool *pool) {
+void cover_combine::apply_partition_kahip(MISConfig & config, graph_access & G, separator_pool *pool) {
     partition part;
     pool->get_random_partition(part);
     pool->apply_partition(config, G, part);

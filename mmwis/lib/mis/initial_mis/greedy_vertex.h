@@ -9,7 +9,7 @@
 #define _GREEDY_VERTEX_H_
 
 #include "initial_mis.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 class greedy_vertex : public initial_mis {
     public:
@@ -32,7 +32,7 @@ class greedy_vertex : public initial_mis {
          * @param G Graph representation.
          */
         void initial_partition( const unsigned int seed,
-                                mmwis::graph_access & G );
+                                graph_access & G );
 
     private:
         /**
@@ -41,7 +41,7 @@ class greedy_vertex : public initial_mis {
          * @param G Graph representation
          * @param permutation Permutation that is created
          */
-        void generate_permutation ( mmwis::graph_access & G,
+        void generate_permutation ( graph_access & G,
                                     NodePermutationMap & permutation);
 };
 

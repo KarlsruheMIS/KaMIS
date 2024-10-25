@@ -139,7 +139,7 @@ private:
 
 		graph_status() = default;
 
-		graph_status(mmwis::graph_access& G) :
+		graph_status(graph_access& G) :
                 n(G.number_of_nodes()), remaining_nodes(n), graph(G), weights(n, 0), node_status(n, IS_status::not_set),
                 folded_stack(n), branching_stack(n), modified_stack(n + 1) {
 
@@ -189,7 +189,7 @@ private:
 	// max number of nodes to use all reductions during branch reduce
 	static constexpr size_t FULL_REDUCTIONS_RECURSION_LIMIT = 50;
 
-    mmwis::graph_access global_graph;
+    graph_access global_graph;
     ::mmwis::MISConfig config;
 	graph_status best_solution_status;
 	NodeWeight best_weight = 0;
@@ -204,12 +204,12 @@ private:
 	size_t total_ils_node_count;
 
 	graph_status status;
-    mmwis::graph_access* local_graph;
+    graph_access* local_graph;
 	std::vector<NodeID> local_mapping;
 	std::vector<size_t> local_transformation_map;
 	std::vector<reduction_ptr> local_reductions;
 
-    mmwis::graph_access recursive_graph;
+    graph_access recursive_graph;
 	std::vector<NodeID> recursive_mapping;
 	std::vector<int> recursive_comp_map;
 	std::vector<NodeID> recursive_local_mapping;
@@ -253,29 +253,41 @@ private:
 	void restore_best_global_solution();
 
 	void build_global_graph_access();
-	void build_induced_neighborhood_subgraph(mmwis::graph_access& G, NodeID source_node);
-	void build_induced_subgraph(mmwis::graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping);
+	void build_induced_neighborhood_subgraph(graph_access& G, NodeID source_node);
+	void build_induced_subgraph(graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping);
 
     void push_nodes(size_t nodes);
     void pop_nodes(size_t nodes);
 public:
-	branch_and_reduce_algorithm(mmwis::graph_access& G, const ::mmwis::MISConfig& config, bool called_from_fold = false);
+	branch_and_reduce_algorithm(graph_access& G, const ::mmwis::MISConfig& config, bool called_from_fold = false);
 	~branch_and_reduce_algorithm();
 
-    mmwis::graph_access& kernelize();
+    ::graph_access& kernelize();
     size_t deg(NodeID node) const;
 	void reduce_graph();
 	bool run_branch_reduce();
 
-	size_t run_ils(const ::mmwis::MISConfig& config, mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
-	static void greedy_initial_is(mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer);
+	size_t run_ils(const ::mmwis::MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
+	static void greedy_initial_is(graph_access& G, sized_vector<NodeID>& tmp_buffer);
 
 	NodeWeight get_current_is_weight() const;
-	void reverse_reduction(mmwis::graph_access & G, mmwis::graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
-	void apply_branch_reduce_solution(mmwis::graph_access & G);
+	void reverse_reduction(graph_access & G, graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
+	template <typename graph>
+	void apply_branch_reduce_solution(graph & G);
 
-	void build_graph_access(mmwis::graph_access & G, std::vector<NodeID>& reverse_mapping) const;
+	void build_graph_access(graph_access & G, std::vector<NodeID>& reverse_mapping) const;
 };
+
+template <typename graph>
+void branch_and_reduce_algorithm::apply_branch_reduce_solution(graph & G) {
+	forall_nodes(G, node) {
+		if (status.node_status[node] == IS_status::included) {
+			G.setPartitionIndex(node, 1);
+		} else {
+			G.setPartitionIndex(node, 0);
+		}
+	} endfor
+}
 
 }
 #endif //BRANCH_AND_REDUCE_SOLVER_H

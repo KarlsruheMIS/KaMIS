@@ -16,7 +16,6 @@
 #include "data_structure/mis_permutation.h"
 #include "maxNodeHeap.h"
 
-namespace mmwis {
 class local_search {
         friend class ils;
 
@@ -233,6 +232,5 @@ class local_search {
          */
         void sort_by_weight(graph_access& G, std::vector<NodeID>::iterator begin, std::vector<NodeID>::iterator end);
 };
-}
 
 #endif

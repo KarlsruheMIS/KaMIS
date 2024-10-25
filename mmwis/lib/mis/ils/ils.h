@@ -16,7 +16,6 @@
 #include "local_search.h"
 #include "graph_access.h"
 
-namespace mmwis {
 
 class ils {
        public:
@@ -99,7 +98,5 @@ class ils {
          */
         void unwind(graph_access &G);
 };
-
-}
 
 #endif

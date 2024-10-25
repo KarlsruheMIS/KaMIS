@@ -14,7 +14,6 @@
 #include <iostream>
 
 using namespace mmwis;
-// typedef mmwis::graph_access graph_access;
 
 typedef branch_and_reduce_algorithm::IS_status IS_status;
 

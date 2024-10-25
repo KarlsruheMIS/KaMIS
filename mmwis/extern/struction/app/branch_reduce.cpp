@@ -38,7 +38,7 @@
 #include "struction_branch_and_reduce_algorithm.h"
 
 
-bool is_IS(mmwis::graph_access& G) {
+bool is_IS(graph_access& G) {
     forall_nodes(G, node) {
                 if (G.getPartitionIndex(node) == 1) {
                     forall_out_edges(G, edge, node) {
@@ -53,7 +53,7 @@ bool is_IS(mmwis::graph_access& G) {
     return true;
 }
 
-void assign_weights(mmwis::graph_access& G, const ::mmwis::MISConfig& mis_config) {
+void assign_weights(graph_access& G, const ::mmwis::MISConfig& mis_config) {
     constexpr NodeWeight MAX_WEIGHT = 200;
 
     if (mis_config.weight_source == ::mmwis::MISConfig::Weight_Source::HYBRID) {
@@ -101,7 +101,7 @@ int main(int argn, char **argv) {
     mis_log::instance()->set_config(mis_config);
 
     // Read the graph
-    mmwis::graph_access G;
+    graph_access G;
     graph_io::readGraphWeighted(G, graph_filepath);
     assign_weights(G, mis_config);
 

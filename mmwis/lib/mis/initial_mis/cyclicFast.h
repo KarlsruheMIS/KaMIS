@@ -13,7 +13,7 @@
 
 #include "initial_mis.h"
 #include "mmwis_config.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 namespace mmwis {
 class cyclicFast: public initial_mis {

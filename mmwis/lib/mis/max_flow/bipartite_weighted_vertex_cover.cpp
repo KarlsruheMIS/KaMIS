@@ -23,10 +23,10 @@ bipartite_weighted_vertex_cover::~bipartite_weighted_vertex_cover() {
 }
 
 
-void bipartite_weighted_vertex_cover::max_flow_cover(mmwis::graph_access & G, std::vector<NodeID> & lhs, std::vector<NodeID> & rhs, std::vector<NodeID> & vertex_cover) {
+void bipartite_weighted_vertex_cover::max_flow_cover(graph_access & G, std::vector<NodeID> & lhs, std::vector<NodeID> & rhs, std::vector<NodeID> & vertex_cover) {
 
     // Create the bipartite graph and flow_network 
-    mmwis::graph_access bipartite;
+    graph_access bipartite;
     std::vector<NodeID> mapping;
     create_bipartite(G, lhs, rhs, bipartite, mapping);
 
@@ -62,7 +62,7 @@ void bipartite_weighted_vertex_cover::max_flow_cover(mmwis::graph_access & G, st
 
 }
 
-void bipartite_weighted_vertex_cover::create_bipartite(mmwis::graph_access & G, std::vector<NodeID> & lhs, std::vector<NodeID> & rhs, mmwis::graph_access & bipartite, std::vector<NodeID> & bipartite_mapping) {
+void bipartite_weighted_vertex_cover::create_bipartite(graph_access & G, std::vector<NodeID> & lhs, std::vector<NodeID> & rhs, graph_access & bipartite, std::vector<NodeID> & bipartite_mapping) {
     std::vector<NodeID> xadj;
     std::vector<NodeID> adjncy;
     std::vector<int> reverse_mapping(G.number_of_nodes(), -1);
@@ -133,7 +133,7 @@ void bipartite_weighted_vertex_cover::create_bipartite(mmwis::graph_access & G, 
     delete[] bi_adjncy;
 }
 
-void bipartite_weighted_vertex_cover::create_flow_network(mmwis::graph_access & bipartite, flow_graph & flow_network, NodeID & source, NodeID & sink) {
+void bipartite_weighted_vertex_cover::create_flow_network(graph_access & bipartite, flow_graph & flow_network, NodeID & source, NodeID & sink) {
     int n = bipartite.number_of_nodes();
     std::vector<bool> included(bipartite.number_of_edges(),false);
     source = n;

@@ -148,12 +148,11 @@ NodeWeight reduction_evolution<reducer>::perform_mis_search(MISConfig & mis_conf
         mmwis_log::instance()->set_best_weight(mis_config, is_base);
      // solve exactly if |V|<mis_config.V_solve_exact:
     } else if(reduced.number_of_nodes() < mis_config.V_solve_exact) {
-        // MISConfig struction_misconfig(mis_config);
+        //set config for cyclicFast:
         MISConfig struction_misconfig;
         configuration_struction struction_config;
         struction_config.cyclicFast(struction_misconfig);
         
-        //set config for cyclicFast:
         double struction_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
 
         // if struction time large, only use time_solve_exact and repeat
@@ -167,17 +166,6 @@ NodeWeight reduction_evolution<reducer>::perform_mis_search(MISConfig & mis_conf
         }
         
         struction_misconfig.time_limit = struction_time;
-        // struction_misconfig.disable_generalized_fold=true;
-        // struction_misconfig.disable_clique_neighborhood=true;
-        // struction_misconfig.struction_type=MISConfig::Struction_Type::EXTENDED;
-        // struction_misconfig.setKeyType("approximate_increase");
-        // struction_misconfig.global_blow_up_factor=9999;
-        // struction_misconfig.struction_degree=64;
-        // struction_misconfig.max_unimproving_phases=512;
-        // struction_misconfig.phase_blow_ups=1;
-        // struction_misconfig.setBacktrackType("immediate_exclude");
-        // struction_misconfig.set_limit=512;
-        // struction_misconfig.time_limit -= mmwis_log::instance()->get_total_timer();
         
         struction::cout_handler::disable_cout();
         struction::branch_and_reduce_algorithm exact_solver(reduced, struction_misconfig);
@@ -228,6 +216,7 @@ NodeWeight reduction_evolution<reducer>::perform_mis_search(MISConfig & mis_conf
     // Stop if time limit or the graph is completely reduced
     if (mis_config.time_limit <= mmwis_log::instance()->get_total_timer() || (remaining_size == 0 && recursive)) {
         add_reductions(mis_config, G, reduced, reverse_mapping, independent_set, full_reducer);
+        build_final_solution(mis_config, G, independent_set, weight_offset);
         return is_base;
 
     } else if (remaining_size == 0 && !recursive) {

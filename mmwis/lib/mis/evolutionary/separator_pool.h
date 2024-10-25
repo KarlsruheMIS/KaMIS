@@ -13,7 +13,7 @@
 #include "definitions.h"
 #include "population_mis.h"
 #include "kaHIP_interface.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 namespace mmwis {
 

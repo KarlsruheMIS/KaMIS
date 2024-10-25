@@ -6,7 +6,7 @@
 #define COMPONENTS_HILS_H
 
 #include "definitions.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 #include "mmwis_config.h"
 #include "random_functions.h"
 #include "timer.h"
@@ -120,7 +120,7 @@ public:
         } while (s.omegaImprovement() || s.twoImprovement() );
 
         Solution best_s(s);
-        double best_t;
+        double best_t = 0;
 
         // run ILS iterations
 

@@ -39,7 +39,7 @@ int cout_handler::disable_count = 0;
 branch_and_reduce_algorithm::~branch_and_reduce_algorithm() {
 }
 
-branch_and_reduce_algorithm::branch_and_reduce_algorithm(mmwis::graph_access& G, const ::mmwis::MISConfig& config, bool called_from_fold)
+branch_and_reduce_algorithm::branch_and_reduce_algorithm(::graph_access& G, const ::mmwis::MISConfig& config, bool called_from_fold)
         : config(config), global_status(G), set_1(global_status.n), set_2(global_status.n), double_set(global_status.n * 2),
         buffers(4, sized_vector<NodeID>(global_status.n)), bool_buffer(global_status.n), zero_vec(global_status.n, 0) {
     if (called_from_fold) {
@@ -235,7 +235,7 @@ void branch_and_reduce_algorithm::fill_global_greedy() {
 	}
 }
 
-void branch_and_reduce_algorithm::greedy_initial_is(mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer) {
+void branch_and_reduce_algorithm::greedy_initial_is(::graph_access& G, sized_vector<NodeID>& tmp_buffer) {
 	auto nodes = tmp_buffer;
 	nodes.set_size(G.number_of_nodes());
 
@@ -278,6 +278,7 @@ void branch_and_reduce_algorithm::compute_ils_pruning_bound() {
 	cout_handler::enable_cout();
 	std::cout << "finished " << t.elapsed() << std::endl;
 	std::cout << (get_current_is_weight() + best_weight) << "," << t.elapsed() << std::endl;
+	best_solution_status = status;
 }
 
 NodeWeight branch_and_reduce_algorithm::compute_cover_pruning_bound() {
@@ -380,11 +381,11 @@ NodeWeight branch_and_reduce_algorithm::compute_cover_pruning_bound() {
 	return upper_bound;
 }
 
-size_t branch_and_reduce_algorithm::run_ils(const ::mmwis::MISConfig& config, mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps) {
+size_t branch_and_reduce_algorithm::run_ils(const ::mmwis::MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps) {
     double time_limit = 0.01*(config.time_limit - t.elapsed());
     if (!config.perform_hils) {
         greedy_initial_is(G, tmp_buffer);
-        mmwis::ils local_search(config);
+        ils local_search(config);
         local_search.perform_ils(G, max_swaps, time_limit);
     } else {
         if (config.reduce_and_peel) {
@@ -548,7 +549,7 @@ bool branch_and_reduce_algorithm::branch_reduce_recursive() {
 		}
 
 		recursive_local_mapping.clear();
-		mmwis::graph_access G;
+		::graph_access G;
 		extractor.extract_block(recursive_graph, G, i + 2, recursive_local_mapping);
 
 		config.time_limit = time_limit - t.elapsed();
@@ -696,7 +697,7 @@ void branch_and_reduce_algorithm::branch_reduce_single_component() {
 	restore_best_local_solution();
 }
 
-mmwis::graph_access& branch_and_reduce_algorithm::kernelize() {
+::graph_access& branch_and_reduce_algorithm::kernelize() {
     initial_reduce();
     build_global_graph_access();
     return global_graph;
@@ -764,28 +765,23 @@ bool branch_and_reduce_algorithm::run_branch_reduce() {
         //std::cout << "%connected component " << i << ":  " << comp_size[i] << std::endl;
 
         local_mapping.clear();
-        mmwis::graph_access G;
+        ::graph_access G;
         extractor.extract_block(global_graph, G, i, local_mapping);
         local_graph = &G;
 
         status = graph_status(*local_graph);
+
 
         set_local_reductions();
 
         branch_reduce_single_component();
 
         for (size_t node = 0; node < local_mapping.size(); node++) {
-            // if (status.node_status[node] == IS_status::not_set || status.node_status[node] == IS_status::folded) {
-            // 	std::cerr << "error: node is not_set / folded after restore" << std::endl;
-            // 	exit(1);
-            // }
-
             global_status.node_status[global_mapping[local_mapping[node]]] = status.node_status[node];
         }
 
         global_status.is_weight += best_weight;
         global_status.remaining_nodes -= status.n;
-        /* local_graph.reset(); */
         local_graph = nullptr;
     }
 
@@ -839,7 +835,6 @@ void branch_and_reduce_algorithm::reverse_branching() {
 		status.modified_stack.pop_back();
 
 		if (status.node_status[node] == IS_status::folded) {
-			//std::cout << "reversed fold" << std::endl;
 			auto type = status.folded_stack.back();
 			status.folded_stack.pop_back();
 
@@ -852,7 +847,9 @@ void branch_and_reduce_algorithm::reverse_branching() {
 }
 
 void branch_and_reduce_algorithm::restore_best_local_solution() {
+	status = best_solution_status;
 	if (is_ils_best_solution) {
+		assert(local_graph->number_of_nodes() == status.n);
 		for (size_t node = 0; node < status.n; node++) {
 			if (local_graph->getPartitionIndex(node) == 1) {
 				status.node_status[node] = IS_status::included;
@@ -864,7 +861,6 @@ void branch_and_reduce_algorithm::restore_best_local_solution() {
 		return;
 	}
 
-	status = best_solution_status;
 	status.modified_stack.pop_back();
 
 	while (!status.modified_stack.empty()) {
@@ -918,7 +914,7 @@ void branch_and_reduce_algorithm::build_global_graph_access() {
 	std::swap(status, global_status);
 }
 
-void branch_and_reduce_algorithm::build_graph_access(mmwis::graph_access & G, std::vector<NodeID> & reverse_mapping) const {
+void branch_and_reduce_algorithm::build_graph_access(::graph_access & G, std::vector<NodeID> & reverse_mapping) const {
 	std::vector<NodeID> mapping(status.graph.size(), UINT_MAX);
 	size_t edge_count = 0;
 
@@ -960,7 +956,7 @@ void branch_and_reduce_algorithm::build_graph_access(mmwis::graph_access & G, st
 	} endfor
 }
 
-void branch_and_reduce_algorithm::build_induced_neighborhood_subgraph(mmwis::graph_access& G, NodeID source_node) {
+void branch_and_reduce_algorithm::build_induced_neighborhood_subgraph(::graph_access& G, NodeID source_node) {
 	buffers[0].clear();
 	set_1.clear();
 
@@ -972,7 +968,7 @@ void branch_and_reduce_algorithm::build_induced_neighborhood_subgraph(mmwis::gra
 	build_induced_subgraph(G, buffers[0], set_1, buffers[1]);
 }
 
-void branch_and_reduce_algorithm::build_induced_subgraph(mmwis::graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping) {
+void branch_and_reduce_algorithm::build_induced_subgraph(::graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping) {
 	size_t edge_count = 0;
 
 	for (size_t i = 0; i < nodes.size(); i++) {
@@ -1001,7 +997,7 @@ void branch_and_reduce_algorithm::build_induced_subgraph(mmwis::graph_access& G,
 	G.finish_construction();
 }
 
-void branch_and_reduce_algorithm::reverse_reduction(mmwis::graph_access & G, mmwis::graph_access & reduced_G, std::vector<NodeID> & reverse_mapping) {
+void branch_and_reduce_algorithm::reverse_reduction(::graph_access & G, ::graph_access & reduced_G, std::vector<NodeID> & reverse_mapping) {
 	//build_global_graph_access();
 
 	forall_nodes(reduced_G, node) {
@@ -1015,14 +1011,4 @@ void branch_and_reduce_algorithm::reverse_reduction(mmwis::graph_access & G, mmw
 	global_status = std::move(status);
 	restore_best_global_solution();
 	apply_branch_reduce_solution(G);
-}
-
-void branch_and_reduce_algorithm::apply_branch_reduce_solution(mmwis::graph_access & G) {
-	forall_nodes(G, node) {
-		if (status.node_status[node] == IS_status::included) {
-			G.setPartitionIndex(node, 1);
-		} else {
-			G.setPartitionIndex(node, 0);
-		}
-	} endfor
 }

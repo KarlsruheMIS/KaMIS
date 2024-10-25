@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <vector>
 #include <string>
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 
 class Solution
@@ -109,7 +109,7 @@ private:
 
 	// problem instance
 
-    mmwis::graph_access *G;
+    graph_access *G;
 
 	// the solution_ vector is partitioned into three blocks: first vertices in the solution, then 
 	// the free vertices (i.e., vertices that are not adjacent to any vertex in the solution), and 

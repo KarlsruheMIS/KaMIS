@@ -11,7 +11,7 @@
 #include "definitions.h"
 #include "mmwis_config.h"
 #include "kaHIP_interface.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 #include <queue>
 

@@ -9,7 +9,7 @@
 #define _RANDOM_MIS_H_
 
 #include "initial_mis.h"
-#include "mmwis_graph_access.h"
+#include "graph_access.h"
 
 class random_mis : public initial_mis {
     public:
@@ -31,7 +31,7 @@ class random_mis : public initial_mis {
          * @param G Graph representation.
          */
         void initial_partition( const unsigned int seed,
-                                mmwis::graph_access & G );
+                                graph_access & G );
 
     private:
         /**
@@ -40,7 +40,7 @@ class random_mis : public initial_mis {
          * @param G Graph representation
          * @param permutation Permutation that is created
          */
-        void generate_permutation( mmwis::graph_access & G,
+        void generate_permutation( graph_access & G,
                                    NodePermutationMap & permutation);
 };
 
