@@ -16,7 +16,7 @@ Main project site:
 <http://KarlsruheMIS.github.io>
 
 ## Installation ##
-As a first step, please run *git submodule --init --recursive*. Then compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
+As a first step, please run *git update submodule --init --recursive*. Then compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
 
