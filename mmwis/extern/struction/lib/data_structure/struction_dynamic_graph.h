@@ -26,7 +26,7 @@
 
 #include <vector>
 #include <algorithm>
-#include "graph_access.h"
+#include "mmwis_graph_access.h"
 #include "fast_set.h"
 #include "sized_vector.h"
 namespace struction {
@@ -66,7 +66,7 @@ public:
 
     struction_dynamic_graph(size_t nodes = 0) : graph(nodes), set(nodes) { graph.reserve(nodes); }
 
-    struction_dynamic_graph(graph_access& G) : struction_dynamic_graph(G.number_of_nodes()) {
+    struction_dynamic_graph(mmwis::graph_access& G) : struction_dynamic_graph(G.number_of_nodes()) {
         neighbor_list* slot;
 
         forall_nodes(G, node)

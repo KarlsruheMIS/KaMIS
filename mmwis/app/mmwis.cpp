@@ -17,14 +17,13 @@
 #include "hils.h"
 #include "mmwis_log.h"
 #include "graph_access.h"
-#include "graph_io.h"
 #include "reduction_evolution.h"
 #include "mmwis_config.h"
 #include "graph_io.h"
 #include "parse_parameters.h"
 #include "branch_and_reduce_algorithm.h"
 
-bool is_IS(graph_access& G) {
+bool is_IS(mmwis::graph_access& G) {
 	forall_nodes(G, node) {
 		if (G.getPartitionIndex(node) == 1) {
 			forall_out_edges(G, edge, node) {
@@ -40,7 +39,7 @@ bool is_IS(graph_access& G) {
 }
 
 std::vector<NodeID> reverse_mapping;
-NodeWeight perform_reduction(std::unique_ptr<mmwis::branch_and_reduce_algorithm>& reducer, graph_access& G, graph_access& rG, const mmwis::MISConfig& config) {
+NodeWeight perform_reduction(std::unique_ptr<mmwis::branch_and_reduce_algorithm>& reducer, mmwis::graph_access& G, mmwis::graph_access& rG, const mmwis::MISConfig& config) {
 	reducer = std::unique_ptr<mmwis::branch_and_reduce_algorithm>(new mmwis::branch_and_reduce_algorithm(G, config));
 	reducer->reduce_graph();
 
@@ -59,7 +58,7 @@ NodeWeight perform_reduction(std::unique_ptr<mmwis::branch_and_reduce_algorithm>
 }
 
 
-void assign_weights(graph_access& G, const mmwis::MISConfig& mis_config) {
+void assign_weights(mmwis::graph_access& G, const mmwis::MISConfig& mis_config) {
 	constexpr NodeWeight MAX_WEIGHT = 200;
 
 	if (mis_config.weight_source == mmwis::MISConfig::Weight_Source::HYBRID) {
@@ -91,7 +90,7 @@ void assign_weights(graph_access& G, const mmwis::MISConfig& mis_config) {
 
 
 template<class reducer>
-int run(mmwis::MISConfig &mis_config, graph_access &G, NodeWeight weight_offset) {
+int run(mmwis::MISConfig &mis_config, mmwis::graph_access &G, NodeWeight weight_offset) {
 
     mmwis::mmwis_log::instance()->restart_total_timer();
     std::vector<int> forced_vertices(G.number_of_nodes(), -1);
@@ -137,7 +136,7 @@ int main(int argn, char **argv) {
     mmwis::mmwis_log::instance()->set_config(mis_config);
 
     // Read the graph
-    graph_access G;
+    mmwis::graph_access G;
     std::string comments;
     graph_io::readGraphWeighted(G, graph_filepath);
     assign_weights(G, mis_config);

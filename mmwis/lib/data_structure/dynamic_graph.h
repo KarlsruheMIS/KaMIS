@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <vector>
 #include <algorithm>
-#include "graph_access.h"
+#include "mmwis_graph_access.h"
 
 namespace mmwis {
 class dynamic_graph {

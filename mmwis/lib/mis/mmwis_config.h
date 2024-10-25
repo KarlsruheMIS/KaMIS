@@ -31,6 +31,8 @@ struct MISConfig {
     std::string output_filename;
     // Name of the kernel file.
     std::string kernel_filename;
+    // Name of config
+    std::string config_name;
     // disable simple reduction
     bool disable_fold1=false;
     bool disable_v_shape_min=false;

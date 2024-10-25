@@ -7,26 +7,25 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 #include "kaHIP_interface.h"
-#include "../lib/data_structure/graph_access.h"
-#include "../lib/io/graph_io.h"
-#include "../lib/node_ordering/nested_dissection.h"
-#include "../lib/tools/timer.h"
-#include "../lib/tools/quality_metrics.h"
-#include "../lib/tools/macros_assertions.h"
-#include "../lib/tools/random_functions.h"
-//#include "../lib/parallel_mh/parallel_mh_async.h"
-#include "../lib/partition/uncoarsening/separator/area_bfs.h"
-#include "../lib/partition/partition_config.h"
-#include "../lib/partition/graph_partitioner.h"
-#include "../lib/partition/uncoarsening/separator/vertex_separator_algorithm.h"
-#include "../lib/partition/uncoarsening/refinement/cycle_improvements/cycle_refinement.h"
-#include "../app/configuration.h"
-#include "../app/balance_configuration.h"
-#include "../lib/data_structure/matrix/normal_matrix.h"
-#include "../lib/data_structure/matrix/online_distance_matrix.h"
-#include "../lib/mapping/mapping_algorithms.h"
+#include "data_structure/graph_access.h"
+#include "node_ordering/nested_dissection.h"
+#include "tools/timer.h"
+#include "tools/quality_metrics.h"
+#include "tools/macros_assertions.h"
+#include "tools/random_functions.h"
+#include "partition/uncoarsening/separator/area_bfs.h"
+#include "partition/partition_config.h"
+#include "partition/graph_partitioner.h"
+#include "partition/uncoarsening/separator/vertex_separator_algorithm.h"
+#include "partition/uncoarsening/refinement/cycle_improvements/cycle_refinement.h"
+#include "configuration.h"
+#include "balance_configuration.h"
+#include "data_structure/matrix/normal_matrix.h"
+#include "data_structure/matrix/online_distance_matrix.h"
+#include "mapping/mapping_algorithms.h"
 
 
 using namespace std;

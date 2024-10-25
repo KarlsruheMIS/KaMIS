@@ -38,7 +38,7 @@
 #include "struction_branch_and_reduce_algorithm.h"
 #include "strongly_connected_components.h"
 
-bool is_IS(graph_access& G) {
+bool is_IS(mmwis::graph_access& G) {
     forall_nodes(G, node)
         if (G.getPartitionIndex(node) == 1)
             forall_out_edges(G, edge, node)
@@ -70,12 +70,12 @@ int main(int argn, char **argv) {
     std::string name = mis_config.graph_filename.substr(0,mis_config.graph_filename.find_last_of('.'));
 
     // Read the graph
-    graph_access G;
+    mmwis::graph_access G;
     graph_io::readGraphWeighted(G, graph_filepath);
 
     struction::branch_and_reduce_algorithm reducer(G, mis_config);
 
-    graph_access &g = reducer.kernelize();
+    mmwis::graph_access &g = reducer.kernelize();
 
     mis_config.phase_blow_ups = 1;
     mis_config.struction_type = ::mmwis::MISConfig::Struction_Type::EXTENDED;

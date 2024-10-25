@@ -2,11 +2,9 @@
 * reductions.cpp
 *****************************************************************************/
 
-#include "graph_io.h"
-
 #include "reductions.h"
 #include "branch_and_reduce_algorithm.h"
-#include "flow_graph.h"
+#include "data_structure/flow_graph.h"
 #include "push_relabel.h"
 #include "definitions.h"
 
@@ -16,6 +14,7 @@
 #include <iostream>
 
 using namespace mmwis;
+// typedef mmwis::graph_access graph_access;
 
 typedef branch_and_reduce_algorithm::IS_status IS_status;
 

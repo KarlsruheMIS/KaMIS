@@ -78,9 +78,15 @@ void mmwis_log::print_graph() {
 void mmwis_log::print_config() {
     filebuffer_string << "\t\tConfiguration"        << std::endl;
     filebuffer_string << "=========================================="                            << std::endl;
+    filebuffer_string << "Configuration:\t\t"        << log_config.config_name                   << std::endl; 
+    filebuffer_string << "Vertex Selection:\t\t"     << log_config.vertex_selection              << std::endl; 
+    filebuffer_string << "threshold to solve exact:\t"<< log_config.V_solve_exact                << std::endl; 
+    filebuffer_string << "time to solve exact:\t"    << log_config.time_solve_exact              << std::endl; 
+    filebuffer_string << "fraction:\t\t"             << log_config.fraction                      << std::endl; 
     filebuffer_string << "Population size:\t\t"      << log_config.population_size               << std::endl; 
     filebuffer_string << "Repetitions:\t\t\t"        << log_config.repetitions                   << std::endl; 
     filebuffer_string << "Time limit:\t\t\t"         << log_config.time_limit                    << std::endl; 
+    filebuffer_string << "Evo time limit:\t\t"       << log_config.evo_time_limit                    << std::endl; 
     filebuffer_string << "---"                       << std::endl;
     filebuffer_string << "KaHIP mode:\t\t\t"         << log_config.kahip_mode                    << std::endl;
     filebuffer_string << "---"                       << std::endl;
@@ -111,6 +117,11 @@ void mmwis_log::print_config() {
     
     std::cout << "\t\tConfiguration"        << std::endl;
     std::cout << "==========================================="                           << std::endl;
+    std::cout << "Configuration:\t\t\t"        << log_config.config_name                   << std::endl; 
+    std::cout << "Vertex Selection:\t\t"     << log_config.vertex_selection              << std::endl; 
+    std::cout << "Threshold to solve exact:\t"<< log_config.V_solve_exact                << std::endl; 
+    std::cout << "Time to solve exact:\t\t"    << log_config.time_solve_exact              << std::endl; 
+    std::cout << "Fraction:\t\t\t"           << log_config.fraction                      << std::endl; 
     std::cout << "Population size:\t\t"      << log_config.population_size               << std::endl; 
     std::cout << "Repetitions:\t\t\t"        << log_config.repetitions                   << std::endl; 
     std::cout << "Time limit:\t\t\t"         << log_config.time_limit                    << std::endl; 
@@ -141,8 +152,6 @@ void mmwis_log::print_config() {
     std::cout << "No. of separators:\t\t"    << log_config.number_of_separators          << std::endl; 
     std::cout << "No. of k-partitions:\t\t"  << log_config.number_of_k_partitions        << std::endl;
     std::cout << "No. of k-separators:\t\t"  << log_config.number_of_k_separators        << std::endl; 
-    std::cout << "---"                       << std::endl;
-    std::cout << "Fraction size:\t\t\t"      << log_config.fraction                      << std::endl;
 
     std::cout << std::endl;
 }
@@ -419,13 +428,6 @@ void mmwis_log::set_best_size(mmwis::MISConfig & mis_config, unsigned int size) 
 
 void mmwis_log::set_config(mmwis::MISConfig & config) {
     log_config = config; 
-}
-
-void mmwis_log::set_graph(graph_access & G) {
-    number_of_nodes = G.number_of_nodes();
-    number_of_edges = G.number_of_edges();
-    avg_degree = (double) number_of_edges / number_of_nodes;
-    density = (double) (2 * number_of_edges) / (number_of_nodes * (number_of_nodes - 1));
 }
 
 void mmwis_log::write_log() {

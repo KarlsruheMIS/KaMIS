@@ -37,7 +37,8 @@ class mmwis_log {
          *
          * @param G Graph representation.
          */
-        void set_graph(graph_access & G);
+        template <typename graph>
+        void set_graph(graph & G);
 
         /**
          * Write the log to a file.
@@ -342,4 +343,13 @@ class mmwis_log {
         void compute_avg();
 
 };
+
+template <typename graph>
+inline void mmwis_log::set_graph(graph & G) {
+    number_of_nodes = G.number_of_nodes();
+    number_of_edges = G.number_of_edges();
+    avg_degree = (double) number_of_edges / number_of_nodes;
+    density = (double) (2 * number_of_edges) / (number_of_nodes * (number_of_nodes - 1));
+}
+
 }

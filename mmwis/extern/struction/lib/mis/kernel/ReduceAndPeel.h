@@ -22,7 +22,7 @@ struct RestoreData {
 };
 class ReduceAndPeel {
 public:
-    ReduceAndPeel(graph_access &g) : g(g), degrees(g.number_of_nodes()), weight_diffs(g.number_of_nodes())
+    ReduceAndPeel(mmwis::graph_access &g) : g(g), degrees(g.number_of_nodes()), weight_diffs(g.number_of_nodes())
             , marked(g.number_of_nodes(), false), reduction_offset(0), active_nodes(g.number_of_nodes()), choices(g.number_of_nodes())
             , edges(g.number_of_edges()){
         std::iota(active_nodes.begin(), active_nodes.end(), 0);
@@ -71,7 +71,7 @@ public:
     }
 
 
-    graph_access &reducedGraph() {
+    mmwis::graph_access &reducedGraph() {
         return reduced_graph;
     }
 
@@ -80,8 +80,8 @@ public:
     }
 
 private:
-    graph_access &g;
-    graph_access reduced_graph;
+    mmwis::graph_access &g;
+    mmwis::graph_access reduced_graph;
     std::vector<size_t> degrees;
     std::vector<int> weight_diffs;
     std::stack<NodeID> deg_1_vertices;
@@ -98,7 +98,7 @@ private:
 
     size_t reduction_offset;
 
-    void init(graph_access &g) {
+    void init(mmwis::graph_access &g) {
         forall_nodes(g, n)
         degrees[n] = g.getNodeDegree(n);
         weight_diffs[n] = get_weight_dif(n);

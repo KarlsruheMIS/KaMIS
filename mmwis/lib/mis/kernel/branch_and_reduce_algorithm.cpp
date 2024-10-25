@@ -857,7 +857,8 @@ void branch_and_reduce_algorithm::build_global_graph_access() {
 	std::swap(status, global_status);
 }
 
-void branch_and_reduce_algorithm::build_graph_access(graph_access & G, std::vector<NodeID> & reverse_mapping) const {
+template <typename graph>
+void branch_and_reduce_algorithm::build_graph_access(graph & G, std::vector<NodeID> & reverse_mapping) const {
 
 	std::vector<NodeID> mapping(status.graph.size(), UINT_MAX);
 	size_t edge_count = 0;

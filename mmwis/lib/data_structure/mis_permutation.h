@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "definitions.h"
-#include "graph_access.h"
+#include "mmwis_graph_access.h"
 #include "data_structure/candidate_list.h"
 
 namespace mmwis {

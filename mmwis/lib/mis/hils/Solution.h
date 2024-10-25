@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <vector>
 #include <string>
-#include <graph_access.h>
+#include "mmwis_graph_access.h"
 
 
 class Solution
@@ -19,7 +19,8 @@ class Solution
 
 public:
 
-	Solution(graph_access *G);
+	template <typename graph>
+	Solution(graph *G);
 
 	// add a vertex to the solution
 
@@ -108,7 +109,7 @@ private:
 
 	// problem instance
 
-    graph_access *G;
+    mmwis::graph_access *G;
 
 	// the solution_ vector is partitioned into three blocks: first vertices in the solution, then 
 	// the free vertices (i.e., vertices that are not adjacent to any vertex in the solution), and 
@@ -158,5 +159,22 @@ private:
 	void moveNonFreeToFreePartition(const int v);
 
 }; // class Solution
+
+template <typename graph>
+inline Solution::Solution(graph *G) :
+	G(G),
+	solution_(G->number_of_nodes()),
+	solution_size_(0),
+	free_size_(G->number_of_nodes()),
+	tightness_(G->number_of_nodes(), 0),
+	position_(G->number_of_nodes()),
+	mu_(G->number_of_nodes()),
+	weight_(0) {
+	for (int idx = 0; idx < G->number_of_nodes(); idx++) {
+		position_[idx] = idx;
+		solution_[idx] = idx;
+		mu_[idx] = G->getNodeWeight(idx);
+	}
+} // Solution::Solution(const Graph *g)
 
 #endif // #ifndef SOLUTION_H_

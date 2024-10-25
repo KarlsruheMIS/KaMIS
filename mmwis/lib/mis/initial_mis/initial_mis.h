@@ -7,7 +7,7 @@
 #ifndef _INITIAL_MIS_H_
 #define _INITIAL_MIS_H_
 
-#include "data_structure/graph_access.h"
+#include "mmwis_graph_access.h"
 class initial_mis {
     public:
         /**
@@ -27,7 +27,7 @@ class initial_mis {
          * @param G Graph representation.
          */
         virtual void initial_partition( const unsigned int seed,
-                                        graph_access & G ) = 0;
+                                        mmwis::graph_access & G ) = 0;
 };
 
 #endif

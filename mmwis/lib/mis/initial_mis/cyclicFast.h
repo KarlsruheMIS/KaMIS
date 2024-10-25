@@ -13,7 +13,7 @@
 
 #include "initial_mis.h"
 #include "mmwis_config.h"
-#include "data_structure/graph_access.h"
+#include "mmwis_graph_access.h"
 
 namespace mmwis {
 class cyclicFast: public initial_mis {
@@ -36,7 +36,7 @@ class cyclicFast: public initial_mis {
          * @param seed Seed for the RNG.
          * @param G Graph representation.
          */
-        void initial_partition_struction(MISConfig & config, 
+        bool initial_partition_struction(MISConfig & config, 
                                 graph_access & G,
                                 double remaining_time); 
 

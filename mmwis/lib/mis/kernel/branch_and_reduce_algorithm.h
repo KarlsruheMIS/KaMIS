@@ -12,6 +12,7 @@
 #include "mmwis_config.h"
 #include "timer.h"
 #include "definitions.h"
+#include "mmwis_graph_access.h"
 #include "graph_access.h"
 #include "sized_vector.h"
 #include "dynamic_graph.h"
@@ -79,7 +80,7 @@ private:
 
 		graph_status() = default;
 
-		graph_status(graph_access& G) :
+		graph_status(mmwis::graph_access& G) :
 			n(G.number_of_nodes()), remaining_nodes(n), graph(G), weights(n, 0), node_status(n, IS_status::not_set),
 			changed_status(n, 0), folded_queue(n + n*m), branching_queue(n+ n*m), modified_queue(n + 1 +n*m) {
 			forall_nodes(G, node) {
@@ -117,18 +118,18 @@ private:
 	bool timeout = false;
 
 	graph_status global_status;
-	graph_access global_graph;
+	mmwis::graph_access global_graph;
 	std::vector<NodeID> global_mapping;
 	std::vector<size_t> global_reduction_map;
 	size_t total_ils_node_count;
 
 	graph_status status;
-	graph_access* local_graph;
+	mmwis::graph_access* local_graph;
 	std::vector<NodeID> local_mapping;
 	std::vector<size_t> local_reduction_map;
 	std::vector<reduction_ptr> local_reductions;
 
-	graph_access recursive_graph;
+	mmwis::graph_access recursive_graph;
 	std::vector<NodeID> recursive_mapping;
 	std::vector<int> recursive_comp_map;
 	std::vector<NodeID> recursive_local_mapping;
@@ -169,34 +170,35 @@ private:
 	void restore_best_global_solution();
 
 	void build_global_graph_access();
-	void build_induced_neighborhood_subgraph(graph_access& G, NodeID source_node);
-	void build_induced_subgraph(graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping);
+	void build_induced_neighborhood_subgraph(mmwis::graph_access& G, NodeID source_node);
+	void build_induced_subgraph(mmwis::graph_access& G, const sized_vector<NodeID>& nodes, const fast_set& nodes_set, sized_vector<NodeID>& reverse_mapping);
 
 	NodeWeight get_unset_neighbor_weight_sum_and_max(NodeID node, NodeID &max_node, graph_status & s);
 	NodeWeight get_unset_neighbor_weight_sum(NodeID node, graph_status & s);
 public:
-	branch_and_reduce_algorithm(graph_access& G, const MISConfig& config, bool called_from_fold = false);
+	branch_and_reduce_algorithm(mmwis::graph_access& G, const MISConfig& config, bool called_from_fold = false);
 
 	void reduce_graph();
 	bool run_branch_reduce();
 
-	NodeWeight run_ils(const MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
-	static void greedy_initial_is(graph_access& G, sized_vector<NodeID>& tmp_buffer);
+	NodeWeight run_ils(const MISConfig& config, mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
+	static void greedy_initial_is(mmwis::graph_access& G, sized_vector<NodeID>& tmp_buffer);
 
 	NodeWeight get_current_is_weight() const;
     NodeID get_current_remaining_nodes() const;
-	void reverse_reduction(graph_access & G, graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
-	void apply_branch_reduce_solution(graph_access & G);
-	void apply_branch_reduce_reductions(graph_access & G);
+	void reverse_reduction(mmwis::graph_access & G, mmwis::graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
+	void apply_branch_reduce_solution(mmwis::graph_access & G);
+	void apply_branch_reduce_reductions(mmwis::graph_access & G);
 
-	void build_graph_access(graph_access& G, std::vector<NodeID>& reverse_mapping) const;
+	template <typename graph>
+	void build_graph_access(graph& G, std::vector<NodeID>& reverse_mapping) const;
     void force_into_independent_set(std::vector<NodeID> const &nodes); 
     void exclude_nodes(std::vector<NodeID> const &nodes);
     /* void extend_finer_is(std::vector<bool> & independent_set); */
     /* void set_node_status(std::vector<bool> & independent_set); */
     void update_independent_set(std::vector<bool> & independent_set);
     void update_new_independent_set_nodes(std::vector<bool> & independent_set);
-    void set_node_status(std::vector<bool> & independent_set , graph_access & G, graph_access & reduced, std::vector<NodeID> & reverse_mapping);
+    void set_node_status(std::vector<bool> & independent_set , mmwis::graph_access & G, mmwis::graph_access & reduced, std::vector<NodeID> & reverse_mapping);
     bool is_node_status_included(NodeID node);
     cout_handler ch;
 

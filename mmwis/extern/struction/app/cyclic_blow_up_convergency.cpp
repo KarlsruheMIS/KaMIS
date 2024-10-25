@@ -59,12 +59,12 @@ int main(int argn, char **argv) {
     mis_log::instance()->set_config(mis_config);
 
     // Read the graph
-    graph_access G;
+    mmwis::graph_access G;
     graph_io::readGraphWeighted(G, graph_filepath);
 
     struction::branch_and_reduce_algorithm reducer(G, mis_config);
     std::cout << "time,graph_size" << std::endl;
-    graph_access &g = reducer.kernelize();
+    mmwis::graph_access &g = reducer.kernelize();
 
     return 0;
 }

@@ -20,7 +20,7 @@
 
 #include "struction_reductions.h"
 #include "struction_branch_and_reduce_algorithm.h"
-#include "flow_graph.h"
+#include "data_structure/flow_graph.h"
 #include "push_relabel.h"
 #include "key_functions.h"
 
@@ -742,7 +742,7 @@ bool struction_generalized_neighborhood_reduction::reduce(branch_and_reduce_algo
 	auto& status = br_alg->status;
 	size_t oldn = status.remaining_nodes;
 
-	graph_access neighborhood_graph;
+	mmwis::graph_access neighborhood_graph;
 	auto config = br_alg->config;
 
 	cout_handler::disable_cout();
@@ -803,7 +803,7 @@ bool struction_generalized_fold_reduction::reduce(branch_and_reduce_algorithm* b
 	auto& reverse_mapping = br_alg->buffers[1];
 	size_t oldn = status.remaining_nodes;
 
-	graph_access neighborhood_graph;
+	mmwis::graph_access neighborhood_graph;
 	auto config = br_alg->config;
 
 	cout_handler::disable_cout();

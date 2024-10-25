@@ -6,8 +6,7 @@
 #define COMPONENTS_HILS_H
 
 #include "definitions.h"
-#include "graph_access.h"
-#include "graph_io.h"
+#include "mmwis_graph_access.h"
 #include "mmwis_config.h"
 #include "random_functions.h"
 #include "timer.h"
@@ -29,7 +28,8 @@ private:
 public:
     hils(const mmwis::MISConfig &config) : config(config) {}
 
-    void make_maximal(graph_access & G) {
+	template <typename graph>
+    void make_maximal(graph & G) {
         srand(config.seed);
         random_functions::setSeed(config.seed);
 
@@ -44,14 +44,16 @@ public:
         assert(s.integrityCheck());
     }
     
-    void add_candidates(graph_access &G, std::vector<NodeID>& cand_list) {
+	template <typename graph>
+    void add_candidates(graph &G, std::vector<NodeID>& cand_list) {
         Solution s(&G);
         for (NodeID cand : cand_list) {
             s.force_candidate(cand);
         }
     }
 
-    void direct_improvement(graph_access &G, NodeID node) {
+	template <typename graph>
+    void direct_improvement(graph &G, NodeID node) {
         double p[4] = {2, 4, 4, 1}; 
         Solution s(&G);
 
@@ -69,7 +71,8 @@ public:
         assert(s.integrityCheck());
     }
 
-    void direct_improvement(graph_access &G, std::vector<NodeID>& candidates) {
+	template <typename graph>
+    void direct_improvement(graph&G, std::vector<NodeID>& candidates) {
         double p[4] = {2, 4, 4, 1}; // intensification/exploration parameters
         Solution s(&G);
 
@@ -91,7 +94,8 @@ public:
     }
 
 
-    void perform_ils(graph_access &G, unsigned int max_iterations, double time_limit,  NodeWeight weight_offset = 0) {
+	template <typename graph>
+    void perform_ils(graph &G, unsigned int max_iterations, double time_limit,  NodeWeight weight_offset = 0) {
         double p[4] = {2, 4, 4, 1}; // intensification/exploration parameters
         Solution s(&G);
 
@@ -116,6 +120,7 @@ public:
         } while (s.omegaImprovement() || s.twoImprovement() );
 
         Solution best_s(s);
+        double best_t;
 
         // run ILS iterations
 
@@ -150,6 +155,7 @@ public:
                 if (best_s.weight() < s.weight()) {
                     best_s = s;
                     k -= s.size() * p[2];
+                    best_t = t.elapsed();
                 }
             } else if (k <= s.size() / p[1]) {
                 k++;
@@ -165,6 +171,8 @@ public:
             G.setPartitionIndex(i++, state);
         }
         assert(best_s.integrityCheck());
+        std::cout << "hils weight: " << best_s.weight()<< std::endl;
+        std::cout << "hils time: " << best_t<< std::endl;
     }
 };
 
