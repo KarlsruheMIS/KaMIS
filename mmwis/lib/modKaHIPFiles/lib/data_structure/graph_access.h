@@ -162,7 +162,7 @@ class complete_boundary;
 class graph_access {
         friend class complete_boundary;
         public:
-                graph_access() { m_max_degree_computed = false; m_max_degree = 0; graphref = new basicGraph(); m_separator_block_ID = 2;}
+                graph_access() { m_max_degree_computed = false; m_max_degree = 0; m_max_weight_computed = false; m_max_weight = 0; graphref = new basicGraph(); m_separator_block_ID = 2;}
                 virtual ~graph_access(){ delete graphref; };
 
                 graph_access(const graph_access&) = delete;
