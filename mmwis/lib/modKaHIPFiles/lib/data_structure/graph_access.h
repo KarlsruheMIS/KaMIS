@@ -236,10 +236,10 @@ class graph_access {
         private:
                 basicGraph * graphref;     
                 bool         m_max_degree_computed;
-                bool         m_max_weight_computed;
+                bool         m_max_weight_computed = false;
                 unsigned int m_partition_count;
                 EdgeWeight   m_max_degree;
-                EdgeWeight   m_max_weight;
+                EdgeWeight   m_max_weight = 0;
                 PartitionID  m_separator_block_ID;
                 std::vector<PartitionID> m_second_partition_index;
 };
