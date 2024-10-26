@@ -164,6 +164,7 @@ void Solution::removeVertex(const int v)
 
 bool Solution::integrityCheck() const
 {
+    std::cout << "IntegrityCheck" << std::endl;
 	for (int idx = 0; idx < solution_size_; idx++) {
 		int vertex = solution_[idx];
 

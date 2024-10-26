@@ -216,6 +216,7 @@ NodeWeight reduction_evolution<reducer>::perform_mis_search(MISConfig & mis_conf
     // Stop if time limit or the graph is completely reduced
     if (mis_config.time_limit <= mmwis_log::instance()->get_total_timer() || (remaining_size == 0 && recursive)) {
         add_reductions(mis_config, G, reduced, reverse_mapping, independent_set, full_reducer);
+        std::cout << "added reductions" << std::endl;
         build_final_solution(mis_config, G, independent_set, weight_offset);
         return is_base;
 
@@ -361,8 +362,8 @@ void reduction_evolution<reducer>::build_final_solution(MISConfig & mis_config,
 
 
     // Apply HILS
-    /* hils iterate(mis_config); */
-    /* iterate.perform_ils(G, mis_config.ils_iterations, weight_offset); */
+    hils iterate(mis_config);
+    iterate.perform_ils(G, mis_config.ils_iterations, 1, weight_offset);
 
     individuum_mis final_mis;
     NodeID *solution = new NodeID[G.number_of_nodes()];

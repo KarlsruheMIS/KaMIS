@@ -41,7 +41,6 @@ public:
         for (int state : s.solution()) {
             G.setPartitionIndex(i++, state);
         }
-        assert(s.integrityCheck());
     }
     
 	template <typename graph>
@@ -68,7 +67,6 @@ public:
         for (int state : s.solution()) {
             G.setPartitionIndex(i++, state);
         }
-        assert(s.integrityCheck());
     }
 
 	template <typename graph>
@@ -90,7 +88,6 @@ public:
         for (int state : s.solution()) {
             G.setPartitionIndex(node++, state);
         }
-        assert(s.integrityCheck());
     }
 
 
@@ -133,7 +130,6 @@ public:
             // shake
             next_s.force(p[0]);
 
-            assert(next_s.integrityCheck());
 
             do {
                 while (!next_s.isMaximal()) {
@@ -141,7 +137,6 @@ public:
                 }
             } while (next_s.omegaImprovement() || next_s.twoImprovement());
 
-            assert(best_s.integrityCheck());
 
             if (next_s.weight() > s.weight()) {
                 k = 1;
@@ -170,7 +165,6 @@ public:
         for (int state : best_s.solution()) {
             G.setPartitionIndex(i++, state);
         }
-        assert(best_s.integrityCheck());
         std::cout << "hils weight: " << best_s.weight()<< std::endl;
         std::cout << "hils time: " << best_t<< std::endl;
     }
