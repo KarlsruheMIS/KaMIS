@@ -6,9 +6,6 @@ set(KaHIP_INCLUDES
     ${modKaHIP}/interface
     ${modKaHIP}/lib
     ${modKaHIP}/lib/data_structure
-    ${modKaHIP}/lib/algorithms
-    ${modKaHIP}/lib/tools
-    ${modKaHIP}/lib/io
     ${modKaHIP}/../data_structure
     ${modKaHIP}/../data_structure/priority_queues
     ${KaHIP}/app
@@ -23,10 +20,10 @@ set(KaHIP_INCLUDES
 set(KaHIP_INCLUDES ${KaHIP_INCLUDES} PARENT_SCOPE)
 
 set(LIBKAFFPA_SOURCE_FILES
-  # ${modKaHIP}/lib/io/graph_io.cpp
-  # ${modKaHIP}/lib/tools/graph_extractor.cpp
-  ${modKaHIP}/lib/algorithms/strongly_connected_components.cpp
+  ${KaHIP}/lib/io/graph_io.cpp
+  ${KaHIP}/lib/tools/graph_extractor.cpp
   ${modKaHIP}/interface/kaHIP_interface.cpp
+  ${KaHIP}/lib/algorithms/strongly_connected_components.cpp
   ${KaHIP}/lib/data_structure/graph_hierarchy.cpp
   ${KaHIP}/lib/algorithms/topological_sort.cpp
   ${KaHIP}/lib/algorithms/push_relabel.cpp

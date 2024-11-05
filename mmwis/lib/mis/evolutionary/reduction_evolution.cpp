@@ -398,7 +398,6 @@ void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph
     }
 
     mmwis_log::instance()->print_init_title();
-    bool found_optimal_individuum = false;
     while (!island.is_full() && mmwis_log::instance()->get_total_timer() <= mis_config.time_limit) {
         // Diversify?
         if (mis_config.diversify) {
@@ -408,7 +407,7 @@ void reduction_evolution<reducer>::fill_population(MISConfig & mis_config, graph
 
         individuum_mis ind;
         double remaining_time = mis_config.time_limit - mmwis_log::instance()->get_total_timer();
-        found_optimal_individuum = island.create_individuum(mis_config, G, ind, remaining_time); 
+        bool found_optimal_individuum = island.create_individuum(mis_config, G, ind, remaining_time); 
 
         mmwis_log::instance()->set_operator("Initial");
         mmwis_log::instance()->set_result_operator(ind.solution_weight);
