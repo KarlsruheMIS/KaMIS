@@ -24,7 +24,7 @@
 
 #include <omp.h>
 
-#include "configuration_mis.h"
+#include "configuration_struction.h"
 
 /**
  * Parse the given parameters and apply them to the config.
@@ -114,7 +114,7 @@ int parse_parameters(int argn, char **argv,
     };
 
     // Choose standard configuration
-    configuration_mis cfg;
+    configuration_struction cfg;
     cfg.cyclicFast(mis_config);
 
     if (cyclicStrong->count > 0 ) {

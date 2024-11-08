@@ -7,7 +7,7 @@
 #ifndef _INITIAL_MIS_H_
 #define _INITIAL_MIS_H_
 
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 class initial_mis {
     public:
         /**

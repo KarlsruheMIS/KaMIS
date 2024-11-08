@@ -189,7 +189,8 @@ public:
 	void apply_branch_reduce_solution(graph_access & G);
 	void apply_branch_reduce_reductions(graph_access & G);
 
-	void build_graph_access(graph_access& G, std::vector<NodeID>& reverse_mapping) const;
+	template <typename graph>
+	void build_graph_access(graph& G, std::vector<NodeID>& reverse_mapping) const;
     void force_into_independent_set(std::vector<NodeID> const &nodes); 
     void exclude_nodes(std::vector<NodeID> const &nodes);
     /* void extend_finer_is(std::vector<bool> & independent_set); */

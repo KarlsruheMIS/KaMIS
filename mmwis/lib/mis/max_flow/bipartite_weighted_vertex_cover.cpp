@@ -5,7 +5,7 @@
 
 #include "bipartite_weighted_vertex_cover.h"
 #include "definitions.h"
-#include "flow_graph.h"
+#include "data_structure/flow_graph.h"
 #include "push_relabel.h"
 #include <limits>
 #include <queue>

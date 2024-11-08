@@ -13,7 +13,7 @@
 #include "definitions.h"
 #include "population_mis.h"
 #include "kaHIP_interface.h"
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 
 namespace mmwis {
 
@@ -292,6 +292,7 @@ class separator_pool {
         unsigned int k_partitions_size;
 
         // Graph data structures used for the KaHIP-library calls.
+        bool graph_computed = false;
         int *xadj;
         int *adjncy;
         // Score cache

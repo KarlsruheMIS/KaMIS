@@ -76,8 +76,10 @@ if(64BITMODE)
   add_definitions("-DPOINTER64=1")
 endif()
 
-set(MMWIS ${CMAKE_CURRENT_SOURCE_DIR})
+add_subdirectory(lib/modKaHIPFiles)
 
+
+set(MMWIS ${CMAKE_CURRENT_SOURCE_DIR})
 set(MMWIS_INCLUDES
     ${MMWIS}/app
     ${MMWIS}/lib
@@ -92,24 +94,12 @@ set(MMWIS_INCLUDES
     ${MMWIS}/lib/mis/evolutionary/combine
     ${MMWIS}/lib/mis/max_flow
     ${MMWIS}/lib/tools
-    ${MMWIS}/lib/modKaHIPFiles
-    ${MMWIS}/lib/modKaHIPFiles/interface
-    ${MMWIS}/lib/modKaHIPFiles/uq_uncoarsening/refinement/quotient_graph_refinement
-    ${MMWIS}/lib/modKaHIPFiles/uq_uncoarsening/
+    ${MMWIS}/extern/
     ${MMWIS}/extern/argtable3-3.2.1
-    ${MMWIS}/extern/KaHIP/lib
-    ${MMWIS}/extern/KaHIP/lib/io
-    ${MMWIS}/extern/KaHIP/lib/tools
-    ${MMWIS}/extern/KaHIP/lib/algorithms
-    ${MMWIS}/extern/KaHIP/lib/data_structure
-    ${MMWIS}/extern/KaHIP/lib/data_structure/priority_queues
-    ${MMWIS}/extern/KaHIP/lib/partition
-    ${MMWIS}/extern/KaHIP/lib/partition/uncoarsening/refinement/quotient_graph_refinement/flow_refinement
     ${MMWIS}/extern/struction/lib/mis/kernel
     ${MMWIS}/extern/struction/lib/data_structure
+    ${KaHIP_INCLUDES}
 )
-
-add_subdirectory(extern/KaHIP EXCLUDE_FROM_ALL)
 
 set(LIB_MMWIS
     ${MMWIS}/lib/tools/mmwis_log.cpp
@@ -130,7 +120,6 @@ set(LIB_MMWIS
     ${MMWIS}/lib/mis/kernel/branch_and_reduce_algorithm.cpp
     ${MMWIS}/lib/mis/kernel/cout_handler.cpp
     ${MMWIS}/lib/mis/kernel/reductions.cpp
-    ${MMWIS}/lib/modKaHIPFiles/interface/kaHIP_interface.cpp
     ${MMWIS}/extern/struction/lib/mis/kernel/struction_reductions.cpp
     ${MMWIS}/extern/struction/lib/mis/kernel/struction_branch_and_reduce_algorithm.cpp
     ${MMWIS}/extern/struction/lib/mis/kernel/extended_struction.cpp
@@ -147,10 +136,15 @@ set(LIB_MMWIS
     ${MMWIS}/lib/mis/evolutionary/combine/multiway_combine.cpp
 )   
 add_library(lib_mmwis OBJECT ${LIB_MMWIS})
+target_include_directories(lib_mmwis PRIVATE ${KaHIP_INCLUDES})
+target_include_directories(lib_mmwis PRIVATE ${MMWIS_INCLUDES})
+
+add_dependencies(lib_mmwis libkaffpa)
+
+include_directories(mmwis PRIVATE ${MMWIS_INCLUDES})
 
 add_subdirectory(extern/struction)
 
-include_directories(mmwis PRIVATE ${MMWIS_INCLUDES})
 add_executable(mmwis "app/mmwis.cpp" $<TARGET_OBJECTS:libkaffpa> 
                                      $<TARGET_OBJECTS:libmapping> 
                                      $<TARGET_OBJECTS:libnodeordering>

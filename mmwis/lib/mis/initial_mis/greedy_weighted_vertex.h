@@ -10,7 +10,7 @@
 
 
 #include "initial_mis.h"
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 
 class greedy_weighted_vertex : public initial_mis {
     public:

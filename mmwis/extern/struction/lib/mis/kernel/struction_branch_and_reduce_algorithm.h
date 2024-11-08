@@ -44,7 +44,6 @@
 #include <sstream>
 
 namespace struction {
-
 class cout_handler {
 private:
 	static std::streambuf* cout_rdbuf_backup;
@@ -263,7 +262,7 @@ public:
 	branch_and_reduce_algorithm(graph_access& G, const ::mmwis::MISConfig& config, bool called_from_fold = false);
 	~branch_and_reduce_algorithm();
 
-    graph_access& kernelize();
+    ::graph_access& kernelize();
     size_t deg(NodeID node) const;
 	void reduce_graph();
 	bool run_branch_reduce();
@@ -273,10 +272,22 @@ public:
 
 	NodeWeight get_current_is_weight() const;
 	void reverse_reduction(graph_access & G, graph_access & reduced_G, std::vector<NodeID> & reverse_mapping);
-	void apply_branch_reduce_solution(graph_access & G);
+	template <typename graph>
+	void apply_branch_reduce_solution(graph & G);
 
 	void build_graph_access(graph_access & G, std::vector<NodeID>& reverse_mapping) const;
 };
+
+template <typename graph>
+void branch_and_reduce_algorithm::apply_branch_reduce_solution(graph & G) {
+	forall_nodes(G, node) {
+		if (status.node_status[node] == IS_status::included) {
+			G.setPartitionIndex(node, 1);
+		} else {
+			G.setPartitionIndex(node, 0);
+		}
+	} endfor
+}
 
 }
 #endif //BRANCH_AND_REDUCE_SOLVER_H

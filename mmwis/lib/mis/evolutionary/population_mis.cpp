@@ -46,11 +46,14 @@ void population_mis::reset(MISConfig & config, graph_access & G) {
     init(config, G);
 }
 
-void population_mis::create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
+bool population_mis::create_individuum(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
 
     // Build solution
     int initial;
-    if (config.use_struction_initial_sol > 0)
+    bool found_optimal_solution = false;
+    if (config.use_struction_initial_sol == 250)
+        { initial = 5;}
+    else if (config.use_struction_initial_sol > 0)
          { initial = random_functions::nextInt(0, 5);}
     else { initial = random_functions::nextInt(0, 4);}
 
@@ -75,9 +78,9 @@ void population_mis::create_individuum(MISConfig & config, graph_access & G, ind
         init_solution.initial_partition(config.seed, G);
     }
     else if (initial == 5) {
-        config.use_struction_initial_sol -=1;
+        config.use_struction_initial_sol -=5;
         cyclicFast init_solution;
-        init_solution.initial_partition_struction(config, G, remaining_time);
+        found_optimal_solution = init_solution.initial_partition_struction(config, G, remaining_time);
     }
 
     // Create solution for the individuum
@@ -86,6 +89,7 @@ void population_mis::create_individuum(MISConfig & config, graph_access & G, ind
     ind.solution = solution;
     ind.solution_weight = solution_weight;
     ASSERT_TRUE(is_mis(config, G, ind));
+    return found_optimal_solution;
 }
 
 void population_mis::get_individuum(unsigned int id, individuum_mis & ind) {
@@ -214,7 +218,6 @@ void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis
     hils iterate(config);
     double hils_time_limit = std::min(config.ils_time_limit, 0.01 * remaining_time);
     iterate.perform_ils(G, config.ils_iterations, hils_time_limit);
-    /* iterate.direct_improvement(G, node); */
 
     // Create solution for the individuum
     NodeID *solution = new NodeID[G.number_of_nodes()];
@@ -226,7 +229,10 @@ void population_mis::mutate(MISConfig & config, graph_access & G, individuum_mis
 bool population_mis::insert(MISConfig & config, graph_access & G, individuum_mis & ind, double remaining_time) {
     ASSERT_TRUE(is_mis(config, G, ind));
     bool successful_insertion = false;
-    double hils_time_limit = std::min(config.ils_time_limit, 0.01 * remaining_time);
+    double hils_time_limit = config.ils_time_limit;
+    // double hils_time_limit = 0.01*remaining_time;
+    if (0.01 *remaining_time < hils_time_limit) 
+        hils_time_limit = 0.01 *remaining_time;
 
     if (internal_population.size() < population_size) {
         ind.id = internal_population.size();
@@ -430,7 +436,7 @@ void population_mis::get_best_individual_nodes(MISConfig & config, graph_access 
         unsigned int added_nodes = 0;
         nodes.clear();
 
-        if (config.fraction == 100) {
+        if (config.fraction == 1) {
             forall_nodes(G, node) {
                 if ( best.solution[node] == 1 ) nodes.push_back(node);
             } endfor

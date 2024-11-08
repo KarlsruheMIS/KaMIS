@@ -17,8 +17,6 @@
 #include <cstddef>
 #include <ostream>
 
-namespace mmwis {
-//using namespace mmwis;
 
 ils::ils(const mmwis::MISConfig &config) : config(config), local(config) {
         // Set config parameters
@@ -355,5 +353,4 @@ void ils::reset() {
                 delete[] best_solution;
                 best_solution_size = 0;
         }
-}
 }

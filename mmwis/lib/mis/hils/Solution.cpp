@@ -15,22 +15,6 @@
 
 /* extern std::mt19937 number_generator; // Mersenne Twister 19937 generator */
 
-Solution::Solution(graph_access *G) :
-	G(G),
-	solution_(G->number_of_nodes()),
-	solution_size_(0),
-	free_size_(G->number_of_nodes()),
-	tightness_(G->number_of_nodes(), 0),
-	position_(G->number_of_nodes()),
-	mu_(G->number_of_nodes()),
-	weight_(0) {
-	for (int idx = 0; idx < G->number_of_nodes(); idx++) {
-		position_[idx] = idx;
-		solution_[idx] = idx;
-		mu_[idx] = G->getNodeWeight(idx);
-	}
-} // Solution::Solution(const Graph *g)
-
 void Solution::moveFreeToSolutionPartition(const int v) {
 	assert(v < G->number_of_nodes());
 
@@ -180,6 +164,7 @@ void Solution::removeVertex(const int v)
 
 bool Solution::integrityCheck() const
 {
+    std::cout << "IntegrityCheck" << std::endl;
 	for (int idx = 0; idx < solution_size_; idx++) {
 		int vertex = solution_[idx];
 

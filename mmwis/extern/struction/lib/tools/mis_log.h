@@ -24,7 +24,7 @@
 
 #include "timer.h"
 #include "mmwis_config.h"
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 
 class mis_log {
     public:
@@ -50,7 +50,8 @@ class mis_log {
          *
          * @param G Graph representation.
          */
-        void set_graph(graph_access & G);
+        template <typename graph>
+        void set_graph(graph & G);
 
         /**
          * Write the log to a file.
@@ -147,5 +148,15 @@ class mis_log {
          */
         virtual ~mis_log();
 };
+
+
+template <typename graph>
+inline void mis_log::set_graph(graph& G) {
+    number_of_nodes = G.number_of_nodes();
+    number_of_edges = G.number_of_edges();
+    avg_degree = (double) number_of_edges / number_of_nodes;
+    density = (double) (1 * number_of_edges) / (number_of_nodes * (number_of_nodes - 1));
+}
+
 
 #endif

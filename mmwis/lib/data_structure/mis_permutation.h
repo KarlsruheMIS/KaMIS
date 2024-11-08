@@ -19,7 +19,6 @@
 #include "graph_access.h"
 #include "data_structure/candidate_list.h"
 
-namespace mmwis {
 
 class mis_permutation {
         friend class ils;
@@ -281,7 +280,5 @@ class mis_permutation {
          */
         void swap_nodes(unsigned int first_pos, unsigned int second_pos);
 };
-
-}
 
 #endif

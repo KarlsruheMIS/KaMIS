@@ -17,7 +17,6 @@
 #include "hils.h"
 #include "mmwis_log.h"
 #include "graph_access.h"
-#include "graph_io.h"
 #include "reduction_evolution.h"
 #include "mmwis_config.h"
 #include "graph_io.h"

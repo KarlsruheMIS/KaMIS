@@ -25,10 +25,8 @@ separator_pool::~separator_pool() {
     internal_partitions.clear();
     internal_k_separators.clear();
     internal_k_partitions.clear();
-    delete [] xadj;
-    xadj = nullptr;
-    delete [] adjncy;
-    adjncy = nullptr;
+    if (graph_computed)
+        clear_graph();
 }
 
 void separator_pool::clear_graph() {
@@ -36,31 +34,32 @@ void separator_pool::clear_graph() {
     xadj = nullptr;
     delete [] adjncy;
     adjncy = nullptr;
+    graph_computed = false;
 }
 
 void separator_pool::clear_partitions() {
-    for (unsigned int i = 0; i < partitions_size; ++i) {
+    for (unsigned int i = 0; i < internal_partitions.size(); ++i) {
         delete [] internal_partitions[i].partition_map;
         internal_partitions[i].partition_map = nullptr;
     }
 }
 
 void separator_pool::clear_k_partitions() {
-    for (unsigned int i = 0; i < k_partitions_size; ++i) {
+    for (unsigned int i = 0; i < internal_k_partitions.size(); ++i) {
         delete [] internal_k_partitions[i].partition_map;
         internal_k_partitions[i].partition_map = nullptr;
     }
 }
 
 void separator_pool::clear_separators() {
-    for (unsigned int i = 0; i < separators_size; ++i) {
+    for (unsigned int i = 0; i < internal_separators.size(); ++i) {
         delete [] internal_separators[i].separator_map;
         internal_separators[i].separator_map = nullptr;
     }
 }
 
 void separator_pool::clear_k_separators() {
-    for (unsigned int i = 0; i < k_separators_size; ++i) {
+    for (unsigned int i = 0; i < internal_k_separators.size(); ++i) {
         delete [] internal_k_separators[i].separator_map;
         internal_k_separators[i].separator_map = nullptr;
     }
@@ -89,10 +88,6 @@ void separator_pool::renew_pool(MISConfig & config, graph_access & G, bool init,
 
     if (mmwis_log::instance()->get_total_timer() > config.time_limit)
     {
-        clear_partitions();
-        clear_separators();
-        clear_k_partitions();
-        clear_k_separators();
         return;
     }
 
@@ -101,6 +96,7 @@ void separator_pool::renew_pool(MISConfig & config, graph_access & G, bool init,
 }
 
 void separator_pool::init(MISConfig & config, graph_access & G) {
+    graph_computed = true;
     xadj = G.UNSAFE_metis_style_xadj_array();
     adjncy = G.UNSAFE_metis_style_adjncy_array();
     separators_size = config.number_of_separators; 

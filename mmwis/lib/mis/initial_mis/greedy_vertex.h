@@ -9,7 +9,7 @@
 #define _GREEDY_VERTEX_H_
 
 #include "initial_mis.h"
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 
 class greedy_vertex : public initial_mis {
     public:

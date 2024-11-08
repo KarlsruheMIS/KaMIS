@@ -42,13 +42,6 @@ void mis_log::set_config(::mmwis::MISConfig & config) {
     log_config = config; 
 }
 
-void mis_log::set_graph(graph_access & G) {
-    number_of_nodes = G.number_of_nodes();
-    number_of_edges = G.number_of_edges();
-    avg_degree = (double) number_of_edges / number_of_nodes;
-    density = (double) (2 * number_of_edges) / (number_of_nodes * (number_of_nodes - 1));
-}
-
 void mis_log::write_log() {
     std::stringstream filename_stream;
     filename_stream << "./logs/log_"<<  log_config.graph_filename <<   

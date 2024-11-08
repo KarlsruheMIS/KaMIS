@@ -47,7 +47,6 @@ int parse_parameters(int argn, char **argv,
     struct arg_str *weight_source       = arg_str0(NULL, "weight_source", NULL, "Choose how the weights are assigned. Can be either: file (default), hybrid, uniform, geometric, unit.");
     struct arg_str *vertex_selection    = arg_str0(NULL, "vertex_selection", NULL, "Choose vertex selection strategie to be applied. Can be either: degree, weight, hybrid, weight_over_degree, solution_participation (default).");
     struct arg_str *reduction_style     = arg_str0(NULL, "reduction_style", NULL, "Choose the type of reductions appropriate for the input graph. Can be either: initial (default), weight, time, time_and_weight.");
-	struct arg_int *heavy_set           = arg_int0(NULL, "heavy_set",NULL, " Set size constraint of neighborhood in heavy_set reduction. Set to 0, then don't perform heavy set reduction.");
     struct arg_lit *disable_fold1       = arg_lit0(NULL, "disable_fold1", "Disable fold1 reduction.");
     struct arg_lit *disable_neighborhood       = arg_lit0(NULL, "disable_neighborhood", "Disable neighborhood reduction.");
     struct arg_lit *disable_twin       = arg_lit0(NULL, "disable_twin", "Disable twin reduction.");
@@ -140,7 +139,9 @@ int parse_parameters(int argn, char **argv,
     }
 
     if (user_conf->count > 0) {
-        if (strcmp(user_conf->sval[0], "mmwiss") == 0) cfg.mmwiss(mis_config);
+        mis_config.config_name = user_conf->sval[0];
+        if (strcmp(user_conf->sval[0],"mmwiss")==0) 
+            cfg.mmwiss(mis_config);
     }
 
     if (filename->count > 0) {
@@ -219,29 +220,6 @@ int parse_parameters(int argn, char **argv,
         mis_config.disable_generalized_neighborhood = true;
     }
 
-    // if (use_multiway_ns->count > 0) {
-    //     mis_config.use_multiway_vc = false;
-    // }
-
-    // if (use_multiway_vc->count > 0) {
-    //     mis_config.use_multiway_vc = true;
-    // }
-
-    // if (use_hopcroft->count > 0) {
-    //     mis_config.use_hopcroft = true;
-    // }
-
-    // if (repetitions->count > 0) {
-    //     mis_config.repetitions = repetitions->ival[0];
-    // }
-
-    /* if (red_thres->count > 0) { */
-    /*     mis_config.reduction_threshold = red_thres->ival[0]; */
-    /* } */
-
-    /* if (local_search_thres->count > 0) { */
-    /*     mis_config.local_search_threshold = local_search_thres->ival[0]; */
-    /* } */
 
     if (time_limit->count > 0) {
         mis_config.time_limit = time_limit->dval[0];
@@ -260,14 +238,10 @@ int parse_parameters(int argn, char **argv,
 
     if (V_solve_exact->count > 0) {
         mis_config.V_solve_exact= V_solve_exact->dval[0];
-    } else {
-        mis_config.V_solve_exact= 0;
     }
 
     if (time_solve_exact->count > 0) {
         mis_config.time_solve_exact= time_solve_exact->dval[0];
-    } else {
-        mis_config.time_solve_exact= mis_config.time_limit;
     }
 
 
@@ -282,18 +256,6 @@ int parse_parameters(int argn, char **argv,
         mis_config.check_sorted = false;
     }
 
-/* 	if (random_freenodes->count > 0) { */
-  /* mis_config.sort_freenodes = false; */
-/* 	} */
-
-/* 	if (disable_reduction->count > 0) { */
-  /* mis_config.perform_reductions = false; */
-/* 	} */
-
-
-    if (heavy_set->count > 0) {
-        mis_config.heavy_set = heavy_set->ival[0];
-    }
 
 	if (weight_source->count > 0) {
 		mis_config.setWeightSource(weight_source->sval[0]);
@@ -326,8 +288,6 @@ int parse_parameters(int argn, char **argv,
 
     if (fraction->count > 0) {
         mis_config.fraction = 0.01 * fraction->dval[0];
-    } else {
-        mis_config.fraction = 100;
     }
 
     arg_freetable(argtable, sizeof(argtable) / sizeof(argtable[0]));

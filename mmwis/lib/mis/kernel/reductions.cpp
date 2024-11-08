@@ -2,11 +2,9 @@
 * reductions.cpp
 *****************************************************************************/
 
-#include "graph_io.h"
-
 #include "reductions.h"
 #include "branch_and_reduce_algorithm.h"
-#include "flow_graph.h"
+#include "data_structure/flow_graph.h"
 #include "push_relabel.h"
 #include "definitions.h"
 
@@ -1067,9 +1065,9 @@ bool single_edge_reduction::reduce(branch_and_reduce_algorithm* br_alg) {
                     // compute w(N(neighbor)\N(node))
                     partial_neighbor_sum = 0;
                     for (NodeID second_neighbor : status.graph[neighbor]) {
-                        if (status.node_status[second_neighbor] == IS_status::not_set && neighbors.add(second_neighbor)) {
+                        if (status.node_status[second_neighbor] == IS_status::not_set && !neighbors.get(second_neighbor)) {
                             partial_neighbor_sum += status.weights[second_neighbor];
-                            neighbors.remove(second_neighbor);
+							if (partial_neighbor_sum > status.weights[neighbor]) break;
                         }
                     }
                  

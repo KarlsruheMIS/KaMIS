@@ -12,11 +12,10 @@
 #include <vector>
 
 #include "mmwis_config.h"
-#include "data_structure/graph_access.h"
+#include "graph_access.h"
 #include "data_structure/mis_permutation.h"
-#include "data_structure/priority_queues/maxNodeHeap.h"
+#include "maxNodeHeap.h"
 
-namespace mmwis {
 class local_search {
         friend class ils;
 
@@ -233,6 +232,5 @@ class local_search {
          */
         void sort_by_weight(graph_access& G, std::vector<NodeID>::iterator begin, std::vector<NodeID>::iterator end);
 };
-}
 
 #endif

@@ -11,9 +11,7 @@
 #include <bitset>
 #include <cassert>
 #include <iostream>
-#include <memory>
 #include <vector>
-#include <algorithm>
 
 #include "definitions.h"
 
@@ -139,8 +137,10 @@ private:
     
     std::vector<refinementNode> m_refinement_node_props;
     std::vector<coarseningEdge> m_coarsening_edge_props;
+
     // Offsets for computing sizes of reachable sets for contracted nodes
     std::vector<NodeWeight> m_contraction_offset;
+        
     // construction properties
     bool m_building_graph;
     int m_last_source;
@@ -162,8 +162,7 @@ class complete_boundary;
 class graph_access {
         friend class complete_boundary;
         public:
-                graph_access() { 
-                    m_max_degree_computed = false; m_max_degree = 0; m_max_weight_computed = false; m_max_weight = 0; graphref = new basicGraph(); m_separator_block_ID = 2;}
+                graph_access() { m_max_degree_computed = false; m_max_degree = 0; m_max_weight_computed = false; m_max_weight = 0; graphref = new basicGraph(); m_separator_block_ID = 2;}
                 virtual ~graph_access(){ delete graphref; };
 
                 graph_access(const graph_access&) = delete;
@@ -237,10 +236,10 @@ class graph_access {
         private:
                 basicGraph * graphref;     
                 bool         m_max_degree_computed;
-                bool         m_max_weight_computed;
+                bool         m_max_weight_computed = false;
                 unsigned int m_partition_count;
                 EdgeWeight   m_max_degree;
-                EdgeWeight   m_max_weight;
+                EdgeWeight   m_max_weight = 0;
                 PartitionID  m_separator_block_ID;
                 std::vector<PartitionID> m_second_partition_index;
 };
@@ -383,14 +382,14 @@ inline NodeID graph_access::getEdgeTarget(EdgeID edge){
 #endif
 }
 
-inline void graph_access::setEdgeTarget(EdgeID edge, NodeID target) {
+inline void graph_access::setEdgeTarget(EdgeID edge, NodeID target)
+{
 #ifdef NDEBUG
-    graphref->m_edges[edge].target = target;
+        graphref->m_edges[edge].target = target;
 #else
-    graphref->m_edges.at(edge).target = target;
+        graphref->m_edges.at(edge).target = target;
 #endif
 }
-
 inline EdgeRatingType graph_access::getEdgeRating(EdgeID edge) {
 #ifdef NDEBUG
         return graphref->m_coarsening_edge_props[edge].rating;        
@@ -419,21 +418,6 @@ inline EdgeWeight graph_access::getWeightedNodeDegree(NodeID node) {
         return degree;
 }
 
-inline EdgeWeight graph_access::getMaxWeight() {
-        if(!m_max_weight_computed) {
-                //compute it
-                basicGraph& ref = *graphref;
-                forall_nodes(ref, node) {
-                        if(getNodeWeight(node) > m_max_weight) {
-                                m_max_weight = getNodeWeight(node);
-                        }
-                } endfor
-                m_max_weight_computed = true;
-        }
-
-        return m_max_weight;
-}
-
 inline EdgeWeight graph_access::getMaxDegree() {
         if(!m_max_degree_computed) {
                 //compute it
@@ -451,6 +435,26 @@ inline EdgeWeight graph_access::getMaxDegree() {
         }
 
         return m_max_degree;
+}
+
+inline EdgeWeight graph_access::getMaxWeight()
+{
+        if (!m_max_weight_computed)
+        {
+                // compute it
+                basicGraph &ref = *graphref;
+                forall_nodes(ref, node)
+                {
+                        if (getNodeWeight(node) > m_max_weight)
+                        {
+                                m_max_weight = getNodeWeight(node);
+                        }
+                }
+                endfor
+                    m_max_weight_computed = true;
+        }
+
+        return m_max_weight;
 }
 
 inline int* graph_access::UNSAFE_metis_style_xadj_array() {
@@ -502,8 +506,8 @@ inline void graph_access::set_partition_count(PartitionID count) {
 }
 
 inline int graph_access::build_from_metis(int n, int* xadj, int* adjncy) {
-        if (graphref != nullptr) {
-            delete graphref;
+        if(graphref != NULL) {
+                delete graphref;
         }
         graphref = new basicGraph();
         start_construction(n, xadj[n]);
@@ -525,8 +529,8 @@ inline int graph_access::build_from_metis(int n, int* xadj, int* adjncy) {
 }
 
 inline int graph_access::build_from_metis_weighted(int n, int* xadj, int* adjncy, int * vwgt, int* adjwgt) {
-        if (graphref != nullptr) {
-            delete graphref;
+        if(graphref != NULL) {
+                delete graphref;
         }
         graphref = new basicGraph();
         start_construction(n, xadj[n]);

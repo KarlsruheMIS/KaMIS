@@ -11,8 +11,8 @@
 
 #include "mmwis_config.h"
 #include "definitions.h"
-#include "flow_graph.h"
-#include "data_structure/graph_access.h"
+#include "data_structure/flow_graph.h"
+#include "graph_access.h"
 
 class bipartite_weighted_vertex_cover {
     public:
