@@ -35,7 +35,6 @@ typedef unsigned int 	PartitionID;
 typedef unsigned int 	NodeWeight;
 typedef int 		EdgeWeight;
 typedef EdgeWeight 	Gain;
-#define MODE64BITEDGES
 #ifdef MODE64BITEDGES
 typedef uint64_t 	EdgeID;
 #else
