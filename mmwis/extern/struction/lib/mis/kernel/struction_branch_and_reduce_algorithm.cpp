@@ -385,7 +385,7 @@ size_t branch_and_reduce_algorithm::run_ils(const ::mmwis::MISConfig& config, gr
     double time_limit = 0.01*(config.time_limit - t.elapsed());
     if (!config.perform_hils) {
         greedy_initial_is(G, tmp_buffer);
-        ils local_search(config);
+        mmwis::ils local_search(config);
         local_search.perform_ils(G, max_swaps, time_limit);
     } else {
         if (config.reduce_and_peel) {
