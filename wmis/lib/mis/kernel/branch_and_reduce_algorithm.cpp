@@ -570,112 +570,6 @@ void branch_and_reduce_algorithm::branch_reduce_single_component() {
 	restore_best_local_solution();
 }
 
-bool branch_and_reduce_algorithm::run_branch_reduce_without_greedy(bool run_initial_reductions) {
-	t.restart();
-        if(run_initial_reductions) {
-                initial_reduce();
-        }else{
-                global_status.modified_queue.push_back(BRANCHING_TOKEN);
-        }
-
-	std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
-	std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
-	std::cout << "reduction_time " << t.elapsed() << "\n";
-
-	if (global_status.remaining_nodes == 0) {
-		restore_best_global_solution();
-		return true;
-	}
-
-	build_global_graph_access();
-
-	std::vector<int> comp_map(global_status.remaining_nodes, 0);
-	size_t comp_count = strongly_connected_components().strong_components(global_graph, comp_map);
-
-	//std::cout << "%components " << comp_count << "\n";
-
-	for (size_t node = 0; node < global_status.remaining_nodes; node++) {
-		global_graph.setPartitionIndex(node, comp_map[node]);
-	}
-
-	std::vector<size_t> comp_size(comp_count, 0);
-	for (auto comp_id : comp_map) {
-		comp_size[comp_id]++;
-	}
-
-	total_ils_node_count = 0;
-	std::vector<size_t> comp_idx(comp_count, 0);
-	for (size_t i = 0; i < comp_count; i++) {
-		comp_idx[i] = i;
-		if (comp_size[i] > ILS_SIZE_LIMIT) {
-			total_ils_node_count += comp_size[i];
-		}
-	}
-
-	std::sort(comp_idx.begin(), comp_idx.end(), [&comp_size](const size_t lhs, const size_t rhs) { return comp_size[lhs] < comp_size[rhs]; });
-
-	//std::cout << "%max_component " << comp_size[comp_idx.back()] << "\n";
-
-	graph_extractor extractor;
-
-	buffers.resize(7, sized_vector<NodeID>(global_status.n));
-
-	for (size_t i : comp_idx) {
-		if (t.elapsed() > config.time_limit) {
-			timeout = true;
-			break;
-		}
-
-		std::cout << "%connected component " << i << ":  " << comp_size[i] << std::endl;
-
-		local_mapping.clear();
-		graph_access G;
-		extractor.extract_block(global_graph, G, i, local_mapping);
-		local_graph = &G;
-
-		status = graph_status(*local_graph);
-		set_local_reductions();
-
-		branch_reduce_single_component();
-
-		if(!timeout) {
-			for (size_t node = 0; node < status.n; node++) {
-				// if (status.node_status[node] == IS_status::not_set || status.node_status[node] == IS_status::folded) {
-				// 	std::cerr << "error: node is not_set / folded after restore" << std::endl;
-				// 	exit(1);
-				// }
-
-				global_status.node_status[global_mapping[local_mapping[node]]] = status.node_status[node];
-			}
-
-			global_status.is_weight += best_weight;
-			global_status.remaining_nodes -= status.n;
-
-		}else {
-			std::cout << "%timeout at connected component " << i << ":  " << comp_size[i] << std::endl;
-		}
-		local_graph = nullptr;
-
-
-		std::cout << "%connected component " << i << ":  " << comp_size[i] << std::endl;
-	}
-
-
-	std::cout << global_status.remaining_nodes  << std::endl;
-	if (timeout) {
-		std::cout << "%timeout" << std::endl;
-		for (size_t node = 0; node < global_status.n; node++) {
-			if (global_status.node_status[node] == IS_status::not_set) {
-				std::cout << "excluding" << std::endl;
-				global_status.node_status[node] = IS_status::excluded;
-			}
-		}
-	}
-
-	restore_best_global_solution();
-	return !timeout;
-}
-
 bool branch_and_reduce_algorithm::run_branch_reduce(bool run_initial_reductions) {
 	t.restart();
         if(run_initial_reductions) {
@@ -684,8 +578,8 @@ bool branch_and_reduce_algorithm::run_branch_reduce(bool run_initial_reductions)
                 global_status.modified_queue.push_back(BRANCHING_TOKEN);
         }
 
-	std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
-	std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
+	//std::cout << "%reduction_nodes " << global_status.remaining_nodes << "\n";
+	//std::cout << "%reduction_offset " << global_status.is_weight + global_status.reduction_offset << "\n";
 	std::cout << "reduction_time " << t.elapsed() << "\n";
 	best_time = t.elapsed();
 
@@ -844,19 +738,19 @@ void branch_and_reduce_algorithm::restore_best_local_solution() {
 
 void branch_and_reduce_algorithm::restore_best_global_solution() {
 	status = std::move(global_status);
-    status.modified_queue.pop_back();
+        status.modified_queue.pop_back();
 
 	while (!status.modified_queue.empty()) {
 		NodeID node = status.modified_queue.back();
-        status.modified_queue.pop_back();
+                status.modified_queue.pop_back();
 
 		if (status.node_status[node] == IS_status::folded) {
 			auto type = status.folded_queue.back();
-            status.folded_queue.pop_back();
-            status.reductions[global_reduction_map[type]]->apply(this);
+		        status.folded_queue.pop_back();
+                        status.reductions[global_reduction_map[type]]->apply(this);
 		}
 		else {
-            status.graph.restore_node(node);
+                        status.graph.restore_node(node);
 		}
 	}
 }
