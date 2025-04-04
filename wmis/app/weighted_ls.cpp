@@ -81,7 +81,7 @@ NodeWeight perform_reduction(std::unique_ptr<branch_and_reduce_algorithm>& reduc
 		exit(1);
 	}
 
-	NodeWeight is_weight = reducer->get_current_is_weight();
+	NodeWeight is_weight = reducer->get_is_weight();
 
 	return is_weight;
 }
