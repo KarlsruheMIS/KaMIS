@@ -195,6 +195,7 @@ private:
 	void disable_cout();
 	void enable_cout();
 
+
 	NodeWeight get_current_is_weight() const;
 
 public:
@@ -205,6 +206,7 @@ public:
 
 	static size_t run_ils(const MISConfig& config, graph_access& G, sized_vector<NodeID>& tmp_buffer, size_t max_swaps);
 	static void greedy_initial_is(graph_access& G, sized_vector<NodeID>& tmp_buffer);
+
 
 	double get_best_time() const;
 	NodeWeight get_is_weight() const;
