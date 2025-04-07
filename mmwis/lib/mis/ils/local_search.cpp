@@ -16,6 +16,7 @@
 #include "bucket_array.h"
 #include "reductions.h"
 
+namespace mmwis {
 local_search::local_search(const mmwis::MISConfig& config) { sort_freenodes = config.sort_freenodes; }
 
 local_search::~local_search() {}
@@ -397,7 +398,7 @@ local_search::Swap_1_2 local_search::find_best_swap(NodeID node, graph_access& G
                                 best_swap = {onetight[i], onetight[j]};
                                 // loop stops
                         }
-                }
+                     }
         }
 
         return best_swap;
@@ -438,4 +439,5 @@ void local_search::sort_by_weight(graph_access& G, std::vector<NodeID>::iterator
                 *std::next(begin, count[G.getNodeWeight(node)]) = node;
                 count[G.getNodeWeight(node)]++;
         }
+}
 }

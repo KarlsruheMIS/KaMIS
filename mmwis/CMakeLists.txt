@@ -141,14 +141,14 @@ target_include_directories(lib_mmwis PRIVATE ${MMWIS_INCLUDES})
 
 add_dependencies(lib_mmwis libkaffpa)
 
-include_directories(mmwis PRIVATE ${MMWIS_INCLUDES})
-
-add_subdirectory(extern/struction)
+option(STRUCTION_ENABLE_APPS "enable/disable struction executables")
+add_subdirectory(extern/struction EXCLUDE_FROM_ALL)
 
 add_executable(mmwis "app/mmwis.cpp" $<TARGET_OBJECTS:libkaffpa> 
                                      $<TARGET_OBJECTS:libmapping> 
                                      $<TARGET_OBJECTS:libnodeordering>
                                      $<TARGET_OBJECTS:lib_mmwis> )
+target_include_directories(mmwis PRIVATE ${MMWIS_INCLUDES})
 target_link_libraries(mmwis ${OpenMP_CXX_LIBRARIES})
 
 install(TARGETS mmwis DESTINATION bin)
