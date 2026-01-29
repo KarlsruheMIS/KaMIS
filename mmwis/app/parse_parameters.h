@@ -274,9 +274,9 @@ int parse_parameters(int argn, char **argv,
 
     if (output->count > 0) {
         mis_config.output_filename = output->sval[0];
-        mis_config.write_graph = true;
+        mis_config.write_solution = true;
     } else {
-        mis_config.write_graph = false;
+        mis_config.write_solution = false;
     }
 
     if (kernel->count > 0) {

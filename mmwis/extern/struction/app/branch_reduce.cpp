@@ -149,5 +149,17 @@ int main(int argn, char **argv) {
     }
 #endif
 
+
+    if (mis_config.write_solution) {
+        std::ofstream f(mis_config.output_filename.c_str());
+        std::cout << "writing independent set to " << mis_config.output_filename << " ... " << std::endl;
+
+        forall_nodes(G, node) {
+            f << G.getPartitionIndex(node) <<  std::endl;
+        } endfor
+
+        f.close();
+    } 
+
     return 0;
 }

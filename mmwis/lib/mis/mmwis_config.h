@@ -115,7 +115,7 @@ struct MISConfig {
     // Write the log into a file
     bool print_log;
     // Write the inpendent set into a file
-    bool write_graph;
+    bool write_solution;
     // Write the kernel into a file
     bool write_kernel;
     // Write the log into the console
