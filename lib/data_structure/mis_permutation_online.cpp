@@ -96,14 +96,18 @@ bool mis_permutation_online::search_adj(NodeID source, NodeID target,
                                  graph_access &G) {
   // Binary search on boundaries
   EdgeID low = G.get_first_edge(source);
-  EdgeID high = G.get_first_invalid_edge(source) - 1;
+  EdgeID end = G.get_first_invalid_edge(source);
+  if (low >= end) return false;
+  EdgeID high = end - 1;
   EdgeID mid = 0;
   while (low <= high) {
     mid = low + (high - low) / 2;
     if (target == G.getEdgeTarget(mid))
       return true;
-    else if (target < G.getEdgeTarget(mid))
+    else if (target < G.getEdgeTarget(mid)) {
+      if (mid == 0) break;
       high = mid - 1;
+    }
     else
       low = mid + 1;
   }
