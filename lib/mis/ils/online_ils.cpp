@@ -157,6 +157,8 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
     long long v;
     long long best_v = -1;
     non_solution = G.number_of_nodes() - (perm->get_solution_size() + perm->get_folded_vertices());
+    int max_attempts = config.force_cand * non_solution;
+    int attempts = 0;
     for (int i = 0; i < config.force_cand; i++) {
       unsigned int position = random_functions::nextInt(0, non_solution - 1);
       v = perm->get_non_solution_node(position);
@@ -164,7 +166,7 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
       // Modification: Skip nodes with degree higher than the limit
       // Modification: Don't touch neighbors of solution nodes
       if (marked_degree[v] < 0 || marked_degree[v] > degree_limit) {
-        i--;
+        if (++attempts < max_attempts) i--;
         continue;
       }
 
@@ -232,7 +234,7 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
     local.make_maximal_and_update(G, marked_degree, degree_limit);
 
     // Modification: Only process unreduced nodes
-    if (marked_degree[v] >= 0)
+    if (v >= 0 && marked_degree[v] >= 0)
       local.direct_improvement(G, marked_degree, degree_limit, true, v);
 
     // Check the difference
@@ -267,18 +269,21 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
           // Perform a random 1-swap
           int x = -1;
           if (!one->is_empty()) {
+            int swap_max_attempts = config.force_cand * one->get_size();
+            int swap_attempts = 0;
             for (int i = 0; i < config.force_cand; i++) {
               int y = one->pick_random();
 
               // Modification: Skip nodes with degree higher than the limit
               // Modification: Don't touch neighbors of marked nodes
               if (marked_degree[y] < 0 || marked_degree[y] > degree_limit) {
-                i--;
+                if (++swap_attempts < swap_max_attempts) i--;
                 continue;
               }
 
               if (x == -1 || last_forced[y] < last_forced[x]) x = y;
             }
+            if (x >= 0) {
             force(config, G, x, NULL);
             // Try to improve the solution
             // fprintf(stderr, "delta v=%d s=%d m=%d\n", x,
@@ -286,6 +291,7 @@ void online_ils::perform_ils(MISConfig &config, graph_access &G,
             // process unreduced nodes
             if (marked_degree[x] >= 0)
               local.direct_improvement(G, marked_degree, degree_limit, true, x);
+            }
             // Improvement found?
             if (perm->get_solution_size() + perm->get_folded_vertices() > best_solution) {
               best_solution = perm->get_solution_size() + perm->get_folded_vertices();
