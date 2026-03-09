@@ -1,4 +1,4 @@
-# KaMIS v3.21 — Karlsruhe Maximum Independent Sets
+# KaMIS v3.1 — Karlsruhe Maximum Independent Sets
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![C++11/14](https://img.shields.io/badge/C++-11%2F14-blue.svg?style=flat)
