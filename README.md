@@ -1,4 +1,4 @@
-# KaMIS v3.0 — Karlsruhe Maximum Independent Sets
+# KaMIS v3.21 — Karlsruhe Maximum Independent Sets
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![C++11/14](https://img.shields.io/badge/C++-11%2F14-blue.svg?style=flat)
@@ -59,7 +59,7 @@ Furthermore, the framework contains tools to make life a little bit easier:
 * sort_adjacencies -- takes a graph file and sorts the neighborhoods of vertices (this is required by our algorithms) 
 * graphchecker -- check if the graph file you gave to algorithm is in the correct format
 
-## NEW in v3.0: 
+## NEW in v3.0:
 *mmwis (Memetic Maxmimum Weight Independent Set):* Our iterative reduce and evolution algorithm to solve the maximum weight independent set problem.
 
 *struction:* Our new branch and reduce algorithm using increasing transformations. 
