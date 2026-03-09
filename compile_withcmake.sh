@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Ensure submodules are initialized
+if [ ! -f mmwis/extern/KaHIP/CMakeLists.txt ]; then
+        echo "Initializing submodules..."
+        git submodule update --init --recursive
+fi
+
 NCORES=4
 unamestr=`uname`
 if [[ "$unamestr" == "Linux" ]]; then
