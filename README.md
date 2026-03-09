@@ -41,6 +41,8 @@ Then run directly:
 redumis network.graph --output independent_set.txt --time_limit 60 --console_log
 ```
 
+**Note:** When installed via Homebrew, `graphchecker` is renamed to `kamis_graphchecker` to avoid name clashes.
+
 ## Installation (from source) ##
 As a first step, please run *git submodule update  --init --recursive*. Then compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
 
