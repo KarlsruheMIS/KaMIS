@@ -305,9 +305,9 @@ If you use the weighted independents set algorithms, please also cite the follow
 }
 ```
 
-if you use struction, please also cite the following: 
+If you use struction, please also cite the following:
 ```
-@article{DBLP:journals/corr/abs-2008-05180,
+@inproceedings{DBLP:conf/alenex/GellnerLSSZ21,
   author       = {Alexander Gellner and
                   Sebastian Lamm and
                   Christian Schulz and
@@ -315,37 +315,34 @@ if you use struction, please also cite the following:
                   Bogd{\'{a}}n Zav{\'{a}}lnij},
   title        = {Boosting Data Reduction for the Maximum Weight Independent Set Problem
                   Using Increasing Transformations},
-  journal      = {CoRR},
-  volume       = {abs/2008.05180},
-  year         = {2020},
-  url          = {https://arxiv.org/abs/2008.05180},
-  eprinttype    = {arXiv},
-  eprint       = {2008.05180},
-  timestamp    = {Sun, 16 Aug 2020 17:19:29 +0200},
-  biburl       = {https://dblp.org/rec/journals/corr/abs-2008-05180.bib},
+  booktitle    = {Proceedings of the 23rd Symposium on Algorithm Engineering and Experiments,
+                  {ALENEX} 2021, Virtual Conference, January 10-11, 2021},
+  pages        = {128--142},
+  publisher    = {{SIAM}},
+  year         = {2021},
+  url          = {https://doi.org/10.1137/1.9781611976472.10},
+  doi          = {10.1137/1.9781611976472.10},
+  biburl       = {https://dblp.org/rec/conf/alenex/GellnerLSSZ21.bib},
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
 
-if you use mmwis, please also cite the following: 
+If you use mmwis, please also cite the following:
 ```
-@inproceedings{dblp:conf/gecco/grossmannl0s23,
-  author       = {ernestine gro{\ss}mann and
-                  sebastian lamm and
-                  christian schulz and
-                  darren strash},
-  editor       = {sara silva and
-                  lu{\'{\i}}s paquete},
-  title        = {finding near-optimal weight independent sets at scale},
-  booktitle    = {proceedings of the genetic and evolutionary computation conference,
-                  {gecco} 2023, lisbon, portugal, july 15-19, 2023},
-  pages        = {293--302},
-  publisher    = {{acm}},
-  year         = {2023},
-  url          = {https://doi.org/10.1145/3583131.3590353},
-  doi          = {10.1145/3583131.3590353},
-  timestamp    = {fri, 02 aug 2024 15:50:42 +0200},
-  biburl       = {https://dblp.org/rec/conf/gecco/grossmannl0s23.bib},
+@article{DBLP:journals/jgaa/GrossmannLSS24,
+  author       = {Ernestine Gro{\ss}mann and
+                  Sebastian Lamm and
+                  Christian Schulz and
+                  Darren Strash},
+  title        = {Finding Near-Optimal Weight Independent Sets at Scale},
+  journal      = {J. Graph Algorithms Appl.},
+  volume       = {28},
+  number       = {1},
+  pages        = {439--473},
+  year         = {2024},
+  url          = {https://doi.org/10.7155/jgaa.v28i1.2997},
+  doi          = {10.7155/JGAA.V28I1.2997},
+  biburl       = {https://dblp.org/rec/journals/jgaa/GrossmannLSS24.bib},
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
