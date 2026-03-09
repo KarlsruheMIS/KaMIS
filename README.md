@@ -1,6 +1,21 @@
-# KaMIS v3.0 #
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/29cd8870a6b041948dbf001d0f427f83)](https://app.codacy.com/gh/KarlsruheMIS/KaMIS?utm_source=github.com&utm_medium=referral&utm_content=KarlsruheMIS/KaMIS&utm_campaign=Badge_Grade_Dashboard)
+# KaMIS v3.0 — Karlsruhe Maximum Independent Sets
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![C++11/14](https://img.shields.io/badge/C++-11%2F14-blue.svg?style=flat)
+[![CMake](https://img.shields.io/badge/build-CMake-blue)](https://cmake.org/)
+[![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/KarlsruheMIS/KaMIS)
+[![macOS](https://img.shields.io/badge/platform-macOS-blue)](https://github.com/KarlsruheMIS/KaMIS)
+[![Homebrew](https://img.shields.io/badge/homebrew-available-orange)](https://github.com/KarlsruheMIS/homebrew-kamis)
+[![GitHub Stars](https://img.shields.io/github/stars/KarlsruheMIS/KaMIS)](https://github.com/KarlsruheMIS/KaMIS/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/KarlsruheMIS/KaMIS)](https://github.com/KarlsruheMIS/KaMIS/issues)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/KarlsruheMIS/KaMIS)](https://github.com/KarlsruheMIS/KaMIS/commits)
+[![arXiv](https://img.shields.io/badge/arXiv-1509.00764-b31b1b)](https://arxiv.org/abs/1509.00764)
+[![arXiv](https://img.shields.io/badge/arXiv-1708.06151-b31b1b)](https://arxiv.org/abs/1708.06151)
+[![arXiv](https://img.shields.io/badge/arXiv-1810.10834-b31b1b)](https://arxiv.org/abs/1810.10834)
+[![arXiv](https://img.shields.io/badge/arXiv-2008.05180-b31b1b)](https://arxiv.org/abs/2008.05180)
+[![arXiv](https://img.shields.io/badge/arXiv-2208.13645-b31b1b)](https://arxiv.org/abs/2208.13645)
+[![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/KarlsruheMIS/KaMIS)
+[![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-red)](https://www.uni-heidelberg.de)
 
 ## Description ##
 This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Given a graph G=(V,E), the goal of the maximum independent set problem is to compute a maximum cardinality set of vertices I, such that no vertices in the set are adjacent to one another. Such a set is called a maximum independent set. The problem is NP-hard and particularly difficult to solve in large sparse graphs. 
@@ -15,7 +30,18 @@ This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Give
 Main project site:
 <http://KarlsruheMIS.github.io>
 
-## Installation ##
+## Install via Homebrew
+
+```console
+brew install KarlsruheMIS/kamis/kamis
+```
+
+Then run directly:
+```console
+redumis network.graph --output independent_set.txt --time_limit 60 --console_log
+```
+
+## Installation (from source) ##
 As a first step, please run *git submodule update  --init --recursive*. Then compile the source by running *compile_withcmake.sh*. The binaries can then be found in the folder *deploy*.  To compile the programs you need g++, OpenMP and cmake installed. 
 
 To convert a graph from DIMACS to METIS format or sort its edges you can use the python scripts in the *misc* folder.
@@ -323,7 +349,3 @@ if you use mmwis, please also cite the following:
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
-
-
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKarlsruheMIS%2FKaMIS?ref=badge_large)
