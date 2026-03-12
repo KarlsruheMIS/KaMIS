@@ -17,6 +17,8 @@
 [![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/KarlsruheMIS/KaMIS)
 [![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-red)](https://www.uni-heidelberg.de)
 
+Part of the [KarlsruheMIS](https://github.com/KarlsruheMIS) organization.
+
 ## Description ##
 This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Given a graph G=(V,E), the goal of the maximum independent set problem is to compute a maximum cardinality set of vertices I, such that no vertices in the set are adjacent to one another. Such a set is called a maximum independent set. The problem is NP-hard and particularly difficult to solve in large sparse graphs. 
 
