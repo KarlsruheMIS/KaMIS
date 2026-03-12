@@ -28,10 +28,6 @@ This is the open source project KaMIS - Karlsruhe Maximum Independent Sets. Give
   width="700" height="245">
 </p>
 
-
-Main project site:
-<http://KarlsruheMIS.github.io>
-
 ## Install via Homebrew
 
 ```console
